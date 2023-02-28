@@ -1,0 +1,1 @@
+var swiper=new Swiper(".image-gallery__thumbs",{slidesPerView:"auto",freeMode:!0,watchSlidesProgress:!0}),swiper2=new Swiper(".image-gallery__main",{spaceBetween:10,zoom:!0,navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"},thumbs:{swiper:swiper}});

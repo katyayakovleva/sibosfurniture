@@ -1,0 +1,352 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&family=Merriweather:wght@700&display=swap);:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+@media screen and (min-width: 35.5em) {
+    :root {
+        --fs-1:6.25em;
+        --fs-2: 3.13em;
+        --fs-3: 1.94em;
+        --fs-4: 1.56em;
+        --fs-5: 1.25em;
+        --fs-6: 0.81em;
+        --fs-7: 0.63em
+    }
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100svh
+}
+
+.hero__left {
+    flex-basis: 40%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-color: #0049af
+}
+
+.hero__left h1 {
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-1);
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    margin-bottom: -.25em
+}
+
+.hero__right {
+    flex-basis: 60%;
+    display: flex;
+    flex-direction: column
+}
+
+.hero__right span {
+    height: auto;
+    flex-grow: 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+.hero__right span:nth-child(1) {
+    width: 40%;
+    background-color: #cba53f
+}
+
+.hero__right span:nth-child(2) {
+    width: 60%;
+    background-color: #f57d48
+}
+
+.hero__right span:nth-child(3) {
+    width: 80%;
+    background-color: #c15929
+}
+
+.hero__right span:nth-child(4) {
+    width: 70%;
+    background-color: #554063
+}
+
+.hero__right span:nth-child(5) {
+    width: 85%;
+    background-image: url(../assets/images/Rectangle-328.jpg)
+}
+
+.hero__right span:nth-child(6) {
+    width: 65%;
+    background-color: #2c413e
+}
+
+.hero__right span:nth-child(7) {
+    width: 95%;
+    background-color: #496969
+}
+
+.hero__right span:nth-child(8) {
+    width: 85%;
+    background-color: #789bce
+}
+
+.hero__right span:nth-child(9) {
+    width: 80%;
+    background-color: #005d67
+}
+
+.hero__right span:nth-child(10) {
+    width: 90%;
+    background-color: #7d0025
+}
+
+.hero__right span:nth-child(11) {
+    width: 60%;
+    background-image: url(../assets/images/Rectangle-334.jpg)
+}
+
+.grid-container {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    -moz-column-gap: 2.5em;
+    column-gap: 2.5em;
+    row-gap: 2.5em;
+    justify-content: center;
+    padding: 2.5em .5em
+}
+
+.colors>h2,.materials>h2 {
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: 1.56em;
+    font-weight: 700;
+    color: #0049af;
+    margin-top: 1em;
+    margin-bottom: .5em
+}
+
+.colors>p,.materials>p {
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: 1.25em;
+    color: #404c5c
+}
+
+.material-item figure {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1
+}
+
+.material-item figure img {
+    width: 100%;
+    height: 100%
+}
+
+.material-item figure figcaption {
+    font-family: 'Merriweather Sans',sans-serif;
+    color: #0049af;
+    font-size: var(--fs-5);
+    margin-top: .5em
+}
+
+.grid-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 1em
+}
+
+.grid-colors__row {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #0049af
+}
+
+.grid-colors__row h3 {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-4);
+    color: #0049af;
+    margin: 0;
+    padding: .5em 1em
+}
+
+.grid-colors__row h3::after {
+    content: "";
+    display: block;
+    width: 1em;
+    height: .5em;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 28 17" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M26 2L14 14L2 2" stroke="%230049AF" stroke-width="4" stroke-linecap="round"/%3E%3C/svg%3E%0A');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain
+}
+
+.grid-colors__body {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    -moz-column-gap: 2em;
+    column-gap: 2em;
+    row-gap: 1em;
+    padding: 1em;
+    border-top: 2px solid #0049af
+}
+
+.grid-colors__item {
+    padding: .1em;
+    display: flex;
+    flex-direction: column
+}
+
+.grid-colors__item span {
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    width: 100%
+}
+
+.grid-colors__item p {
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-5);
+    color: #0049af;
+    margin: 0;
+    margin-top: .5em
+}
+
+@media screen and (min-width: 35.5em) {
+    .hero {
+        flex-direction:row
+    }
+
+    .hero__left {
+        background-image: url(../assets/images/image-5.jpg);
+        background-color: rgba(0,73,175,.3);
+        background-blend-mode: multiply
+    }
+
+    .hero__left h1 {
+        margin: 0
+    }
+
+    .hero__right span {
+        display: none
+    }
+
+    .hero__right span:nth-child(1),.hero__right span:nth-child(2),.hero__right span:nth-child(3),.hero__right span:nth-child(4),.hero__right span:nth-child(5),.hero__right span:nth-child(6),.hero__right span:nth-child(7) {
+        display: inline
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(4,minmax(0,1fr));
+        -moz-column-gap: 6em;
+        column-gap: 6em
+    }
+
+    .colors>h2,.materials>h2 {
+        font-size: 3.125em
+    }
+
+    .grid-colors__row {
+        border: none
+    }
+
+    .grid-colors__row h3 {
+        padding: 0
+    }
+
+    .grid-colors__row h3::after {
+        display: none
+    }
+
+    .grid-colors__body {
+        display: grid!important;
+        grid-template-columns: repeat(9,minmax(0,1fr));
+        gap: 2em;
+        border: none
+    }
+
+    .grid-colors__item {
+        border: 2px solid #0049af
+    }
+
+    .grid-colors__item span {
+        width: calc(100% - 2em);
+        margin: 1em 1em 0 1em
+    }
+
+    .grid-colors__item p {
+        margin-top: .1em
+    }
+}
