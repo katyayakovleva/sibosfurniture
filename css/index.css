@@ -1,13 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&family=Merriweather:wght@700&display=swap);:root {
-    --fs-1: 3.13em;
-    --fs-2: 2.5em;
-    --fs-3: 1.56em;
-    --fs-4: 1.56em;
-    --fs-5: 0.75em;
-    --fs-6: 1em;
-    --fs-7: 0.63em
-}
-
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&family=Merriweather:wght@700&display=swap);
 :root {
     --fs-1: 3.13em;
     --fs-2: 2.5em;
@@ -68,9 +59,19 @@
     --fs-7: 0.63em
 }
 
-@media screen and (min-width: 35.5em) {
+:root {
+    --fs-1: 3.13em;
+    --fs-2: 2.5em;
+    --fs-3: 1.56em;
+    --fs-4: 1.56em;
+    --fs-5: 0.75em;
+    --fs-6: 1em;
+    --fs-7: 0.63em
+}
+
+@media screen and (min-width:35.5em) {
     :root {
-        --fs-1:6.25em;
+        --fs-1: 6.25em;
         --fs-2: 3.13em;
         --fs-3: 1.94em;
         --fs-4: 1.56em;
@@ -103,7 +104,7 @@
 }
 
 .swiper-full-height .swiper-menu {
-    background-color: rgba(0,73,175,.5)
+    background-color: rgba(0, 73, 175, .5)
 }
 
 .swiper-full-height .swiper-menu .link {
@@ -111,7 +112,7 @@
 }
 
 .swiper-full-height .swiper-menu.white {
-    background-color: rgba(255,255,255,.5)
+    background-color: rgba(255, 255, 255, .5)
 }
 
 .swiper-full-height .swiper-menu.white .link {
@@ -150,9 +151,16 @@
 
 .swiper-full-height .swiper-slide div {
     margin-top: calc(var(--navbar-height) + 2em);
-    margin-inline:2em}
+    margin-inline: 2em
+}
 
-.swiper-full-height .swiper-button-next,.swiper-full-height .swiper-button-prev,.swiper-full-height .swiper-pagination {
+.swiper-full-height .swiper-slide .swiper-slide__number {
+    display: none
+}
+
+.swiper-full-height .swiper-button-next,
+.swiper-full-height .swiper-button-prev,
+.swiper-full-height .swiper-pagination {
     display: none
 }
 
@@ -183,7 +191,7 @@
 
 .advantages section {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(16em,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16em, 1fr));
     gap: 3em;
     justify-content: center;
     padding: 3em 3em
@@ -192,8 +200,8 @@
 .advantages-post {
     display: flex;
     flex-direction: column;
-    background: rgba(255,255,255,.07);
-    box-shadow: 4px 4px 10px rgba(0,0,0,.15);
+    background: rgba(255, 255, 255, .07);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
     -webkit-backdrop-filter: blur(7.5px);
     backdrop-filter: blur(7.5px);
     padding: 2em;
@@ -212,7 +220,7 @@
     width: 100%;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
     -moz-column-gap: 5em;
     column-gap: 5em;
     row-gap: 2.5em;
@@ -227,7 +235,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    background-color: rgba(0,73,175,.3);
+    background-color: rgba(0, 73, 175, .3);
     transition: all ease-in-out .12s;
     aspect-ratio: 4/3
 }
@@ -245,7 +253,8 @@
 
 .grid-item-w-header p {
     text-transform: uppercase;
-    padding-inline:.5em}
+    padding-inline: .5em
+}
 
 .grid-item-w-header::after {
     content: "";
@@ -259,7 +268,7 @@
 }
 
 .grid-item-w-header:hover {
-    background-color: rgba(0,60,144,.4)
+    background-color: rgba(0, 60, 144, .4)
 }
 
 .grid-item-w-header:hover::after {
@@ -272,7 +281,7 @@
 
 .cam {
     display: grid;
-    grid-template-columns: repeat(1,minmax(0,1fr))
+    grid-template-columns: repeat(1, minmax(0, 1fr))
 }
 
 .cam section {
@@ -310,16 +319,19 @@
 .cam section:last-of-type {
     display: none;
     box-sizing: border-box;
-    padding-inline:2em}
+    padding-inline: 2em
+}
 
-.cam .cam-colors-images,.cam .cam-materials-images {
+.cam .cam-colors-images,
+.cam .cam-materials-images {
     box-sizing: border-box;
     position: relative;
     height: 100%;
     width: 100%
 }
 
-.cam .cam-colors-images img,.cam .cam-materials-images img {
+.cam .cam-colors-images img,
+.cam .cam-materials-images img {
     box-sizing: border-box;
     position: absolute;
     width: 100%;
@@ -334,7 +346,8 @@
     z-index: -1
 }
 
-.cam .cam-colors-images img:not([aria-current=true]),.cam .cam-materials-images img:not([aria-current=true]) {
+.cam .cam-colors-images img:not([aria-current=true]),
+.cam .cam-materials-images img:not([aria-current=true]) {
     position: absolute;
     display: none;
     opacity: 0
@@ -351,7 +364,7 @@
 
 .cam .cam-controll>div {
     display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1em;
     padding: 1em 2em
 }
@@ -387,97 +400,104 @@
     align-items: center
 }
 
-@media screen and (min-width: 35.5em) {
+@media screen and (min-width:35.5em) {
     .swiper-full-height .swiper-menu {
-        display:flex
+        display: flex
     }
-
     .swiper-full-height .swiper-slide {
+        position: relative;
         align-items: center
     }
-
     .swiper-full-height .swiper-slide img {
         -o-object-position: center;
         object-position: center
     }
-
     .swiper-full-height .swiper-slide div {
-        width: max(30em,40%);
+        width: max(30em, 40%);
         min-height: 19em;
         margin-top: 0;
-        margin-left: calc(min(12em,40%) + 4em);
+        margin-left: calc(min(12em, 40%) + 4em);
         margin-right: 4em
     }
-
     .swiper-full-height .swiper-slide div p {
+        max-width: 30vw;
         height: 1;
         overflow: visible
     }
-
-    .swiper-full-height .swiper-button-next,.swiper-full-height .swiper-button-prev {
+    .swiper-full-height .swiper-slide .swiper-slide__number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 73, 175, .5);
+        box-sizing: border-box;
+        width: 5.5em;
+        min-height: auto;
+        height: 4.7em;
+        margin: 0
+    }
+    .swiper-full-height .swiper-slide .swiper-slide__number p {
+        font-family: Inter, sans-serif;
+        font-size: 3.125em;
+        font-weight: 700;
+        color: #fff;
+        opacity: .6;
+        margin: 0
+    }
+    .swiper-full-height .swiper-button-next,
+    .swiper-full-height .swiper-button-prev {
         display: flex
     }
-
     .swiper-full-height .swiper-pagination {
         display: block
     }
-
     .advantages img {
         -o-object-position: center bottom;
         object-position: center bottom
     }
-
     .advantages header h1.offset {
         position: relative;
         top: .23em;
         left: 8%
     }
-
     .advantages section {
         gap: 2em;
         padding: 2em 3em
     }
-
     .advantages-post {
         padding: 2em
     }
-
     .advantages-post p:first-of-type {
         max-width: 75%
     }
-
     .advantages-post p:last-of-type {
         display: block
     }
-
     .grid-container {
         row-gap: 3em;
         padding: 4em 3em;
-        grid-template-columns: repeat(3,minmax(0,1fr))
+        grid-template-columns: repeat(3, minmax(0, 1fr))
     }
-
     .cam {
-        grid-template-columns: repeat(2,minmax(0,1fr))
+        grid-template-columns: repeat(2, minmax(0, 1fr))
     }
-
     .cam section {
         justify-content: center
     }
-
     .cam section:first-of-type {
         justify-content: flex-start;
         align-items: flex-end
     }
-
     .cam section:first-of-type h2 {
         top: .23em;
         margin: 0
     }
-
     .cam section:last-of-type {
         display: flex
     }
-
     .cam .cam-controll {
         display: none
     }
