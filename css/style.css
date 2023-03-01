@@ -3431,6 +3431,9 @@ form label.has-value {
     .form-control.form-control-without-value:has(span>span.wpcf7-not-valid-tip) {
         margin-top: 0.3em;
     }
+    .form-control:has(span>span.wpcf7-not-valid-tip) {
+        margin-top: -0.53em;
+    }
     .form-control {
         padding-block: 0.9em;
     }
