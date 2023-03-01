@@ -45,10 +45,10 @@
                             <li><a href="#" class="link link-navbar">Accent chair</a></li>
                             <li><a href="#" class="link link-navbar">Accent chair</a></li>
                             <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
                             </div>
@@ -65,7 +65,7 @@
                             <li><a href="#" class="link link-navbar">Dinning chair</a></li>
                             <li><a href="#" class="link link-navbar">Dinning chair</a></li>
                             <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
                             </div>
@@ -76,10 +76,10 @@
                             <li><a href="#" class="link link-navbar">Accent furniture</a></li>
                             <li><a href="#" class="link link-navbar">Accent furniture</a></li>
                             <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
                             </div>
@@ -96,7 +96,7 @@
                             <li><a href="#" class="link link-navbar">Outdoor chair</a></li>
                             <li><a href="#" class="link link-navbar">Outdoor chair</a></li>
                             <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
                             </div>
@@ -107,10 +107,10 @@
                             <li><a href="#" class="link link-navbar">Sale chair</a></li>
                             <li><a href="#" class="link link-navbar">Sale chair</a></li>
                             <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
-                                <figure class="ratio-1x1"><img src="assets/images/Rectangle-355.png" alt="sale card image">
+                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
                                     <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
                                 </figure>
                             </div>
