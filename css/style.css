@@ -47,7 +47,10 @@ a {
     color: #ff7171;
     font-size: 0.87em;
 }
-
+.wpcf7 form .wpcf7-response-output{
+    margin: 0;
+    color: white;
+}
 input[type=button] {
     border: none;
 }
@@ -3353,80 +3356,39 @@ a.blue:hover {
 /* .form-control:has(label):has(input:not(:-moz-placeholder-shown)) input {
     order: 0
 }
-
 .form-control:has(label):has(input:focus) input,
 .form-control:has(label):has(input:not(:placeholder-shown)) input {
     order: 0
 }
-
 .form-control:has(label):has(input:not(:-moz-placeholder-shown)) label {
     order: 1;
     padding-left: .5em;
     padding-right: 1px
 }
-
 .form-control:has(label):has(input:focus) label,
 .form-control:has(label):has(input:not(:placeholder-shown)) label {
     order: 1;
     padding-left: .5em;
     padding-right: 1px
 } */
-
-
 /*!*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) input {*!*/
-
-
 /*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) span.wpcf7-form-control-wrap {*/
-
-
 /*    order: 0*/
-
-
 /*}*/
-
-
 /*!*.form-control:has(label):has(input:focus) input,.form-control:has(label):has(input:not(:placeholder-shown)) input {*!*/
-
-
 /*.form-control:has(label):has(input:focus) span.wpcf7-form-control-wrap,.form-control:has(label):has(input:not(:placeholder-shown)) span.wpcf7-form-control-wrap{*/
-
-
 /*    order: 0*/
-
-
 /*}*/
-
-
 /*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) label {*/
-
-
 /*    order: 1;*/
-
-
 /*    padding-left: .5em;*/
-
-
 /*    padding-right: 1px*/
-
-
 /*}*/
-
-
 /*!*.form-control:has(label):has(input:focus) label {*!*/
-
-
 /*.form-control:has(label):has(input:focus) label,.form-control:has(label):has(input:not(:placeholder-shown)) label {*/
-
-
 /*    order: 1;*/
-
-
 /*    padding-left: .5em;*/
-
-
 /*    padding-right: 1px*/
-
-
 /*}*/
 
 form label {
@@ -3451,7 +3413,31 @@ form label.has-value {
 .form-control:has(span>span.wpcf7-not-valid-tip) {
     margin-top: -1em;
 }
-
+.form-control.form-control-without-value:has(span>span.wpcf7-not-valid-tip) {
+    margin-top: 0.1em;
+}
+.form-control.form-control-without-value:has(span>span.wpcf7-not-valid-tip) input {
+    margin-top: -0.7em;
+    position: absolute;
+    width: initial;
+}
+.form-control input{
+    transition: none!important;
+}
+@media screen and (max-width: 35.5em) {
+    .wpcf7-not-valid-tip {
+        font-size: 0.65em;
+    }
+    .form-control.form-control-without-value:has(span>span.wpcf7-not-valid-tip) {
+        margin-top: 0.3em;
+    }
+    .form-control {
+        padding-block: 0.9em;
+    }
+    .wpcf7 form .wpcf7-response-output{
+        font-size: 0.8em;
+    }
+}
 .form-group .form-control {
     flex: 1
 }

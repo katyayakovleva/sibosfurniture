@@ -115,13 +115,17 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     navbarBurger()
             }))
         $('#contact-us form').addClass('d-flex fd-col g-1');
+        $('#contact-us form .form-control').addClass('form-control-without-value');
         $(".wpcf7-form input").focus(function() {
                 $(this).parent().siblings('label').addClass('has-value');
+                $(this).parent().parent().removeClass('form-control-without-value');
+
             })
             .blur(function() {
                 var text_val = $(this).val();
                 if (text_val === "") {
                     $(this).parent().siblings('label').removeClass('has-value');
+                    $(this).parent().parent().addClass('form-control-without-value');
                 }
             });
     });
