@@ -9,7 +9,7 @@ get_header();
 ?>
 <main>
     <article class="swiper-full-height">
-        <menu class="swiper-menu">
+        <!-- <menu class="swiper-menu">
             <li><a href="shop-page.html" class="link sm">Living room</a></li>
             <li><a href="shop-page.html" class="link sm">Bedroom</a></li>
             <li><a href="shop-page.html" class="link sm">Dinning room</a></li>
@@ -17,9 +17,35 @@ get_header();
             <li><a href="shop-page.html" class="link sm">Office</a></li>
             <li><a href="shop-page.html" class="link sm">Outdoor</a></li>
             <li><a href="shop-page.html" class="link sm">Sale</a></li>
-        </menu>
+        </menu> -->
+        <?php
+            wp_nav_menu(
+                array(
+                    'theme_location' => 'home-page-menu',
+                    'menu_id'        => 'home-page-menu',
+                    'container'            => '',
+                    'container_class'      => '',
+                    'container_id'         => '',
+                    'container_aria_label' => '',
+                    'menu_class'           => '',
+                    'menu_id'              => '',
+                    'echo'                 => true,
+                    'fallback_cb'          => 'wp_page_menu',
+                    'before'               => '',
+                    'after'                => '',
+                    'link_before'          => '',
+                    'link_after'           => '',
+                    'items_wrap'           => '<menu class=" swiper-menu %2$s">%3$s</menu>',
+                    'item_spacing'         => 'preserve',
+                    'depth'                => 0,
+                    'walker'               => '',
+                    'link_class'     => 'link sm',
+                    
+                )
+            );
+        ?>
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="assets/images/IMG_7727-1.jpg" alt="slide 1 background">
+            <div class="swiper-slide"><img src="<?php echo get_template_directory_uri(); ?>assets/images/IMG_7727-1.jpg" alt="slide 1 background">
                 <div>
                     <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0">Discount for 1st order</h2>
                     <p class="ff-ms fs-5 fc-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>

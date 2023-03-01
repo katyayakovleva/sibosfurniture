@@ -1,9 +1,18 @@
-function colorRowCollapse() {
-    var o = $(".grid-colors__row").find("h3");
-    const i = $(".grid-colors__body");
-    i.filter(":not(.active)").css("display", "none"), o.off(), window.matchMedia("screen and (min-width: 35.5em)").matches || o.click(function() {
-        var o = $(this).parent().find(".grid-colors__body");
-        o.hasClass("active") || i.filter(".active").removeClass("active").animate({ opacity: "toggle", height: "toggle", padding: "toggle" }, { duration: 200, start: function() { $(this).css("display", "grid") } }), o.animate({ opacity: "toggle", height: "toggle", padding: "toggle" }, { duration: 200, start: function() { $(this).css("display", "grid") } }), o.toggleClass("active")
+function changinColorItem() {
+    $(".changing-color-item").each(function() {
+        const i = $(this).find("figure").find("img");
+        $(this).find(".colors").find('span[role="button"]').each(function() {
+            $(this).on("click", function() {
+                const n = $(this).data("color");
+                var t = i.filter(function() {
+                    return $(this).data("color") === n
+                }).first();
+                t.length && (i.removeClass("active"),
+                    t.addClass("active"))
+            })
+        })
     })
 }
-$(document).ready(function() { colorRowCollapse(), $(window).resize($.debounce(250, function() { colorRowCollapse() })) });
+$(document).ready(function() {
+    changinColorItem()
+});
