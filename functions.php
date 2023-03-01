@@ -51,7 +51,7 @@ function sibosfurniture_setup() {
 		array(
 			'menu-1' => esc_html__( 'Primary', 'sibosfurniture' ),
 			'footer-menu' => esc_html__( 'Footer menu', 'sibosfurniture' ),
-			'footer-links' => esc_html__( 'Footer links', 'sibosfurniture' ),
+			'footer-info-links' => esc_html__( 'Footer info links', 'sibosfurniture' ),
 			'home-page-menu' => esc_html__( 'Home Page Menu', 'sibosfurniture' ),
 		)
 	);
