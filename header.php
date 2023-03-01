@@ -142,17 +142,43 @@
                         </ul>
                     </li>
                 </menu>
-                <menu class="navbar-collapse-right">
-                    <li><a href="#" class="link link-navbar" aria-current="page">Home</a></li>
-                    <li><button href="shop-page.html" class="link link-navbar" data-toggle="collapse">Catalog</button>
-                        <ul></ul>
-                    </li>
-                    <li><a href="about-us.html" class="link link-navbar">About us</a></li>
-                    <li><a href="colors-and-materials.html" class="link link-navbar">Colors & materials</a></li>
-                    <li><a href="portfolio.html" class="link link-navbar">Portfolio</a></li>
-                    <li><a href="#reviews" class="link link-navbar">Reviews</a></li>
-                    <li><a href="#contact-us" class="link link-navbar">Contact us</a></li>
-                </menu>
+                <?php
+                wp_nav_menu(
+                    array(
+                        'theme_location' => 'menu-primary',
+                        'menu_id'        => 'menu-primary',
+                        'container'            => '',
+                        'container_class'      => '',
+                        'container_id'         => '',
+                        'container_aria_label' => '',
+                        'menu_class'           => '',
+                        'menu_id'              => '',
+                        'echo'                 => true,
+                        'fallback_cb'          => 'wp_page_menu',
+                        'before'               => '',
+                        'after'                => '',
+                        'link_before'          => '',
+                        'link_after'           => '',
+                        'items_wrap'           => '<menu class="navbar-collapse-right %2$s">%3$s</menu>',
+                        'item_spacing'         => 'preserve',
+                        'depth'                => 0,
+                        'walker'               => '',
+                        'link_class'     => 'link link-navbar',
+
+                    )
+                );
+                ?>
+<!--                <menu class="navbar-collapse-right">-->
+<!--                    <li><a href="#" class="link link-navbar" aria-current="page">Home</a></li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar" data-toggle="collapse">Catalog</button>-->
+<!--                        <ul></ul>-->
+<!--                    </li>-->
+<!--                    <li><a href="about-us.html" class="link link-navbar">About us</a></li>-->
+<!--                    <li><a href="colors-and-materials.html" class="link link-navbar">Colors & materials</a></li>-->
+<!--                    <li><a href="portfolio.html" class="link link-navbar">Portfolio</a></li>-->
+<!--                    <li><a href="#reviews" class="link link-navbar">Reviews</a></li>-->
+<!--                    <li><a href="#contact-us" class="link link-navbar">Contact us</a></li>-->
+<!--                </menu>-->
             </div>
         </nav>
     </header>

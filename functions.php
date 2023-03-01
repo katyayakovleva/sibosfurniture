@@ -49,7 +49,8 @@ function sibosfurniture_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'sibosfurniture' ),
+			'menu-primary' => esc_html__( 'Primary', 'sibosfurniture' ),
+			'menu-primary-items' => esc_html__( 'Primary-items', 'sibosfurniture' ),
 			'footer-menu' => esc_html__( 'Footer menu', 'sibosfurniture' ),
 			'footer-info-links' => esc_html__( 'Footer info links', 'sibosfurniture' ),
 			'home-page-menu' => esc_html__( 'Home Page Menu', 'sibosfurniture' ),
