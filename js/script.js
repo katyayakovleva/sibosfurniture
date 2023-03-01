@@ -84,23 +84,44 @@ function navbarBurger() {
                 })
         })
 }
-$(document).ready(function() {
-    collapseCross(),
-        linkNavbar(),
-        navbarBurger(),
-        $(window).resize($.debounce(250, function() {
-            collapseCross(),
-                linkNavbar(),
-                navbarBurger()
-        }))
-    $('#contact-us form').addClass('d-flex fd-col g-1');
-    $(".wpcf7-form input").focus(function() {
-        $(this).parent().siblings('label').addClass('has-value');
-    })
-        .blur(function() {
-            var text_val = $(this).val();
-            if(text_val === "") {
-                $(this).parent().siblings('label').removeClass('has-value');
-            }
-        });
+const body = $("body");
+body.toggleClass("fixed");
+let preloader_animation = new TimelineMax({
+    repeat: -1
 });
+preloader_animation.fromTo($("#preloader_animation"), 2, {
+        transformOrigin: "center",
+        autoAlpha: 1,
+        scalX: 1,
+        scalY: 1
+    }, {
+        autoAlpha: 0,
+        scaleX: 5,
+        scaleY: 5
+    }),
+    $(document).ready(function() {
+        $("#preloader").fadeOut({
+                duration: 400,
+                complete: function() {
+                    body.toggleClass("fixed")
+                }
+            }),
+            collapseCross(),
+            linkNavbar(),
+            navbarBurger(),
+            $(window).resize($.debounce(250, function() {
+                collapseCross(),
+                    linkNavbar(),
+                    navbarBurger()
+            }))
+        $('#contact-us form').addClass('d-flex fd-col g-1');
+        $(".wpcf7-form input").focus(function() {
+                $(this).parent().siblings('label').addClass('has-value');
+            })
+            .blur(function() {
+                var text_val = $(this).val();
+                if (text_val === "") {
+                    $(this).parent().siblings('label').removeClass('has-value');
+                }
+            });
+    });

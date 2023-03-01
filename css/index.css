@@ -69,8 +69,8 @@
     --fs-7: 0.63em
 }
 
-@media screen and (min-width:35.5em) {
-    :root {
+@media screen and (min-width: 35.5em) {
+     :root {
         --fs-1: 6.25em;
         --fs-2: 3.13em;
         --fs-3: 1.94em;
@@ -400,7 +400,7 @@
     align-items: center
 }
 
-@media screen and (min-width:35.5em) {
+@media screen and (min-width: 35.5em) {
     .swiper-full-height .swiper-menu {
         display: flex
     }
