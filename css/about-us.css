@@ -85,7 +85,7 @@
     height: calc(100svh - var(--navbar-height));
     display: flex;
     flex-direction: column;
-    background: url(../assets/images/image-7.jpg) no-repeat center/cover;
+    /*background: url(../assets/images/image-7.jpg) no-repeat center/cover;*/
     background-position: 20% bottom
 }
 
@@ -142,7 +142,7 @@
 .hidden-work span {
     height: 8em;
     width: 100%;
-    background: rgba(0,73,175,.3) url(../assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
+    /*background: rgba(0,73,175,.3) url(../assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;*/
     background-blend-mode: overlay
 }
 
@@ -185,7 +185,7 @@
 @media screen and (min-width: 35.5em) {
     .hero {
         flex-direction:row;
-        background: url(../assets/images/image-6.jpg) no-repeat center/cover
+        /*background: url(../assets/images/image-6.jpg) no-repeat center/cover*/
     }
 
     .hero>div:first-of-type {
@@ -231,7 +231,7 @@
     }
 
     .numbers>div:nth-child(1) {
-        background: rgba(0,73,175,.3) url(../assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
+        /*background: rgba(0,73,175,.3) url(../assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;*/
         background-blend-mode: overlay
     }
 

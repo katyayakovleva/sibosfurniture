@@ -31,7 +31,7 @@ get_header();
                     point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors
                     now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected
                     humour and the like).</p>
-                <figure><img src="assets/images/ruslan-bardash-4kTbAMRAHtQ-unsplash-1.jpg" alt="article image"></figure>
+                <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/ruslan-bardash-4kTbAMRAHtQ-unsplash-1.jpg" alt="article image"></figure>
             </article>
         </section>
         <article class="px-3 px-sm-4 bg-blue-5">
@@ -41,7 +41,7 @@ get_header();
                     <div class="swiper-slide item-blog">
                         <div>
                             <div class="d-flex jc-between">
-                                <figure class="ratio-4x3"><img src="assets/images/spacejoy-IH7wPsjwomc-unsplash-4.jpg" alt="item image"></figure>
+                                <figure class="ratio-4x3"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/spacejoy-IH7wPsjwomc-unsplash-4.jpg" alt="item image"></figure>
                                 <div class="d-flex fd-col pl-1">
                                     <p class="ff-ms fs-1-25 fc-blue-4 m-0">03/09</p>
                                     <p class="ff-ms fs-1-25 fc-blue-4 m-0">2023</p>

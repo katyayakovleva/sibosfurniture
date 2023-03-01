@@ -143,7 +143,7 @@
 
 .hero__right span:nth-child(5) {
     width: 85%;
-    background-image: url(../assets/images/Rectangle-328.jpg)
+    /*background-image: url(../assets/images/Rectangle-328.jpg)*/
 }
 
 .hero__right span:nth-child(6) {
@@ -173,7 +173,7 @@
 
 .hero__right span:nth-child(11) {
     width: 60%;
-    background-image: url(../assets/images/Rectangle-334.jpg)
+    /*background-image: url(../assets/images/Rectangle-334.jpg)*/
 }
 
 .grid-container {
@@ -291,7 +291,7 @@
     }
 
     .hero__left {
-        background-image: url(../assets/images/image-5.jpg);
+        /*background-image: url(../assets/images/image-5.jpg);*/
         background-color: rgba(0,73,175,.3);
         background-blend-mode: multiply
     }

@@ -10,7 +10,7 @@
         <div class="cols">
             <div class="col-1 col-sm-2-3">
                 <figure class="pb-2 pb-sm-3">
-                    <a href="#"><img src="assets/images/logo-sibos-white.svg" alt="logo"></a>
+                    <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos-white.svg" alt="logo"></a>
                 </figure>
                 <div class="cols">
                     <div class="col-1 col-sm-1-2 col-xl-1-3 d-flex fd-col ai-center ai-sm-start">

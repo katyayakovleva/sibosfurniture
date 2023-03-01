@@ -15,7 +15,31 @@
 
 	<?php wp_head(); ?>
 </head>
-
+<style>
+    .hero {
+        background: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-7.jpg) no-repeat center/cover;
+    }
+    .hidden-work span {
+        background: rgba(0,73,175,.3) url(<?php echo get_template_directory_uri(); ?>/assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
+    }
+    .hero__right span:nth-child(5) {
+        background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-328.jpg)
+    }
+    .hero__right span:nth-child(11) {
+        background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-334.jpg)
+    }
+    @media screen and (min-width: 35.5em) {
+        .hero {
+            background: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-6.jpg) no-repeat center/cover
+        }
+        .numbers>div:nth-child(1) {
+            background: rgba(0,73,175,.3) url(<?php echo get_template_directory_uri(); ?>/assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
+        }
+        .hero__left {
+            background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-5.jpg);
+        }
+    }
+</style>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="preloader"><svg><circle id="preloader_animation" cx="50%" cy="50%" r="15" fill="rgba(0,0,0,0)" stroke-width="1" stroke="white" ;/></svg></div>
@@ -25,7 +49,7 @@
                 <div class="navbar-group">
                     <div class="link-group" type="group"><a href="tel:+1818-696-3839" class="link xs">+1818-696-3839</a> <a href="mailto:orders@sibosfurniture" class="link xs">orders@sibosfurniture</a></div><a href="my-cart.html" class="link" type="button"><i class="icon-cart-icon fa-2xl"></i></a></div>
                 <figure>
-                    <a href="#"><img src="assets/images/logo-sibos.svg" alt="navbar logo"></a>
+                    <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="navbar logo"></a>
                 </figure>
                 <div class="navbar-group">
                     <div class="navbar-search">
