@@ -226,3 +226,36 @@ function add_additional_class_on_a($classes, $item, $args)
 }
 
 add_filter('nav_menu_link_attributes', 'add_additional_class_on_a', 1, 3);
+
+
+/**
+ * Post Type: Review.
+ */
+function sibosfurniture_review_post_type() {
+
+	
+	$labels = [
+		"name" => "Reviews",
+		"singular_name" => "Review",
+	];
+
+	$args = array(
+        'labels'             => $labels,
+        'description'        => '',
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'review' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'supports'           => array( 'title', 'thumbnail','custom-fields' ),
+        'show_in_rest'       => true
+    );
+
+	register_post_type( "review", $args );
+}
+
+add_action( 'init', 'sibosfurniture_review_post_type' );

@@ -143,17 +143,67 @@ get_header();
             <div class="cam-colors-images"><img aria-current="true" src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-10.jpg" alt="colors blue image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-11.jpg" alt="colors purple image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-12.jpg"
                     alt="colors red image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-13.jpg" alt="colors yellow image"></div>
         </section>
+        <?php
+            $page_template = get_pages( array(
+                'post_type' => 'page',
+                'meta_key' => '_wp_page_template',
+                'meta_value' => 'page-templates/page-template-colors-and-materials.php',
+                ));
+        ?>  
         <section>
             <div class="cam-materials-images"><img aria-current="true" src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-8.png" alt="material blue image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-9.png" alt="material purple image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-10.png" alt="material red image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-11.png"
-                    alt="material yellow image"></div><a href="colors-and-materials.html" class="btn mt-1">Colors and Materials</a></section>
+                    alt="material yellow image"></div><a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mt-1">Colors and Materials</a></section>
         <div class="cam-controll">
             <div><span aria-current="true" type="button"></span> <span type="button"></span> <span type="button"></span> <span type="button"></span></div><span><a href="colors-and-materials.html" class="btn my-1 mx-auto">Colors & Materials</a></span></div>
     </article>
     <article id="reviews" class="px-2 px-sm-4">
         <h2 class="w-75 w-sm-100 ff-ms fs-2 fc-blue-2 ta-center mx-auto">GOOGLE REVIEWS</h2>
         <div class="swiper-per-view">
+        <?php 
+        $args = array(
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'post_type' => 'review',
+        );
+        query_posts( $args );
+            $number = TRUE;
+        ?>
             <div class="swiper-wrapper">
-                <div class="swiper-slide comment">
+            <?php 
+                if ( have_posts() ):
+                    while ( have_posts() ) : the_post(); ?>
+                        <div class="swiper-slide comment">
+                            <figure>
+                                <?php if ( has_post_thumbnail() ) : ?>
+                                    <?php echo get_the_post_thumbnail(); ?>
+                                <?php else:?>
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-7.jpg" alt="avatar">
+                                <?php endif;?>
+                            </figure>
+                            <div>
+                                <?php $rating = get_field('review_rating'); ?>
+                                <div>
+                                <?php
+                                    for ($i=0; $i < $rating; $i++) : ?>
+                                        <span class="checked"></span>
+                                    <?php endfor;
+                                ?> 
+                                </div>   
+                                 <!-- <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div> -->
+                                <p class="ff-ms fs-5 fc-blue-2"><?php the_field('review_text'); ?></p>
+                            </div>
+                        </div>
+                <?php 
+                    $number = FALSE;
+                    endwhile; 
+                ?>
+                        
+                <?php wp_reset_postdata();
+                    wp_reset_query();
+
+                endif;
+            ?>
+                <!-- <div class="swiper-slide comment">
                     <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-5.jpg" alt="avatar"></figure>
                     <div>
                         <div><span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div>
@@ -176,7 +226,7 @@ get_header();
                         <p class="ff-ms fs-5 fc-blue-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                             et dolore magna aliqua.</p>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
