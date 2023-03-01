@@ -46,11 +46,13 @@
             </div>
             <div class="col-1 col-sm-1-3">
                 <h3 class="w-100 w-sm-75 fs-4 mt-0 ta-center ta-sm-start fc-white">Leave your quote to create your dream furniture with us!</h3>
-                <form class="d-flex fd-col g-1">
-                    <div class="form-control white"><label for="name">Name</label> <input type="text" id="name" name="name" aria-label="Name" placeholder=" "></div>
-                    <div class="form-control white"><label for="email">Email</label> <input type="email" id="email" name="email" aria-label="Email" placeholder=" "></div>
-                    <div class="form-control white"><label for="phone">Phone</label> <input type="tel" id="phone" name="phone" aria-label="Phone" placeholder=" "></div>
-                    <div class="form-control white"><label for="interest">I'm interested in</label> <input type="text" id="interest" name="interest" aria-label="Interest" placeholder=" "></div><button type="submit" class="btn white mt-1 as-center as-sm-start">Call me</button></form>
+<!--                <form class="d-flex fd-col g-1">-->
+<!--                    <div class="form-control white"><label for="name">Name</label> <input type="text" id="name" name="name" aria-label="Name" placeholder=" "></div>-->
+<!--                    <div class="form-control white"><label for="email">Email</label> <input type="email" id="email" name="email" aria-label="Email" placeholder=" "></div>-->
+<!--                    <div class="form-control white"><label for="phone">Phone</label> <input type="tel" id="phone" name="phone" aria-label="Phone" placeholder=" "></div>-->
+<!--                    <div class="form-control white"><label for="interest">I'm interested in</label> <input type="text" id="interest" name="interest" aria-label="Interest" placeholder=" "></div><button type="submit" class="btn white mt-1 as-center as-sm-start">Call me</button>-->
+<!--                </form>-->
+                <?php echo do_shortcode( '[contact-form-7 id="11" title="Contact form"]' );?>
             </div>
         </div>
         <div class="cols mt-3">

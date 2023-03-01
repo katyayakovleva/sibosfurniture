@@ -31,7 +31,21 @@ pre {
 a {
     background-color: transparent
 }
-
+#submit_btn{
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+.wpcf7-spinner{
+    display: none;
+}
+.wpcf7-not-valid-tip {
+    color: #ff7171;
+    font-size: 0.87em;
+}
+input[type=button] {
+    border: none;
+}
 abbr[title] {
     border-bottom: none;
     text-decoration: underline;
@@ -3198,7 +3212,7 @@ a.decor {
     background-color: #fff
 }
 
-.form-control {
+.form-control{
     display: inline-flex;
     align-items: flex-end;
     position: relative;
@@ -3252,24 +3266,45 @@ a.decor {
     border-radius: 30px
 }
 
-.form-control:has(label):has(input:not(:-moz-placeholder-shown)) input {
-    order: 0
-}
+/*!*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) input {*!*/
+/*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) span.wpcf7-form-control-wrap {*/
+/*    order: 0*/
+/*}*/
 
-.form-control:has(label):has(input:focus) input,.form-control:has(label):has(input:not(:placeholder-shown)) input {
-    order: 0
-}
+/*!*.form-control:has(label):has(input:focus) input,.form-control:has(label):has(input:not(:placeholder-shown)) input {*!*/
+/*.form-control:has(label):has(input:focus) span.wpcf7-form-control-wrap,.form-control:has(label):has(input:not(:placeholder-shown)) span.wpcf7-form-control-wrap{*/
+/*    order: 0*/
+/*}*/
 
-.form-control:has(label):has(input:not(:-moz-placeholder-shown)) label {
-    order: 1;
-    padding-left: .5em;
-    padding-right: 1px
-}
+/*.form-control:has(label):has(input:not(:-moz-placeholder-shown)) label {*/
+/*    order: 1;*/
+/*    padding-left: .5em;*/
+/*    padding-right: 1px*/
+/*}*/
 
-.form-control:has(label):has(input:focus) label,.form-control:has(label):has(input:not(:placeholder-shown)) label {
-    order: 1;
-    padding-left: .5em;
-    padding-right: 1px
+/*!*.form-control:has(label):has(input:focus) label {*!*/
+/*.form-control:has(label):has(input:focus) label,.form-control:has(label):has(input:not(:placeholder-shown)) label {*/
+/*    order: 1;*/
+/*    padding-left: .5em;*/
+/*    padding-right: 1px*/
+/*}*/
+form label{
+    order: 0;
+}
+form label.has-value{
+        order: 1;
+        padding-left: .5em;
+        padding-right: 1px
+}
+.form-control:has(label.has-value)>span.wpcf7-form-control-wrap{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.form-control:has(label.has-value){
+    justify-content: space-between;
+}
+.form-control:has(span>span.wpcf7-not-valid-tip){
+    margin-top: -1em;
 }
 
 .form-control input {
@@ -3367,7 +3402,7 @@ a.decor {
     max-width: 85%
 }
 
-.form-group .form-control {
+.form-group .form-control{
     flex: 1
 }
 
