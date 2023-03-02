@@ -4298,7 +4298,7 @@ footer {
         left: 2.5em
     }
     .swiper-button-next {
-        right: 2.5em !important;
+        right: 2.5em;
     }
     .swiper-per-view {
         margin-bottom: 1em

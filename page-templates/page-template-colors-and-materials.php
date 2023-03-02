@@ -25,303 +25,78 @@ get_header();
                 Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula
                 vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.</p>
             <div class="grid-container">
-                <article class="material-item">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-gray.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
+            <?php 
+               $materials = new WP_Query( array(
+                    'posts_per_page' => -1,
+                    'post_status' => 'publish',
+                    'post_type' => 'material',
+                    )
+                );  
+            ?>
+            <?php if ( $materials->have_posts() ):
+                while ( $materials->have_posts() ) : $materials->the_post(); ?>
+                    <article class="material-item">
+                    <figure><img src="<?php the_post_thumbnail_url();?>" alt="material item">
+                        <figcaption><?php the_title();?></figcaption>
                     </figure>
                 </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-green.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-purple.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-pink.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-gray.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-green.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-purple.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-pink.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-gray.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-green.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-purple.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-pink.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-gray.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-green.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-purple.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
-                <article class="material-item d-none d-sm-block">
-                    <figure><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1-pink.jpg" alt="material item">
-                        <figcaption>#00000</figcaption>
-                    </figure>
-                </article>
+            <?php 
+            endwhile; 
+                ?>
+                        
+            <?php wp_reset_postdata();
+            endif;
+            ?>
             </div>
         </article>
         <article class="colors px-2 px-sm-4">
             <h2>Colors</h2><q class="mb-3">There are no limitations in color, you can type you favorite and desire one in your notes for the item while making the order.</q>
             <div class="grid-colors">
+                <?php 
+                $color_categories = get_terms( array(
+                    'taxonomy' => 'color_category',
+                    'hide_empty' => true,
+                ) );
+                ?>
+                <?php if ( !empty($color_categories) ) :
+	                foreach( $color_categories as $category ) :?>
+                
                 <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
+                    <h3><?php echo $category->name;?></h3>
                     <div class="grid-colors__body active">
-                        <div class="grid-colors__item"><span style="background-color: #6B0077;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #724E95;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #7C7BB2;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #8DA3CA;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #A9C6DC;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #C8E2EB;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #F1F1F1;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
+
+                        <?php
+                        $colors = new WP_Query( array(
+                            'posts_per_page' => -1,
+                            'post_type' => 'color',
+                            'tax_query' => array(
+                            array(
+                                'taxonomy' => 'color_category',
+                                'field' => 'term_id', 
+                                'terms' => $category->term_id, 
+                                'include_children' => false
+                            )
+                            )
+                        ));
+                        
+                        ?>
+                        <?php if ( $colors->have_posts() ):
+                            while ( $colors->have_posts() ) : $colors->the_post(); ?>
+                            <div class="grid-colors__item"><span style="background-color: <?php the_title();?>;"></span>
+                                <p><?php the_title();?></p>
+                            </div>
+                        <?php 
+                        endwhile; 
+                            ?>
+                                    
+                        <?php wp_reset_postdata();
+                        endif;
+                        ?>
                     </div>
                 </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #7D0112;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #A3355C;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #C16092;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D68ABE;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #E4B2E1;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #EDD5F7;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #F2F0F6;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #006E37;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #57945C;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #8DB580;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #B7D0A0;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9E5BD;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9E5BD;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #E2E6BD;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #005D67;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #007577;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #398E88;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #64A79A;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #8BC1AF;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #BCD1C8;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #E0F2E6;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #070707;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #581555;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #870061;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #C5226D;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #E85D48;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #EDAB7D;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #EDAB7D;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D9D9D9;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #273871;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #325FA2;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #5087C1;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #7FABD3;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #ACCCE4;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #D5E8F3;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #F4FAFE;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-colors__row">
-                    <h3>Purple blue</h3>
-                    <div class="grid-colors__body">
-                        <div class="grid-colors__item"><span style="background-color: #7D0025;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #BE1D00;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #EB5500;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #F39300;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #F1CE85;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #FCE7A0;"></span>
-                            <p>#00000</p>
-                        </div>
-                        <div class="grid-colors__item"><span style="background-color: #FFFFC8;"></span>
-                            <p>#00000</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach;
+                endif;
+                ?>
             </div>
         </article>
         <article class="px-3 px-sm-4 bg-blue-5 mt-2 mt-sm-4">

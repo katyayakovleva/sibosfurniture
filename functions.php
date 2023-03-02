@@ -248,7 +248,7 @@ function sibosfurniture_review_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'review' ),
+        'rewrite'            => array( 'slug' => 'reviews' ),
         'capability_type'    => 'post',
         'has_archive'        => false,
         'hierarchical'       => false,
@@ -260,3 +260,93 @@ function sibosfurniture_review_post_type() {
 }
 
 add_action( 'init', 'sibosfurniture_review_post_type' );
+
+/**
+ * Post Type: Review.
+ */
+function sibosfurniture_materials_post_type() {
+
+	
+	$labels = [
+		"name" => "Materials",
+		"singular_name" => "Material",
+	];
+
+	$args = array(
+        'labels'             => $labels,
+        'description'        => '',
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'materials' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'supports'           => array( 'title','thumbnail' ),
+        'show_in_rest'       => true
+    );
+
+	register_post_type( "material", $args );
+}
+
+add_action( 'init', 'sibosfurniture_materials_post_type' );
+/**
+ * Post Type: Color.
+ */
+function sibosfurniture_colors_post_type() {
+
+	
+	$labels = [
+		"name" => "Colors",
+		"singular_name" => "Color",
+	];
+
+	$args = array(
+        'labels'             => $labels,
+        'description'        => '',
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'colors' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'supports'           => array( 'title' ),
+		'taxonomies' => array( 'color_category' ),
+        'show_in_rest'       => true
+    );
+
+	register_post_type( "color", $args );
+}
+
+add_action( 'init', 'sibosfurniture_colors_post_type' );
+
+
+function sibosfurniture_colors_category_taxonomy() {
+ 
+	register_taxonomy( 'color_category', array( 'color'),
+	   array(
+		   'labels' => array(
+		   'name'              => 'Color category',
+		   'singular_name'     => 'Color category',
+		   'menu_name'         => 'Categories',
+		   ),
+		   'hierarchical' => true,
+		   'has_archive' => true,
+		   // 'sort' => true,
+		   // 'args' => array( 'orderby' => 'term_order' ),
+		   'show_ui' => true,
+		   'show_admin_column' => true,
+		   'show_in_nav_menus'          => true,
+		   'show_in_rest'               => true,
+		   'show_tagcloud'              => false,
+		   'with_front' => false,
+	   )
+   );
+}
+
+add_action( 'init', 'sibosfurniture_colors_category_taxonomy', 0 );
