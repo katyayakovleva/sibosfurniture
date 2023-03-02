@@ -262,7 +262,7 @@ function sibosfurniture_review_post_type() {
 add_action( 'init', 'sibosfurniture_review_post_type' );
 
 /**
- * Post Type: Review.
+ * Post Type: Materials.
  */
 function sibosfurniture_materials_post_type() {
 
@@ -350,3 +350,71 @@ function sibosfurniture_colors_category_taxonomy() {
 }
 
 add_action( 'init', 'sibosfurniture_colors_category_taxonomy', 0 );
+
+
+
+/**
+  * custom title length
+  */
+
+  function sibosfurniture_custom_title($post=null, $limit = 60) {
+	$title = get_the_title($post);
+	if( strlen( $title ) > $limit ) {
+		return substr( $title, 0, $limit ). " ...";
+	} else {
+		return $title;
+	}
+}
+
+
+/**
+  * custom excerpt length
+  */
+function sibosfurniture_custom_excerpt($post = null, $limit=20){
+	$excerpt = explode(' ', get_the_excerpt($post), $limit);
+	if (count($excerpt)>=$limit) {
+	  array_pop($excerpt);
+	  $excerpt = implode(" ",$excerpt).'...';
+	} else {
+	  $excerpt = implode(" ",$excerpt);
+	} 
+	$excerpt = preg_replace('`\[[^\]]*\]`','',$excerpt);
+	return $excerpt;
+}
+
+/**
+  * create meta key for order by views
+  */
+  function plumber_wpp_update_postviews($postid) {
+    // Accuracy:
+    //   10  = 1 in 10 visits will update view count. (Recommended for high traffic sites.)
+    //   30  = 30% of visits. (Medium traffic websites.)
+    //   100 = Every visit. Creates many db write operations every request.
+
+    $accuracy = 100;
+
+    if ( function_exists('wpp_get_views') && (mt_rand(0,100) < $accuracy) ) {
+
+		update_post_meta(
+            $postid,
+            'views_total',
+            wpp_get_views($postid, 'all', false)
+        );
+        // update_post_meta(
+        //     $postid,
+        //     'views_daily',
+        //     wpp_get_views($postid, 'daily', false)
+        // );
+        // update_post_meta(
+        //     $postid,
+        //     'views_weekly',
+        //     wpp_get_views($postid, 'weekly', false)
+        // );
+        // update_post_meta(
+        //     $postid,
+        //     'views_monthly',
+        //     wpp_get_views($postid, 'monthly', false)
+        // );
+    }
+}
+add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );

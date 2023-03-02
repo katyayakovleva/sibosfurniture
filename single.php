@@ -7,49 +7,77 @@
 
 get_header();
 ?>
+<?php 
 
+$page_template = get_pages( array(
+    'post_type' => 'page',
+    'meta_key' => '_wp_page_template',
+    'meta_value' => 'page-templates/page-template-blog.php'
+    ));
+    $current_post = get_the_ID();
+?>
 <main class="header-padding">
         <article class="primary-header px-2 px-md-4 pt-2 pb-1">
             <div class="d-flex fd-col">
-                <h1 class="ff-ms fs-1 fw-7 fc-blue-2 m-0">Name of the article</h1>
+                <h1 class="ff-ms fs-1 fw-7 fc-blue-2 m-0"><?php the_title();?></h1>
                 <div class="breadcrumb my-1">
-                    <div class="breadcrumb__item"><a href="#" class="link">Home</a></div>
-                    <div class="breadcrumb__item"><a href="#" class="link">Blog</a></div>
-                    <div class="breadcrumb__item"><a href="#" class="link">Name of article</a></div>
+                    <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
+                    <div class="breadcrumb__item"><a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="link">Blog</a></div>
+                    <div class="breadcrumb__item"><a href="<?php echo get_permalink();?>" class="link"><?php the_title(); ?></a></div>
                 </div>
             </div>
             <div class="d-flex fd-col pl-sm-1">
-                <p class="ff-ms fs-5 fc-blue-4 m-0">03/09</p>
-                <p class="ff-ms fs-5 fc-blue-4 m-0">2023</p>
+                <p class="ff-ms fs-5 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>
+                <p class="ff-ms fs-5 fc-blue-4 m-0"><?php echo get_the_date('Y'); ?></p>
             </div>
         </article>
         <section class="px-2 px-sm-4 pb-3 pb-sm-4">
             <article class="article-block">
-                <p class="ff-ms fs-5 fc-dark">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
-                    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The
-                    point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors
-                    now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected
-                    humour and the like).</p>
-                <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/ruslan-bardash-4kTbAMRAHtQ-unsplash-1.jpg" alt="article image"></figure>
+                <?php the_content();?>
+                <figure><?php the_post_thumbnail(); ?></figure>
             </article>
         </section>
         <article class="px-3 px-sm-4 bg-blue-5">
             <h2 class="ff-ms fs-4 fc-blue-2 my-1">You might also like...</h2>
             <div class="swiper-per-view">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide item-blog">
-                        <div>
-                            <div class="d-flex jc-between">
-                                <figure class="ratio-4x3"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/spacejoy-IH7wPsjwomc-unsplash-4.jpg" alt="item image"></figure>
-                                <div class="d-flex fd-col pl-1">
-                                    <p class="ff-ms fs-1-25 fc-blue-4 m-0">03/09</p>
-                                    <p class="ff-ms fs-1-25 fc-blue-4 m-0">2023</p>
-                                </div>
+                    <?php 
+                        $posts = new WP_Query( array(
+                            'posts_per_page' => 3,
+                            'post_type'      => 'post',
+                            'category' =>  get_category_by_slug( 'blog' )->term_id,
+                            'post__not_in'  => array($current_post),
+                            'meta_key' => 'views_total',
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            )
+                        );
+                    ?>
+                    <?php if ( $posts->have_posts() ):
+                        while ( $posts->have_posts() ) : $posts->the_post(); ?>
+                            <div class="swiper-slide item-blog">
+                                <div>
+                                    <div class="d-flex jc-between">
+                                        <figure class="ratio-4x3">
+                                        <?php if ( has_post_thumbnail() ) : ?>
+                                            <img src="<?php the_post_thumbnail_url();?>" alt="item image">
+                                        <?php else:?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="item image">
+                                        <?php endif;?>
+                                        </figure>
+                                        <div class="d-flex fd-col pl-1">
+                                            <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>
+                                            <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('Y'); ?></p>
+                                        </div>
+                                    </div>
+                                    <p class="ff-ms fs-4 fw-7 uppercase"><?php echo sibosfurniture_custom_title();?></p>
+                                    <p class="ff-ms fs-5 fc-dark"><?php echo sibosfurniture_custom_excerpt();?></p>
+                                </div><a href="<?php the_permalink($post->ID); ?>" class="btn as-start">Read more</a>
                             </div>
-                            <p class="ff-ms fs-5">A subtitle</p>
-                            <p class="ff-ms fs-5 fc-dark">Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolvore magna aliqua.</p>
-                        </div><a href="news-page.html" class="btn">Read more</a></div>
+                        <?php endwhile; ?>
+                    <?php wp_reset_postdata();
+                endif;?>
+                    
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-prev"></div>

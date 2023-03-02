@@ -136,4 +136,6 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     linkNavbar(),
                     navbarBurger()
             }))
+            $('.article-block p').addClass('ff-ms fs-5 fc-dark');
+        
     });
