@@ -208,3 +208,14 @@
             </div>
         </nav>
     </header>
+<script>
+    jQuery(document).ready(function() {
+        jQuery('.navbar-collapse-middle li:has(ul) ul ').each(function (index){
+            $(this).append('<div class="d-none d-sm-flex my-2 g-2">' +
+                '<figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">' +
+                '<figcaption class="ff-i fs-3 fc-dark">Sale</figcaption></figure>' +
+                '<figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">' +
+                '<figcaption class="ff-i fs-3 fc-dark">Sale</figcaption></figure></div>');
+        });
+    });
+</script>
