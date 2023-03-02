@@ -64,84 +64,110 @@
             <div class="navbar-collapse" id="navbar-collapse">
                 <div class="navbar-collapse-cross" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
                 <menu class="navbar-collapse-left"></menu>
-                <menu class="navbar-collapse-middle">
-                    <li><button href="shop-page.html" class="link link-navbar">Living room</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Accent chair</a></li>
-                            <li><a href="#" class="link link-navbar">Accent chair</a></li>
-                            <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                            </div>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Bedrooms</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Accent bed</a></li>
-                            <li><a href="#" class="link link-navbar">Accent bed</a></li>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Dinning room</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Dinning chair</a></li>
-                            <li><a href="#" class="link link-navbar">Dinning chair</a></li>
-                            <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                            </div>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Accent furniture</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Accent furniture</a></li>
-                            <li><a href="#" class="link link-navbar">Accent furniture</a></li>
-                            <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                            </div>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Office</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Office chair</a></li>
-                            <li><a href="#" class="link link-navbar">Office chair</a></li>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Outdoor</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Outdoor chair</a></li>
-                            <li><a href="#" class="link link-navbar">Outdoor chair</a></li>
-                            <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                            </div>
-                        </ul>
-                    </li>
-                    <li><button href="shop-page.html" class="link link-navbar">Sale</button>
-                        <ul>
-                            <li><a href="#" class="link link-navbar">Sale chair</a></li>
-                            <li><a href="#" class="link link-navbar">Sale chair</a></li>
-                            <div class="d-none d-sm-flex my-2 g-2">
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                                <figure class="ratio-1x1"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-355.png" alt="sale card image">
-                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>
-                                </figure>
-                            </div>
-                        </ul>
-                    </li>
-                </menu>
+                <?php
+                wp_nav_menu(
+                    array(
+                        'theme_location' => 'menu-primary-items',
+                        'menu_id'        => 'menu-primary-items',
+                        'container'            => '',
+                        'container_class'      => '',
+                        'container_id'         => '',
+                        'container_aria_label' => '',
+                        'menu_class'           => '',
+                        'menu_id'              => '',
+                        'echo'                 => true,
+                        'fallback_cb'          => 'wp_page_menu',
+                        'before'               => '',
+                        'after'                => '',
+                        'link_before'          => '',
+                        'link_after'           => '',
+                        'items_wrap'           => '<menu class="navbar-collapse-middle%2$s">%3$s</menu>',
+                        'item_spacing'         => 'preserve',
+                        'depth'                => 0,
+                        'walker'               => '',
+                        'link_class'     => 'link link-navbar',
+
+                    )
+                );
+                ?>
+<!--                <menu class="navbar-collapse-middle">-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Living room</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent chair</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent chair</a></li>-->
+<!--                            <div class="d-none d-sm-flex my-2 g-2">-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Bedrooms</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent bed</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent bed</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Dinning room</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Dinning chair</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Dinning chair</a></li>-->
+<!--                            <div class="d-none d-sm-flex my-2 g-2">-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Accent furniture</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent furniture</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Accent furniture</a></li>-->
+<!--                            <div class="d-none d-sm-flex my-2 g-2">-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Office</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Office chair</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Office chair</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Outdoor</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Outdoor chair</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Outdoor chair</a></li>-->
+<!--                            <div class="d-none d-sm-flex my-2 g-2">-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><button href="shop-page.html" class="link link-navbar">Sale</button>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#" class="link link-navbar">Sale chair</a></li>-->
+<!--                            <li><a href="#" class="link link-navbar">Sale chair</a></li>-->
+<!--                            <div class="d-none d-sm-flex my-2 g-2">-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                                <figure class="ratio-1x1"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-355.png" alt="sale card image">-->
+<!--                                    <figcaption class="ff-i fs-3 fc-dark">Sale</figcaption>-->
+<!--                                </figure>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </menu>-->
                 <?php
                 wp_nav_menu(
                     array(

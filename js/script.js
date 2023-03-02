@@ -100,6 +100,28 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         scaleY: 5
     }),
     $(document).ready(function() {
+        $('#contact-us form').addClass('d-flex fd-col g-1');
+        $('#contact-us form .form-control').addClass('form-control-without-value');
+        $(".wpcf7-form input").focus(function() {
+            $(this).parent().siblings('label').addClass('has-value');
+            $(this).parent().parent().removeClass('form-control-without-value');
+
+        })
+            .blur(function() {
+                var text_val = $(this).val();
+                if (text_val === "") {
+                    $(this).parent().siblings('label').removeClass('has-value');
+                    $(this).parent().parent().addClass('form-control-without-value');
+                }
+            });
+        $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
+            var href_middle = this.href
+            $(this).replaceWith($('<button href = "' + href_middle +'" class="link link-navbar">' + this.innerHTML + '</button>'));
+        })
+        $('.navbar-collapse-right li:has(ul)>a').each(function (index){
+            var href_right = this.href
+            $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
+        })
         $("#preloader").fadeOut({
                 duration: 400,
                 complete: function() {
@@ -114,18 +136,4 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     linkNavbar(),
                     navbarBurger()
             }))
-        $('#contact-us form').addClass('d-flex fd-col g-1');
-        $('#contact-us form .form-control').addClass('form-control-without-value');
-        $(".wpcf7-form input").focus(function() {
-                $(this).parent().siblings('label').addClass('has-value');
-                $(this).parent().parent().removeClass('form-control-without-value');
-
-            })
-            .blur(function() {
-                var text_val = $(this).val();
-                if (text_val === "") {
-                    $(this).parent().siblings('label').removeClass('has-value');
-                    $(this).parent().parent().addClass('form-control-without-value');
-                }
-            });
     });
