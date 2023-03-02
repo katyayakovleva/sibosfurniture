@@ -19,12 +19,32 @@
                     <div class="col-1 col-sm-1-2">
                         <div class="cols">
                             <div class="col-1 col-sm-1-2">
-                                <ul class="d-flex fd-col g-2 p-0 pl-sm-3 ai-center ai-sm-start">
-                                    <li><a href="blog.html" class="link white">Blog</a></li>
-                                    <li><a href="#" class="link white">FAQ</a></li>
-                                    <li><a href="#" class="link white">Shipping</a></li>
-                                    <li><a href="#" class="link white">Terms and Conditions</a></li>
-                                </ul>
+                                <?php
+                                wp_nav_menu(
+                                    array(
+                                        'theme_location' => 'footer-menu',
+                                        'menu_id'        => 'footer-menu',
+                                        'container'            => '',
+                                        'container_class'      => '',
+                                        'container_id'         => '',
+                                        'container_aria_label' => '',
+                                        'menu_class'           => '',
+                                        'menu_id'              => '',
+                                        'echo'                 => true,
+                                        'fallback_cb'          => 'wp_page_menu',
+                                        'before'               => '',
+                                        'after'                => '',
+                                        'link_before'          => '',
+                                        'link_after'           => '',
+                                        'items_wrap'           => '<ul class="d-flex fd-col g-2 p-0 pl-sm-3 ai-center ai-sm-start %2$s">%3$s</ul>',
+                                        'item_spacing'         => 'preserve',
+                                        'depth'                => 0,
+                                        'walker'               => '',
+                                        'link_class'     => 'link white',
+
+                                    )
+                                );
+                                ?>
                             </div>
                             <div class="col-1 col-sm-1-2">
                                 <ul class="d-flex fd-col g-2 p-0 pl-sm-2 ai-center ai-sm-start">
@@ -57,14 +77,40 @@
         </div>
         <div class="cols mt-3">
             <div class="col-1">
-                <ul class="footer-reorder w-100 d-flex fd-col fd-sm-row m-0 p-0 jc-between ai-center g-1 ta-center">
-                    <li><a href="#" class="link blue sm">FAQ</a></li>
-                    <li><a href="#" class="link blue sm">Privacy policy</a></li>
-                    <li><a href="mailto:orders@sibosfurniture.com" class="link blue sm">orders@sibosfurniture.com</a></li>
-                    <li><a href="tel:+1818-696-3839" class="link blue sm">+1818-696-3839</a></li>
-                    <li><a href="#" class="link blue sm">Copyright (c) SIBOSFURNITURE. All rights reserved</a></li>
-                    <li><a href="#" class="link blue sm">by LIDDWEB</a></li>
-                </ul>
+                <?php
+                wp_nav_menu(
+                    array(
+                        'theme_location' => 'footer-info-links',
+                        'menu_id'        => 'footer-info-links',
+                        'container'            => '',
+                        'container_class'      => '',
+                        'container_id'         => '',
+                        'container_aria_label' => '',
+                        'menu_class'           => '',
+                        'menu_id'              => '',
+                        'echo'                 => true,
+                        'fallback_cb'          => 'wp_page_menu',
+                        'before'               => '',
+                        'after'                => '',
+                        'link_before'          => '',
+                        'link_after'           => '',
+                        'items_wrap'           => '<ul class="footer-reorder w-100 d-flex fd-col fd-sm-row m-0 p-0 jc-between ai-center g-1 ta-center %2$s">%3$s</ul>',
+                        'item_spacing'         => 'preserve',
+                        'depth'                => 0,
+                        'walker'               => '',
+                        'link_class'     => 'link blue sm',
+
+                    )
+                );
+                ?>
+<!--                <ul class="footer-reorder w-100 d-flex fd-col fd-sm-row m-0 p-0 jc-between ai-center g-1 ta-center">-->
+<!--                    <li><a href="#" class="link blue sm">FAQ</a></li>-->
+<!--                    <li><a href="#" class="link blue sm">Privacy policy</a></li>-->
+<!--                    <li><a href="mailto:orders@sibosfurniture.com" class="link blue sm">orders@sibosfurniture.com</a></li>-->
+<!--                    <li><a href="tel:+1818-696-3839" class="link blue sm">+1818-696-3839</a></li>-->
+<!--                    <li><a href="#" class="link blue sm">Copyright (c) SIBOSFURNITURE. All rights reserved</a></li>-->
+<!--                    <li><a href="#" class="link blue sm">by LIDDWEB</a></li>-->
+<!--                </ul>-->
             </div>
         </div>
     </footer>
