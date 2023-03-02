@@ -166,13 +166,13 @@ get_header();
             'post_type' => 'review',
         );
         query_posts( $args );
-            $number = TRUE;
         ?>
             <div class="swiper-wrapper">
             <?php 
                 if ( have_posts() ):
                     while ( have_posts() ) : the_post(); ?>
                         <div class="swiper-slide comment">
+
                             <figure>
                                 <?php if ( has_post_thumbnail() ) : ?>
                                     <?php echo get_the_post_thumbnail(); ?>
@@ -189,12 +189,10 @@ get_header();
                                     <?php endfor;
                                 ?> 
                                 </div>   
-                                 <!-- <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div> -->
                                 <p class="ff-ms fs-5 fc-blue-2"><?php the_field('review_text'); ?></p>
                             </div>
                         </div>
                 <?php 
-                    $number = FALSE;
                     endwhile; 
                 ?>
                         
@@ -203,32 +201,8 @@ get_header();
 
                 endif;
             ?>
-                <!-- <div class="swiper-slide comment">
-                    <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-5.jpg" alt="avatar"></figure>
-                    <div>
-                        <div><span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div>
-                        <p class="ff-ms fs-5 fc-blue-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua.</p>
-                    </div>
-                </div>
-                <div class="swiper-slide comment">
-                    <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-6.jpg" alt="avatar"></figure>
-                    <div>
-                        <div><span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div>
-                        <p class="ff-ms fs-5 fc-blue-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua.</p>
-                    </div>
-                </div>
-                <div class="swiper-slide comment">
-                    <figure><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-7.jpg" alt="avatar"></figure>
-                    <div>
-                        <div><span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span> <span class="checked"></span></div>
-                        <p class="ff-ms fs-5 fc-blue-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua.</p>
-                    </div>
-                </div> -->
             </div>
-            <div class="swiper-pagination"></div>
+            <!-- <div class="swiper-pagination"></div> -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
