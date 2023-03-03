@@ -189,17 +189,24 @@ function sibosfurniture_scripts() {
 		wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
 
-	}else{
+	}elseif(is_account_page() || is_page_template( 'page-templates/page-template-registration.php' )){
+        wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
+		wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+
+	}
+	else{
 
 	}
 }
 add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
 
-function mytheme_add_woocommerce_support() {
+function sibosfurniture_add_woocommerce_support() {
     add_theme_support( 'woocommerce' );
 }
 
-add_action( 'after_setup_theme', 'mytheme_add_woocommerce_support' );
+add_action( 'after_setup_theme', 'sibosfurniture_add_woocommerce_support' );
 
 // function mytheme_add_woocommerce_support() {
 // 	add_theme_support( 'woocommerce', array(
@@ -418,3 +425,55 @@ function sibosfurniture_custom_excerpt($post = null, $limit=20){
     }
 }
 add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
+
+
+
+add_filter( 'woocommerce_new_customer_data', function( $data ) {
+	$data['user_login'] = $data['user_email'];
+
+	return $data;
+} );
+
+/* Separate login form and registration form */
+// add_action('woocommerce_login_form', 'load_registration_form', 2);
+// function load_registration_form() {
+//   if (isset($_GET['action']) == 'register') {
+// 	woocommerce_get_template('myaccount/form-registration.php');
+//   }
+// }
+
+add_action( 'init', 'custom_new_wc_endpoint' );
+function custom_new_wc_endpoint() {
+    add_rewrite_endpoint( 'registration', EP_ROOT | EP_PAGES );
+}
+
+add_filter( 'query_vars', 'custom_query_vars', 0 );
+function custom_query_vars( $vars ) {
+    $vars[] = 'registration';
+    return $vars;
+}
+
+add_action( 'after_switch_theme', 'custom_flush_rewrite_rules' );    
+function custom_flush_rewrite_rules() {
+    flush_rewrite_rules();
+}
+
+// The custom template location
+add_action( 'woocommerce_account_registration_endpoint', 'custom_endpoint_content' );
+function custom_endpoint_content() {
+    include 'woocommerce/myaccount/form-registration.php'; 
+}
+// add_filter( 'woocommerce_account_menu_items', 'custom_my_account_menu_items' );
+// function custom_my_account_menu_items( $items ) {
+//     // Remove the orders menu item.
+//     $orders_item = $items['orders']; // first we keep it in a variable
+//     unset( $items['orders'] ); // we unset it then
+
+//     // Insert your custom endpoint.
+//     $items['registration'] = __( 'Registration', 'woocommerce' );
+
+//     // Insert back the logout item.
+//     $items['orders'] = $orders_item; // we set it back
+
+//     return $items;
+// }
