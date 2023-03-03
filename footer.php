@@ -72,7 +72,8 @@
 <!--                    <div class="form-control white"><label for="phone">Phone</label> <input type="tel" id="phone" name="phone" aria-label="Phone" placeholder=" "></div>-->
 <!--                    <div class="form-control white"><label for="interest">I'm interested in</label> <input type="text" id="interest" name="interest" aria-label="Interest" placeholder=" "></div><button type="submit" class="btn white mt-1 as-center as-sm-start">Call me</button>-->
 <!--                </form>-->
-                <?php echo do_shortcode( '[contact-form-7 id="11" title="Contact form"]' );?>
+                <!-- <?php echo do_shortcode( '[contact-form-7 id="11" title="Contact form"]' );?> -->
+                <?php echo do_shortcode( '[contact-form-7 id="118" title="Contact form footer"]' );?>
             </div>
         </div>
         <div class="cols mt-3">
