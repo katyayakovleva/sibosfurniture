@@ -18,42 +18,29 @@ function linkNavbar() {
         t = $('button.link-navbar[data-toggle="collapse"]'),
         e = $(".navbar-collapse-left");
     var i = $(".navbar-collapse-middle");
-    a.off(),
-        t.off(),
-        t.filter(".active").removeClass("active").next().hide(),
-        window.matchMedia("screen and (min-width: 35.5em)").matches ? (a.click(function() {
-                a.filter(".active").not($(this)).removeClass("active"),
-                    $(this).toggleClass("active");
-                var t = $(this).next();
-                e.empty(),
-                    $(this).hasClass("active") && (e.append(t.clone()),
-                        e.find("ul").animate({
-                            opacity: "toggle"
-                        }, 200))
-            }),
-            a.dblclick(function() {
-                window.location.href = $(this).attr("href")
-            }),
-            t.click(function() {
-                window.location.href = $(this).attr("href")
-            })) : (t.parent().find("ul").empty().append(i.children().clone()),
-            t.click(function() {
-                t.filter(".active").not($(this)).removeClass("active").next().animate({
-                        opacity: "toggle",
-                        height: "toggle"
-                    }, 200),
-                    $(this).toggleClass("active"),
-                    $(this).next().animate({
-                        opacity: "toggle",
-                        height: "toggle"
-                    }, 200)
-            }),
-            t.parent().find("button.link-navbar").filter("[href]").filter(":not([data-toggle])").click(function() {
-                window.location.href = $(this).attr("href")
-            }),
-            t.dblclick(function() {
-                window.location.href = $(this).attr("href")
-            }))
+    a.off(), t.off(), t.filter(".active").removeClass("active").next().hide(), window.matchMedia("screen and (min-width: 35.5em)").matches ? (a.mouseenter(function () {
+        a.filter(".active").not($(this)).removeClass("active"), $(this).toggleClass("active");
+        var t = $(this).next();
+        e.empty(), $(this).hasClass("active") && (e.append(t.clone()), e.find("ul").animate({
+            opacity: "toggle"
+        }, 200))
+    }), a.click(function () {
+        window.location.href = $(this).attr("href")
+    }), t.click(function () {
+        window.location.href = $(this).attr("href")
+    })) : (t.parent().find("ul").empty().append(i.children().clone()), t.click(function () {
+        t.filter(".active").not($(this)).removeClass("active").next().animate({
+            opacity: "toggle",
+            height: "toggle"
+        }, 200), $(this).toggleClass("active"), $(this).next().animate({
+            opacity: "toggle",
+            height: "toggle"
+        }, 200)
+    }), t.parent().find("button.link-navbar").filter("[href]").filter(":not([data-toggle])").click(function () {
+        window.location.href = $(this).attr("href")
+    }), t.dblclick(function () {
+        window.location.href = $(this).attr("href")
+    }))
 }
 
 function navbarBurger() {

@@ -3572,7 +3572,9 @@ form label.has-value {
     justify-content: space-between;
     align-items: center;
     padding-block: var(--navbar-padding-block);
-    padding-inline: var(--navbar-padding-inline)
+    padding-inline: var(--navbar-padding-inline);
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px)
 }
 
 .navbar-main>figure {
@@ -3723,7 +3725,17 @@ form label.has-value {
 .navbar-collapse {
     background-color: #0049af
 }
-
+.navbar-collapse figure {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1
+}
+.navbar-collapse figure img {
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center
+}
 .navbar-collapse menu,
 .navbar-collapse ul {
     flex-direction: column
@@ -4266,6 +4278,9 @@ footer {
     }
     .navbar-collapse .navbar-collapse-left .link-navbar {
         color: #364354
+    }
+    .navbar-collapse .navbar-collapse-left .link-navbar::after {
+        background-color: #364354
     }
     .navbar-collapse .navbar-collapse-left ul {
         padding-left: 0
