@@ -1,0 +1,38 @@
+.wpgs-for .slick-arrow {
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    top: 95%;
+    margin-top: -15px;
+}
+div.header-padding {
+    padding-top: var(--navbar-height)
+}
+.wpgs-nav .slick-track {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5em
+}
+.product-article {
+    padding-inline: 1.5em!important;
+}
+@media screen and (min-width: 35.5em){
+    .product-article {
+        padding-inline: 4.5em!important;
+    }
+    .wpgs-nav .slick-track {
+        gap: 1em
+    }
+}
+@media screen and (min-width: 769px) {
+    .woocommerce-page div.product div.images{
+        width: 40%;
+    }
+}
+@media screen and (min-width: 1920px) {
+    .woocommerce-page div.product div.images{
+        width: 25%;
+    }
+}
+

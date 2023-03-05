@@ -122,6 +122,9 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             var href_right = this.href
             $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
         })
+        $('i.flaticon-right-arrow.slick-arrow').each(function (index){
+            $(this).replaceWith($('<div class="swiper-button-next"></div>'))
+        })
         $("#preloader").fadeOut({
                 duration: 400,
                 complete: function() {
