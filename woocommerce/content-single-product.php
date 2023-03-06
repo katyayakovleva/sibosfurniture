@@ -19,8 +19,12 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 $price = $product->get_price();
-$main_image = $product->get_image();
-
+$title = $product->get_title();
+$SKU = $product->get_sku();
+$pieces = explode(' ', $SKU);
+$SKU_last_word = array_pop($pieces);
+$SKU_first_words = implode(' ', $pieces);
+$short_description = $product->get_short_description();
 /**
  * Hook: woocommerce_before_single_product.
  *
@@ -47,7 +51,29 @@ if ( post_password_required() ) {
          */
         do_action( 'woocommerce_before_single_product_summary' );
         ?>
-
+<!--        <div class="product-info">-->
+<!--            <form class="main-info">-->
+<!--                <h1 class="ff-ms fs-2 fw-7 fc-blue-2 my-0">--><?php //echo esc_attr($title); ?><!--</h1>-->
+<!--                <p class="ff-ms fs-6 fc-dark my-0 mt-sm-1">--><?php //echo esc_attr($SKU_first_words); ?><!--</p>-->
+<!--                <p class="ff-ms fs-6 fc-dark my-0 my-sm-1">--><?php //echo esc_attr($SKU_last_word); ?><!--</p>-->
+<!--                <hr class="d-sm-none mt-0 mb-1">-->
+<!--                <p class="ff-ms fs-5 fc-dark mb-sm-3">--><?php //echo esc_attr($short_description); ?><!--</p>-->
+<!--                <div class="color-picker my-0">-->
+<!--                    <div class="color-picker__ratio"><input type="radio" aria-label="Orange color" value="orange" name="color" checked="checked"> <img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-316.jpg" alt="texture option"></div>-->
+<!--                    <div class="color-picker__ratio"><input type="radio" aria-label="Yellow color" value="yellow" name="color"> <img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-317.jpg" alt="texture option"></div>-->
+<!--                    <div class="color-picker__ratio"><input type="radio" aria-label="Blue color" value="blue" name="color"> <img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-318.jpg" alt="texture option"></div>-->
+<!--                </div>-->
+<!---->
+<!--                <div class="stepper-input mt-2">-->
+<!--                    <div class="stepper-input__container">-->
+<!---->
+<!--                        <p class="stepper-input__input ff-i fs-4 fw-7 fc-blue-4 m-0 ta-center">1</p>-->
+<!--                        <input id="count" type="number" hidden value="1" name="count">-->
+<!--                    </div>-->
+<!--                    <div class="stepper-input__control d-flex fd-col"><button type="button" aria-label="increase quantity" class="stepper-input__button stepper-input__button--left"><i class="fa-solid fa-chevron-up fc-blue-4"></i></button> <button type="button" aria-label="decrease quantity" class="stepper-input__button stepper-input__button--right"><i class="fa-solid fa-chevron-down fc-blue-4"></i></button></div>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
         <div class="summary entry-summary">
             <?php
             /**
@@ -66,16 +92,16 @@ if ( post_password_required() ) {
             ?>
         </div>
 
-        <?php
-        /**
-         * Hook: woocommerce_after_single_product_summary.
-         *
-         * @hooked woocommerce_output_product_data_tabs - 10
-         * @hooked woocommerce_upsell_display - 15
-         * @hooked woocommerce_output_related_products - 20
-         */
-        do_action( 'woocommerce_after_single_product_summary' );
-        ?>
+<!--        --><?php
+//        /**
+//         * Hook: woocommerce_after_single_product_summary.
+//         *
+//         * @hooked woocommerce_output_product_data_tabs - 10
+//         * @hooked woocommerce_upsell_display - 15
+//         * @hooked woocommerce_output_related_products - 20
+//         */
+//        do_action( 'woocommerce_after_single_product_summary' );
+//        ?>
     </div>
 <!--    </section>-->
     </article>
@@ -88,7 +114,7 @@ if ( post_password_required() ) {
                         <div class="image-gallery__main">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <div class="swiper-zoom-container"><?php esc_attr($main_image); ?></div>
+                                    <div class="swiper-zoom-container"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/cm-br1855a-29-1-1.jpg" alt="image"></div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="swiper-zoom-container"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/cm-br1855a-29-1-2.jpg" alt="image"></div>
