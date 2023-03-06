@@ -32,7 +32,8 @@ $SKU_first_words = implode(' ', $pieces);
 	<?php if ( wc_product_sku_enabled() && ( $product->get_sku() || $product->is_type( 'variable' ) ) ) : ?>
         <p class="ff-ms fs-6 fc-dark my-0 mt-sm-1"><?php echo ( $SKU_first_words ) ? $SKU_first_words : esc_html__( 'N/A', 'woocommerce' ); ?></p>
         <p class="ff-ms fs-6 fc-dark my-0 my-sm-1"><?php echo ( $SKU_last_word ) ? $SKU_last_word : esc_html__( 'N/A', 'woocommerce' ); ?></p>
-	<?php endif; ?>
+        <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0"><?php echo $product->get_price_html(); ?></p>
+    <?php endif; ?>
 
 <!--	--><?php //echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="posted_in">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'woocommerce' ) . ' ', '</span>' ); ?>
 

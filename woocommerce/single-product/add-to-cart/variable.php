@@ -77,7 +77,6 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 			?>
 		</div>
 	<?php endif; ?>
-
 	<?php do_action( 'woocommerce_after_variations_form' ); ?>
 </form>
 
