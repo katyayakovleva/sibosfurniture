@@ -17,6 +17,9 @@ div.header-padding {
 .product-article {
     padding-inline: 1.5em!important;
 }
+.woocommerce div.product div.images img {
+    aspect-ratio: 1/1;
+}
 .summary.entry-summary{
     border: 2px solid #0049af;
     padding: 2em;
