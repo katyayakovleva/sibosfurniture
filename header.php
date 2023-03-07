@@ -55,8 +55,18 @@
                 <div class="navbar-group">
                     <div class="navbar-search">
                         <form>
-                            <div class="form-control sm"><label for="search" aria-label="Search"><i class="fa-solid fa-magnifying-glass fa-sm"></i></label> <input type="text" id="search" name="search" placeholder=" "></div><input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"
-                                hidefocus="true"> <a href="sign-in.html" class="link link-blue xs">Sign in</a></form>
+                            <div class="form-control sm">
+                                <label for="search" aria-label="Search"> <i class="fa-solid fa-magnifying-glass fa-sm"></i> </label> 
+                                <input type="text" id="search" name="search" placeholder=" ">
+                            </div>
+                            <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true"> 
+                            <?php if ( is_user_logged_in() ) { ?>
+                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-blue xs">My Account</a>
+                            <?php } 
+                            else { ?>
+                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-blue xs">Sign in</a>
+                            <?php } ?>
+                        </form>
                     </div>
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
                 </div>

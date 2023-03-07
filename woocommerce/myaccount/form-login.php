@@ -17,7 +17,8 @@
 
 if ( is_user_logged_in() ) { 
   	if (strpos($_SERVER['REQUEST_URI'], "register") !== false){
-	header('Location: https:myaccount.php');
+ 		// wp_redirect( home_url('/myaccount/') ); exit; 
+		 header('Location: https:myaccount.php');
 	//header("location:myaccount.php"); or sth that you want.
 	} else if (strpos($_SERVER['REQUEST_URI'], "login") !== false) {
 	header('Location: https:myaccount.php');
@@ -33,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-<main class="header-padding">		
+<!-- <main class="header-padding">		 -->
 <?php  
 if ( !is_user_logged_in() ) :
 	if (strpos($_SERVER['REQUEST_URI'], "register") !== false):
@@ -48,7 +49,7 @@ if ( !is_user_logged_in() ) :
 						<h2>New account</h2>
 					</header>
 					<section class="header-block__body">
-						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?>>
+						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?>action="<?php bloginfo('/myco/'); ?>/">
 							<?php do_action( 'woocommerce_register_form_start' ); ?>
 							<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -77,7 +78,6 @@ if ( !is_user_logged_in() ) :
 				</article>
 			</section>
 		</article>
-		
 	<?php else:?>
 			<article class="px-2 px-sm-4 mb-2">
 				<header class="header-primary">
@@ -92,12 +92,13 @@ if ( !is_user_logged_in() ) :
 						<form  method="post">
 							<?php do_action( 'woocommerce_login_form_start' ); ?>
 							<div class="form-control">
-								<label for="username">Email</label> 
+								<label for="username">Email&nbsp;<span class="required">*</span></label> 
 								<input type="text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>              
 							</div>
 							<div class="form-control">
-								<label for="password">Password</label>
+								<label for="password">Password&nbsp;<span class="required">*</span></label>
 								<input type="password" name="password" id="password" autocomplete="current-password" />
+								<span id="toggle_pwd" class="fa fa-fw fa-eye field_icon"></span>
 							</div>
 							
 							<?php do_action( 'woocommerce_login_form' ); ?>
@@ -163,6 +164,6 @@ endif;
 		<div class="swiper-button-next"></div>
 	</div>
 </article>
-</main>
+<!-- </main> -->
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>

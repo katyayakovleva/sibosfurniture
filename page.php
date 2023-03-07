@@ -14,10 +14,12 @@
 
 get_header();
 ?>
-
-
-
+<?php if(is_user_logged_in() && is_account_page() && !is_wc_endpoint_url()):?>
+	<main class="header-padding mb-sm-2 mb-lg-3">	
+<?php else:?>
+	<main class="header-padding">	
+<?php endif;?>
 	<?php the_content();?>
-
+</main>
 
 <?php get_footer();?>
