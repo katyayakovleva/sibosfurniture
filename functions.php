@@ -242,7 +242,22 @@ function bbloomer_echo_variation_info() {
         });
    ");
 }
-    add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
+
+add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
+function woo_remove_product_tabs( $tabs ) {
+
+    unset( $tabs['additional_information'] );  	// Remove the additional information tab
+
+    return $tabs;
+}
+
+add_filter( 'woocommerce_product_tabs', 'misha_rename_reviews_tab' );
+function misha_rename_reviews_tab( $tabs ) {
+    global $product;
+    $tabs[ 'reviews' ][ 'title' ] = 'Feedback';
+    return $tabs;
+}
+add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
 
 function sibosfurniture_add_woocommerce_support() {
     add_theme_support( 'woocommerce' );

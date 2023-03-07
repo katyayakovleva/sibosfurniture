@@ -301,32 +301,35 @@
     display: none
 }
 
-.description-info__info ul {
+ul.woocommerce-product-attributes {
     width: min(12em,30%);
     padding-left: 0
 }
 
-.description-info__info li {
+ul.woocommerce-product-attributes li {
     display: flex;
     font-style: var(--fs-5);
     font-family: 'Merriweather Sans',sans-serif;
     margin-block:1em}
 
-.description-info__info li p,.description-info__info li strong {
+ul.woocommerce-product-attributes li div,ul.woocommerce-product-attributes li strong {
     margin: 0;
     flex-basis: 0px;
     flex-grow: 1;
     font-weight: 400
 }
 
-.description-info__info li strong {
+ul.woocommerce-product-attributes li strong {
     flex-shrink: 0;
     color: #0049af
 }
 
-.description-info__info li p {
+ul.woocommerce-product-attributes li div {
     flex-shrink: 1;
     color: #404c5c
+}
+ul.woocommerce-product-attributes li div p{
+    margin: 0;
 }
 
 @media screen and (min-width: 35.5em) {
