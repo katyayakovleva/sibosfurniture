@@ -204,6 +204,11 @@ bdi{
     font-size: .75em!important;
     font-family: 'Merriweather Sans', sans-serif!important;
 }
+.comment figure img {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center right;
+}
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
         width: 39.5%;

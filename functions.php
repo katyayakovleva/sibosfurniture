@@ -222,6 +222,47 @@ function sibosfurniture_scripts() {
 
 	}
 }
+//add_filter( 'avatar_defaults', 'new_gravatar' );
+//function new_gravatar ($avatar_defaults) {
+/*    $myavatar = '<?php echo get_template_directory_uri(); ?>/assets/images/Default_avatar.jpg';*/
+//    $avatar_defaults[$myavatar] = "Default Gravatar";
+//    return $avatar_defaults;
+//}
+
+/* AVATAR */
+// Add a default avatar to Settings > Discussion
+add_filter( 'avatar_defaults', 'add_custom_gravatar' );
+if ( !function_exists('add_custom_gravatar') ) {
+    function add_custom_gravatar( $avatar_defaults ) {
+        $myavatar = get_stylesheet_directory_uri() . '/assets/images/Default_avatar.jpg';
+        $avatar_defaults[$myavatar] = 'Avatar Santé Ensemble';
+
+        return $avatar_defaults;
+    }
+}
+
+//Hack the default beahvior of gravatar to enable custom avatars on localhost
+add_filter( 'get_avatar', 'so_14088040_localhost_avatar', 10, 5 );
+function so_14088040_localhost_avatar( $avatar, $id_or_email, $size, $default, $alt )
+{
+    $whitelist = array( 'localhost', '127.0.0.1' );
+
+    if( !in_array( $_SERVER['SERVER_ADDR'] , $whitelist ) )
+        return $avatar;
+
+    $doc = new DOMDocument;
+    $doc->loadHTML( $avatar );
+    $imgs = $doc->getElementsByTagName('img');
+    if ( $imgs->length > 0 )
+    {
+        $url = urldecode( $imgs->item(0)->getAttribute('src') );
+        $url2 = explode( 'd=', $url );
+        $url3 = explode( '&', $url2[1] );
+        $avatar= "<img src='{$url3[0]}' alt='' class='avatar avatar-64 photo' height='42' width='42' />";
+    }
+    return $avatar;
+}
+/* AVATAR */
 //
 //add_action('woocommerce_before_add_to_cart_quantity', 'bbloomer_display_dropdown_variation_add_cart');
 //function find_variation_id()
@@ -260,6 +301,7 @@ function misha_rename_reviews_tab( $tabs ) {
     $tabs[ 'reviews' ][ 'title' ] = 'Feedback';
     return $tabs;
 }
+
 add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
 
 function sibosfurniture_add_woocommerce_support() {

@@ -177,7 +177,7 @@ get_header();
                                 <?php if ( has_post_thumbnail() ) : ?>
                                     <?php echo get_the_post_thumbnail(); ?>
                                 <?php else:?>
-                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse-7.jpg" alt="avatar">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Default_avatar.jpg" alt="avatar">
                                 <?php endif;?>
                             </figure>
                             <div>
