@@ -36,19 +36,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php $user = wp_get_current_user(); ?>
     <section class="menu">
         <div class="menu__header" id="dashboard-menu">
-            <button data-target="dashboard" class="active">Dashboard</button> 
-            <button data-target="orders">Orders</button> 
-            <button data-target="addresses">Addresses</button> 
-            <button data-target="payment-methods">Payment methods</button> 
-            <button data-target="account-details">Account details</button> 
-            <button data-target="logout">Logout</button>
+            <button id="dashboard" data-target="dashboard" class="active">Dashboard</button> 
+            <button id="orders" data-target="orders">Orders</button> 
+            <button id="addresses" data-target="addresses">Addresses</button> 
+            <button id="payment-methods" data-target="payment-methods">Payment methods</button> 
+            <button id="account-details" data-target="account-details">Account details</button> 
+            <button id="logout" data-target="logout">Logout</button>
         </div>
         <div class="menu__body" >
 
             <div id="dashboard-content" class="dashboard active" >
                 <div>
-                    <p>From your account dashboard you can <a href="<?php echo esc_url( wc_get_endpoint_url( 'orders' ) );?>">view your recent orders</a>,<br>manage
-                        your <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address' ) );?>">shipping and billing addresses</a>,<br>and <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-account' ) );?>">edit your
+                    <p>From your account dashboard you can <a data-target="orders">view your recent orders</a>,<br>manage
+                        your <a data-target="addresses">shipping and billing addresses</a>,<br>and <a  data-target="account-details">edit your
                             passwords and account details</a>
                     </p>
                 </div>

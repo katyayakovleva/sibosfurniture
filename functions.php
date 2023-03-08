@@ -554,9 +554,10 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
 	}
 	else{
 	  $out='
-		<p>From your account dashboard you can <a href="'.esc_url( wc_get_endpoint_url( 'orders' ) ).'">view your recent orders</a>,<br>manage
-		  your <a href="'.esc_url( wc_get_endpoint_url( 'edit-address' ) ).'">shipping and billing addresses</a>,<br>and <a href="'.esc_url( wc_get_endpoint_url( 'edit-account' ) ).'">edit your
-			passwords and account details</a></p>
+	  <p>From your account dashboard you can <a data-target="orders">view your recent orders</a>,<br>manage
+	  your <a data-target="addresses">shipping and billing addresses</a>,<br>and <a  data-target="account-details">edit your
+		  passwords and account details</a>
+  		</p>
 	  ';
 	}
 	
