@@ -195,7 +195,10 @@ function sibosfurniture_scripts() {
 			wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
 			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
 			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
-
+			wp_localize_script( 'script-dashboard', 'ajax_posts', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'noposts' => __('No older posts found', 'greenglobe'),
+			));
 		}else{
 			 wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
 			wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
@@ -226,7 +229,7 @@ function sibosfurniture_scripts() {
 //    global $product;
 //    if ($product->is_type('variable')) {
 //        $variation_id = wc_enqueue_js("$( 'input.variation_id' );");
-//        return $variation_id;
+//        return $variation_id;\wp-admin\admin.php
 //    }
 //}
 //add_action( 'woocommerce_after_add_to_cart_form', 'bbloomer_echo_variation_info' );
@@ -490,3 +493,78 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
 	return $data;
 } );
 
+/**
+  * show more posts with ajax
+  */
+  function more_post_ajax() {
+
+	$dashboard_menu_item = (! empty( $_POST['dashboard_menu_item'] )) ? sanitize_text_field( wp_unslash( $_POST['dashboard_menu_item'] ) ) : '';
+	$out ='';
+  
+	if($dashboard_menu_item == 'orders'){
+	  $current_page    = empty( $current_page ) ? 1 : absint( $current_page );
+	  $customer_orders = wc_get_orders(
+		apply_filters(
+		  'woocommerce_my_account_my_orders_query',
+		  array(
+		  'customer' => get_current_user_id(),
+		  'page'     => $current_page,
+		  'paginate' => true,
+		  )
+		)
+	  );
+	  wc_get_template(
+		  'myaccount/orders.php',
+		  array(
+			'current_page'    => absint( $current_page ),
+			'customer_orders' => $customer_orders,
+			'has_orders'      => 0 < $customer_orders->total,
+			'wp_button_class' => wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '',
+		  )
+		);
+	}elseif($dashboard_menu_item == 'addresses'){
+	  
+	  wc_get_template(
+			'myaccount/my-address.php',
+			array(
+			)
+		  );
+	}elseif($dashboard_menu_item == 'payment-methods'){
+	  
+	  wc_get_template(
+		'myaccount/payment-methods.php',
+		array(
+		)
+		);
+	}elseif($dashboard_menu_item == 'account-details'){
+	  
+	  wc_get_template(
+		'myaccount/form-edit-account.php',
+		array(
+			'user'    =>  wp_get_current_user(),
+			)
+		);
+	}
+	elseif($dashboard_menu_item == 'logout'){
+	  
+	  $out = '
+			  <p>Do you want to log out from your account?</p>
+			  <div><button class="btn" onclick="location.href = \''.esc_url( wc_logout_url() ).'\';">Yes</button> <button class="btn">No</button></div>
+			';
+	}
+	else{
+	  $out='
+		<p>From your account dashboard you can <a href="'.esc_url( wc_get_endpoint_url( 'orders' ) ).'">view your recent orders</a>,<br>manage
+		  your <a href="'.esc_url( wc_get_endpoint_url( 'edit-address' ) ).'">shipping and billing addresses</a>,<br>and <a href="'.esc_url( wc_get_endpoint_url( 'edit-account' ) ).'">edit your
+			passwords and account details</a></p>
+	  ';
+	}
+	
+	
+	
+	
+	  die($out);
+  }
+  
+  add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
+  add_action('wp_ajax_more_post_ajax', 'more_post_ajax');

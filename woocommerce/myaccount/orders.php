@@ -22,8 +22,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <?php if ( $has_orders ) : ?>
-
-	<section class="orders-1">
+<section class="orders-1">
     <?php
         foreach ( $customer_orders->orders as $customer_order ):
             $order      = wc_get_order( $customer_order ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -90,7 +89,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
-
+</section>
 <?php else : ?>
 	<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
 		<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'woocommerce' ); ?></a>

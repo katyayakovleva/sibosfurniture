@@ -164,14 +164,14 @@
     height: 4em
 }
 
-#dashboard>div {
+.dashboard>div {
     min-height: 20em;
     display: flex;
     justify-content: center;
     align-items: center
 }
 
-#dashboard>div p {
+.dashboard>div p {
     font-family: 'Merriweather Sans',sans-serif;
     font-size: .75em;
     font-weight: 400;
@@ -179,25 +179,25 @@
     text-align: center
 }
 
-#orders>div {
+.orders>div {
     display: flex;
     flex-direction: column
 }
 
-#orders>div .orders-1 {
+.orders>div .orders-1 {
     display: flex;
     flex-direction: column;
     gap: 2em
 }
 
-#orders>div .orders-1 .orders__group {
+.orders>div .orders-1 .orders__group {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 100%
 }
 
-#orders>div .orders-1 .orders-1__row {
+.orders>div .orders-1 .orders-1__row {
     position: relative;
     box-sizing: border-box;
     height: 100%;
@@ -208,228 +208,228 @@
     gap: 1em
 }
 
-#orders>div .orders-1 .orders-1__row a,#orders>div .orders-1 .orders-1__row p {
+.orders>div .orders-1 .orders-1__row a,.orders>div .orders-1 .orders-1__row p {
     font-family: 'Merriweather Sans',sans-serif;
     text-align: left;
     font-size: var(--fs-5);
     margin: 0
 }
 
-#orders>div .orders-1 .orders-1__row .id {
+.orders>div .orders-1 .orders-1__row .id {
     color: #0049af
 }
 
-#orders>div .orders-1 .orders-1__row .date {
+.orders>div .orders-1 .orders-1__row .date {
     color: #789bce;
     position: absolute;
     right: .5em;
     top: .5em
 }
 
-#orders>div .orders-1 .orders-1__row .status {
+.orders>div .orders-1 .orders-1__row .status {
     color: #404c5c
 }
 
-#orders>div .orders-1 .orders-1__row .total {
+.orders>div .orders-1 .orders-1__row .total {
     color: #404c5c
 }
 
-#orders>div .orders-1 .orders-1__row .actions {
+.orders>div .orders-1 .orders-1__row .actions {
     margin-top: 1em
 }
 
-#orders>div .orders-1 .orders-1__row div.actions {
+.orders>div .orders-1 .orders-1__row div.actions {
     display: flex;
     gap: .5em
 }
 
-#orders>div .orders-1 .orders-1__header .date {
+.orders>div .orders-1 .orders-1__header .date {
     display: none
 }
 
-#orders>div .orders-1 .orders-1__header p {
+.orders>div .orders-1 .orders-1__header p {
     color: #789bce!important
 }
 
-#orders>div .orders-1 .orders-1__header p:first-of-type,#orders>div .orders-1 .orders-1__header p:last-of-type {
+.orders>div .orders-1 .orders-1__header p:first-of-type,.orders>div .orders-1 .orders-1__header p:last-of-type {
     text-align: left
 }
 
-#orders>div .orders p {
+.orders>div .orders p {
     font-family: 'Merriweather Sans',sans-serif
 }
 
-#orders>div .orders>p.orders__title {
+.orders>div .orders>p.orders__title {
     font-weight: 700;
     color: #6da1eb;
     font-size: 1.5625em;
     text-transform: uppercase
 }
 
-#orders>div .orders>p.orders__subtitle {
+.orders>div .orders>p.orders__subtitle {
     font-size: 1.25em;
     color: #789bce
 }
 
-#orders>div .orders .orders__container {
+.orders>div .orders .orders__container {
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#orders>div .orders .orders__row {
+.orders>div .orders .orders__row {
     display: flex;
     flex-direction: column;
     padding: .5em;
     gap: 1em
 }
 
-#orders>div .orders .orders__row p {
+.orders>div .orders .orders__row p {
     margin: 0;
     font-family: 'Merriweather Sans',sans-serif;
     font-size: var(--fs-5)
 }
 
-#orders>div .orders .orders__row p:nth-child(1) {
+.orders>div .orders .orders__row p:nth-child(1) {
     color: #0049af
 }
 
-#orders>div .orders .orders__row p:nth-child(2) {
+.orders>div .orders .orders__row p:nth-child(2) {
     color: #404c5c
 }
 
-#orders>div .orders .orders__row>div {
+.orders>div .orders .orders__row>div {
     display: flex;
     gap: .5em
 }
 
-#orders>div .orders .orders__row>div :nth-child(1) {
+.orders>div .orders .orders__row>div :nth-child(1) {
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0
 }
 
-#orders>div .orders .orders__row>div :nth-child(2) {
+.orders>div .orders .orders__row>div :nth-child(2) {
     flex-grow: 3;
     flex-shrink: 1;
     flex-basis: 0
 }
 
-#orders>div .orders .orders__footer {
+.orders>div .orders .orders__footer {
     margin-top: .5em
 }
 
-#orders>div .orders form {
+.orders>div .orders form {
     margin-top: 1.5em
 }
 
-#orders>div .orders .form-checkbox a {
+.orders>div .orders .form-checkbox a {
     font-size: var(--fs-5)
 }
 
-#orders>div .orders .btn {
+.orders>div .orders .btn {
     margin-top: 1em;
     width: 100%
 }
 
-#addresses>div {
+.addresses>div {
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#addresses>div>div {
+.addresses>div>div {
     display: flex;
     flex-direction: column;
     gap: 2em
 }
 
-#addresses>div>div>div {
+.addresses>div>div>div {
     display: flex;
     flex-direction: column;
     gap: .5em
 }
 
-#addresses>div p {
+.addresses>div p {
     font-family: 'Merriweather Sans',sans-serif;
     font-size: 1.25em;
     color: #789bce
 }
 
-#addresses>div a {
+.addresses>div a {
     font-size: 1.5625em;
     text-transform: uppercase;
     font-weight: 700
 }
 
-#payment-methods>div p {
+.payment-methods>div p {
     font-family: 'Merriweather Sans',sans-serif;
     font-size: 1.25em;
     color: #789bce
 }
 
-#payment-methods>div .container {
+.payment-methods>div .container {
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#payment-methods>div .container .container__row {
+.payment-methods>div .container .container__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: .5em;
     padding: .5em 0
 }
 
-#payment-methods>div .container .container__row p {
+.payment-methods>div .container .container__row p {
     margin: 0
 }
 
-#payment-methods>div .container .container__row p:last-of-type {
+.payment-methods>div .container .container__row p:last-of-type {
     text-align: right
 }
 
-#payment-methods>div .container .container__row a {
+.payment-methods>div .container .container__row a {
     font-size: 1.25em
 }
 
-#payment-methods>div .container .container__header {
+.payment-methods>div .container .container__header {
     grid-template-columns: 1fr
 }
 
-#payment-methods>div .container .container__header p {
+.payment-methods>div .container .container__header p {
     font-weight: 700;
     color: #0049af;
     font-size: 1.5625em
 }
 
-#payment-methods>div .container .container__header p:last-of-type {
+.payment-methods>div .container .container__header p:last-of-type {
     display: none
 }
 
-#payment-methods>div .btn {
+.payment-methods>div .btn {
     margin-top: 1em
 }
 
-#account-details>div form {
+.account-details>div form {
     display: flex;
     flex-direction: column;
     gap: 3em
 }
 
-#account-details>div form>div {
+.account-details>div form>div {
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#account-details>div form>div>div {
+.account-details>div form>div>div {
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#account-details>div form>div p {
+.account-details>div form>div p {
     font-family: 'Merriweather Sans',sans-serif;
     font-size: 1.5625em;
     color: #0049af;
@@ -438,11 +438,11 @@
     margin: 0
 }
 
-#account-details>div form .btn {
+.account-details>div form .btn {
     width: 100%
 }
 
-#logout>div {
+.logout>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -450,18 +450,18 @@
     gap: 1em
 }
 
-#logout>div>div {
+.logout>div>div {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1em
 }
 
-#logout>div>div .btn {
+.logout>div>div .btn {
     width: 100%
 }
 
-#logout>div p {
+.logout>div p {
     font-family: 'Merriweather Sans',sans-serif;
     font-size: 1.5625em;
     font-weight: 700;
@@ -512,154 +512,154 @@
         padding: 1.5em 3em
     }
 
-    #dashboard>div p {
+    .dashboard>div p {
         font-size: 1.5625em;
         font-weight: 700;
         text-transform: uppercase
     }
 
-    #orders>div .orders-1 {
+    .orders>div .orders-1 {
         gap: 0
     }
 
-    #orders>div .orders-1 .orders__group {
+    .orders>div .orders-1 .orders__group {
         display: flex;
         flex-direction: column
     }
 
-    #orders>div .orders-1 .orders__group:not(:first-child) .orders-1__header {
+    .orders>div .orders-1 .orders__group:not(:first-child) .orders-1__header {
         display: none
     }
 
-    #orders>div .orders-1 .orders-1__row {
+    .orders>div .orders-1 .orders-1__row {
         display: grid;
         grid-template-columns: .5fr 1.5fr 1fr 2fr 1fr;
         padding: 1em 2em;
         gap: 0
     }
 
-    #orders>div .orders-1 .orders-1__row p {
+    .orders>div .orders-1 .orders-1__row p {
         text-align: center
     }
 
-    #orders>div .orders-1 .orders-1__row p:first-of-type {
+    .orders>div .orders-1 .orders-1__row p:first-of-type {
         text-align: left
     }
 
-    #orders>div .orders-1 .orders-1__row .date {
+    .orders>div .orders-1 .orders-1__row .date {
         position: static
     }
 
-    #orders>div .orders-1 .orders-1__row .actions {
+    .orders>div .orders-1 .orders-1__row .actions {
         margin-top: auto
     }
 
-    #orders>div .orders-1 .orders-1__row div.actions {
+    .orders>div .orders-1 .orders-1__row div.actions {
         justify-content: flex-start;
         align-items: center
     }
 
-    #orders>div .orders-1 .orders-1__header {
+    .orders>div .orders-1 .orders-1__header {
         padding-block:1.5em}
 
-    #orders>div .orders-1 .orders-1__header .date {
+    .orders>div .orders-1 .orders-1__header .date {
         display: block
     }
 
-    #orders>div .orders .orders__container {
+    .orders>div .orders .orders__container {
         gap: 0
     }
 
-    #orders>div .orders .orders__row {
+    .orders>div .orders .orders__row {
         display: grid;
         grid-template-columns: 1.6fr 3.4fr 1fr;
         padding: 1em 2em;
         gap: 0
     }
 
-    #orders>div .orders .orders__row>div {
+    .orders>div .orders .orders__row>div {
         flex-direction: column
     }
 
-    #orders>div .orders .orders__footer {
+    .orders>div .orders .orders__footer {
         grid-template-columns: 1.6fr 1.6fr 1.8fr 1fr;
         margin-top: 1.8em
     }
 
-    #orders>div .orders form {
+    .orders>div .orders form {
         margin-top: 0
     }
 
-    #orders>div .orders .btn {
+    .orders>div .orders .btn {
         margin-top: 0;
         width: -moz-fit-content;
         width: fit-content
     }
 
-    #addresses>div {
+    .addresses>div {
         gap: 0
     }
 
-    #addresses>div>div {
+    .addresses>div>div {
         flex-direction: row;
         gap: 6em
     }
 
-    #payment-methods>div .container {
+    .payment-methods>div .container {
         gap: 0
     }
 
-    #payment-methods>div .container .container__row {
+    .payment-methods>div .container .container__row {
         grid-template-columns: 4fr 3fr 2fr;
         row-gap: 0
     }
 
-    #payment-methods>div .container .container__row p:last-of-type {
+    .payment-methods>div .container .container__row p:last-of-type {
         text-align: left
     }
 
-    #payment-methods>div .container .container__header {
+    .payment-methods>div .container .container__header {
         grid-template-columns: 4fr 5fr
     }
 
-    #payment-methods>div .container .container__header p:last-of-type {
+    .payment-methods>div .container .container__header p:last-of-type {
         display: inline-block
     }
 
-    #payment-methods>div .btn {
+    .payment-methods>div .btn {
         margin-top: 2em
     }
 
-    #account-details>div form {
+    .account-details>div form {
         max-width: 75%;
         gap: 4em
     }
 
-    #account-details>div form>div>div {
+    .account-details>div form>div>div {
         flex-direction: row
     }
 
-    #account-details>div form>div>div>* {
+    .account-details>div form>div>div>* {
         flex-basis: calc(50% - 1em)
     }
 
-    #account-details>div form .btn {
+    .account-details>div form .btn {
         width: -moz-fit-content;
         width: fit-content
     }
 
-    #logout>div>div {
+    .logout>div>div {
         flex-direction: row;
         justify-content: center;
         gap: 15%
     }
 
-    #logout>div>div .btn {
+    .logout>div>div .btn {
         min-width: 25%;
         max-width: 16em
     }
 
-    #logout>div p {
+    .logout>div p {
         font-size: 3.125em
     }
 }

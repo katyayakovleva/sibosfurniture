@@ -42,33 +42,33 @@ $oldcol = 1;
 $col    = 1;
 ?>
 
-<p>
-	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', esc_html__( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-</p>
+		<p>
+			<?php echo apply_filters( 'woocommerce_my_account_my_address_description', esc_html__( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		</p>
 
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	<!-- <div class="u-columns woocommerce-Addresses col2-set addresses"> -->
-<?php endif; ?>
-<div>
-    <?php foreach ( $get_addresses as $name => $address_title ) : ?>
-        <?php
-            $address = wc_get_account_formatted_address( $name );
-            $col     = $col * -1;
-            $oldcol  = $oldcol * -1;
-        ?>
+		<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
+			<!-- <div class="u-columns woocommerce-Addresses col2-set addresses"> -->
+		<?php endif; ?>
+		<div>
+			<?php foreach ( $get_addresses as $name => $address_title ) : ?>
+				<?php
+					$address = wc_get_account_formatted_address( $name );
+					$col     = $col * -1;
+					$oldcol  = $oldcol * -1;
+				?>
 
-        <div>
-            <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>"><?php echo esc_html( $address_title ); ?> <i class="fa-regular fa-pen-to-square"></i></a>   
-            <p>
-                <?php
-                    echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
-                ?>
-            </p>
-        </div>
+				<div>
+					<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>"><?php echo esc_html( $address_title ); ?> <i class="fa-regular fa-pen-to-square"></i></a>   
+					<p>
+						<?php
+							echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
+						?>
+					</p>
+				</div>
 
-    <?php endforeach; ?>
-</div>
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	<!-- </div> -->
-	<?php
-endif;?>
+			<?php endforeach; ?>
+		</div>
+		<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
+			<!-- </div> -->
+			<?php
+		endif;?>
