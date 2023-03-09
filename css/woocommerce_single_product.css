@@ -194,9 +194,6 @@ bdi{
 .woocommerce div.product .woocommerce-tabs ul.tabs li a:hover{
     color: #789bce;
 }
-.woocommerce div.product .woocommerce-tabs ul.tabs li:first-of-type{
-    padding-left: 0.3em;
-}
 .woocommerce div.product .woocommerce-tabs ul.tabs li:first-of-type > a{
     padding-left: 0;
 }
