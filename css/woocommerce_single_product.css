@@ -180,6 +180,11 @@ bdi{
     margin: 0 0;
     padding: 0 1em;
 }
+.woocommerce div.product .woocommerce-tabs ul.tabs li::before,
+.woocommerce div.product .woocommerce-tabs ul.tabs li::after{
+    content: "";
+    display: none;
+}
 .woocommerce div.product .woocommerce-tabs ul.tabs {
     padding: 0;
 }
