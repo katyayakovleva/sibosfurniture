@@ -22,13 +22,13 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <?php if ( $has_orders ) : ?>
-<section class="orders-1">
+    <section class="orders-1">
     <?php
-        foreach ( $customer_orders->orders as $customer_order ):
+     foreach ( $customer_orders->orders as $customer_order ){
             $order      = wc_get_order( $customer_order ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
             $item_count = $order->get_item_count() - $order->get_item_count_refunded();
             ?>
-        <div class="orders__group">
+        <div id="<?php echo $order->get_order_number() ; ?>" class="orders__group" >
             <div class="orders-1__row orders-1__header">
                 <p class="id">Order</p>
                 <p class="date">Date</p>
@@ -36,9 +36,9 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 <p class="total">Total</p>
                 <p class="actions">Actions</p>
             </div>
-            <div class="orders-1__row ">
-            <?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
-                
+
+            <div class="orders-1__row">
+                <?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
                     <?php if ( has_action( 'woocommerce_my_account_my_orders_column_' . $column_id ) ) : ?>
                                     <?php do_action( 'woocommerce_my_account_my_orders_column_' . $column_id, $order ); ?>    
                     <?php elseif ( 'order-number' === $column_id ) : ?>
@@ -60,20 +60,22 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                         <?php
                         $actions = wc_get_account_orders_actions( $order );
 
-                        if ( ! empty( $actions ) ):?>
+                        if ( ! empty( $actions ) ){?>
                             <div class="actions">
-                                <?php foreach ( $actions as $key => $action ): // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-                                    echo '<a href="' . esc_url( $action['url'] ) . '" class="">' . esc_html( $action['name'] ) . '</a>';
-                                endforeach;
+                                <?php foreach ( $actions as $key => $action ){ // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+                                    echo '<a class="" data-action="' . esc_html( $action['name'] ) .'" data-order_id="' .$order->get_order_number().'" >' . esc_html( $action['name'] ) . '</a>';
+                                    // echo '<a href="' . esc_url( $action['url'] ) . '" class="">' . esc_html( $action['name'] ) . '</a>';
+                                }
                                 ?>
-                            
-                        <?php endif; ?>
+                            </div>
+                        <?php } ?>
                     <?php endif; ?>
-            <?php endforeach; ?>
+                <?php endforeach; ?>    
             </div>
         </div>
-        <?php endforeach; ?>
-    </div>
+        <?php } ?>
+    </section>
+
 		
 
 	<?php do_action( 'woocommerce_before_account_orders_pagination' ); ?>
@@ -89,7 +91,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
-</section>
+
 <?php else : ?>
 	<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
 		<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'woocommerce' ); ?></a>

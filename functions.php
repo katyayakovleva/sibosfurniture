@@ -623,3 +623,30 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
   
   add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
   add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
+  /**
+  * show more posts with ajax
+  */
+  function order_details_ajax() {
+	$action = (! empty( $_POST['order_action'] )) ? sanitize_text_field( wp_unslash( $_POST['order_action'] ) ) : '';
+	$order_id = (isset($_POST['order_id'])) ? $_POST['order_id'] : 0;
+	$out='';
+	if($action == 'View'){
+		$order = wc_get_order( $order_id );
+		wc_get_template(
+			'myaccount/view-order.php',
+			array(
+				'order'    =>  $order,
+				'order_id' => $order_id,
+				)
+			);
+	}
+	else{
+		$out = '<h1>'.esc_html( $action ).'</h1>';
+	}
+	
+	die($out);
+	
+  }
+  
+  add_action('wp_ajax_nopriv_order_details_ajax', 'order_details_ajax');
+  add_action('wp_ajax_order_details_ajax', 'order_details_ajax');
