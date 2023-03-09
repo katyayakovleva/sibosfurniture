@@ -263,6 +263,18 @@ function so_14088040_localhost_avatar( $avatar, $id_or_email, $size, $default, $
     return $avatar;
 }
 /* AVATAR */
+
+add_filter( 'preprocess_comment', 'wpb_preprocess_comment' );
+
+function wpb_preprocess_comment($comment) {
+    if ( strlen( $comment['comment_content'] ) > 235 ) {
+        wp_die('Comment is too long. Please keep your comment under 5000 characters.');
+    }
+    if ( strlen( $comment['comment_content'] ) < 4 ) {
+        wp_die('Comment is too short. Please use at least 60 characters.');
+    }
+    return $comment;
+}
 //
 //add_action('woocommerce_before_add_to_cart_quantity', 'bbloomer_display_dropdown_variation_add_cart');
 //function find_variation_id()
