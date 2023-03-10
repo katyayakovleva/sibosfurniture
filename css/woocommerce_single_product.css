@@ -350,20 +350,36 @@ section.related.products .related_products_div .swiper-slide .price{
     }
     .woocommerce-product-short-description.mobile-description p{
         color: #404c5c!important;
-        font-size: 1em!important;
+        font-size: .75em!important;
         font-family: 'Merriweather Sans',sans-serif!important;
         margin: 2em 0 0;
+    }
+    .woocommerce div.product form.cart .reset_variations {
+        font-size: .75em;
     }
     .quantity {
         width: 4.5em;
         height: 2.5em;
     }
+    .woocommerce .quantity .qty {
+        font-size: 1em!important;
+    }
     button.single_add_to_cart_button.button.alt.wp-element-button {
         font-size: 1.2em;
     }
+    .swiper-wrapper .swiper-slide.comment .mobile-comment-text{
+        font-size: 1.25em!important;
+    }
+    /*.woocommerce-Tabs-panel--description>p {*/
+    /*    font-size: 1.25em!important;*/
+    /*}*/
+    /*.woocommerce-product-attributes-item__label{*/
+
+    /*}*/
 }
 @media screen and (max-width: 25em){
     button.single_add_to_cart_button.button.alt.wp-element-button {
         font-size: 1em;
     }
+
 }

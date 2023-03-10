@@ -63,7 +63,7 @@ if ( ! comments_open() ) {
                                         <span class="unchecked"></span>
                                     <?php }?>
                                 </div>
-                                <p class="ff-ms fs-5 fc-blue-2"><?php echo $comment->comment_content?></p>
+                                <p class="ff-ms fs-5 fc-blue-2 mobile-comment-text"><?php echo $comment->comment_content?></p>
                             </div>
                         </div>
                     <?php }?>
