@@ -45,3 +45,9 @@ ul.products .swiper-slide bdi {
         font-weight: 400;
     }
 }
+@media screen and (max-width: 35.5em){
+    .woocommerce ul.products li.product{
+        width: 100% !important;
+        margin: 0!important;
+    }
+}

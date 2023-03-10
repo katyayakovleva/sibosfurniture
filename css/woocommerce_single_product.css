@@ -8,6 +8,9 @@
 div.header-padding {
     padding-top: var(--navbar-height)
 }
+.woocommerce .products ul, .woocommerce ul.products {
+    margin: 0;
+}
 .wpgs-nav .slick-track {
     display: flex;
     justify-content: flex-start;
@@ -370,12 +373,9 @@ section.related.products .related_products_div .swiper-slide .price{
     .swiper-wrapper .swiper-slide.comment .mobile-comment-text{
         font-size: 1.25em!important;
     }
-    /*.woocommerce-Tabs-panel--description>p {*/
-    /*    font-size: 1.25em!important;*/
-    /*}*/
-    /*.woocommerce-product-attributes-item__label{*/
-
-    /*}*/
+    .related_products_div {
+        padding-inline: 3em!important;
+    }
 }
 @media screen and (max-width: 25em){
     button.single_add_to_cart_button.button.alt.wp-element-button {
