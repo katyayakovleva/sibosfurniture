@@ -34,6 +34,7 @@ $short_description = apply_filters( 'woocommerce_short_description', $post->post
     <div class="woocommerce-product-short-description desktop-description">
         <?php echo $short_description; ?>
     </div>
+    <?php echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
     <div class="price-and-button-block">
 <!--        <p class="ff-ms fs-2 fw-7 fc-blue-3 m-sm-0 variation-price"></p>-->
         <?php bbloomer_echo_variation_info()?>

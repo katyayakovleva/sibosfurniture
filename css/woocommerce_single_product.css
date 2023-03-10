@@ -307,7 +307,7 @@ section.related.products .related_products_div .swiper-slide .price{
     .woocommerce-product-short-description p{
         font-size: 1.25em!important;
         font-family: 'Merriweather Sans', sans-serif!important;
-        margin: 0 0 3em 0!important;
+        margin: 0!important;
     }
     .woocommerce-Tabs-panel--description{
         width: 75%!important;
@@ -318,6 +318,9 @@ section.related.products .related_products_div .swiper-slide .price{
     section.related.products .related_products_div .swiper-slide .price{
         font-size: 1.56em;
         font-weight: 400;
+    }
+    .yith-wcwl-add-to-wishlist{
+        margin-bottom: 3em;
     }
 }
 @media screen and (min-width: 968px) {
@@ -366,6 +369,12 @@ section.related.products .related_products_div .swiper-slide .price{
     }
     .woocommerce .quantity .qty {
         font-size: 1em!important;
+    }
+    .woocommerce div.product form.cart div.quantity {
+        margin: 0 4px 0.25em 0;
+    }
+    .yith-wcwl-add-to-wishlist {
+        margin-bottom: 1.25em;
     }
     button.single_add_to_cart_button.button.alt.wp-element-button {
         font-size: 1.2em;

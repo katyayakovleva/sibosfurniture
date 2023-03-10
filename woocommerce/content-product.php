@@ -56,6 +56,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
      */
     do_action( 'woocommerce_after_shop_loop_item_title' );
 
+
     /**
      * Hook: woocommerce_after_shop_loop_item.
      *
@@ -64,4 +65,8 @@ if ( empty( $product ) || ! $product->is_visible() ) {
      */
 //    do_action( 'woocommerce_after_shop_loop_item' );
     ?>
+    <div class="grid-item-shop__buttons">
+        <p class="grid-item-shop__price ff-ms m-0"><?php echo $product->get_price_html(); ?></p>
+        <a href="" class="link fs-3 cart-link"><i class="icon-cart-icon"></i></a>
+    </div>
 </li>
