@@ -14,9 +14,6 @@ global $post;
 
 $short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt );
 
-if ( ! $short_description ) {
-    return;
-}
 ?>
 <div class="woocommerce-variation-add-to-cart variations_button">
 	<?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
@@ -34,8 +31,8 @@ if ( ! $short_description ) {
 
 	do_action( 'woocommerce_after_add_to_cart_quantity' );
 	?>
-    <div class="woocommerce-product-short-description">
-        <?php echo $short_description; // WPCS: XSS ok. ?>
+    <div class="woocommerce-product-short-description desktop-description">
+        <?php echo $short_description; ?>
     </div>
     <div class="price-and-button-block">
 <!--        <p class="ff-ms fs-2 fw-7 fc-blue-3 m-sm-0 variation-price"></p>-->

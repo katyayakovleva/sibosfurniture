@@ -28,10 +28,11 @@ $(document).ready(function() {
             spinner.find("input").trigger("change");
         });
     });
-    function clear_html() {
-
-    }
     $('.reset_variations').click(function () {
         $(".var_info").css("visibility", "hidden");
     });
+    $('section.related.products .woocommerce-LoopProduct-link').addClass('disabled-link');
+    $('section.related.products ul.products li.product .woocommerce-LoopProduct-link').removeClass('disabled-link');
+    $('.disabled-link').removeAttr('href');
+
 })

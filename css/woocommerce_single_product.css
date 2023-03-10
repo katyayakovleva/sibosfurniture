@@ -14,7 +14,7 @@ div.header-padding {
     align-items: center;
     gap: .5em
 }
-.product-article {
+.product-main-info, .woocommerce-tabs, .related_products_div{
     padding-inline: 1.5em!important;
 }
 .woocommerce div.product div.images img {
@@ -165,6 +165,22 @@ bdi{
     font-weight: 700!important;
     /*font-size: var(--fs-2)!important;*/
 }
+.woocommerce-page div.product div.summary {
+    float: left;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+.quantity{
+    display: flex;
+}
+.woocommerce .quantity .qty {
+    font-size: 1.56em!important;
+}
+.woocommerce div.product form.cart div.quantity{
+    margin: 0 4px 1.25em 0;
+}
 .woocommerce div.product .woocommerce-tabs ul.tabs {
     display: flex;
     flex-direction: row;
@@ -234,11 +250,25 @@ bdi{
     object-fit: cover;
     object-position: center right;
 }
+section.related.products{
+    background-color: rgba(0, 73, 175, .1019607843)!important;
+}
+section.related.products .related_products_div{
+    padding-top: 0.5em;
+}
+section.related.products .related_products_div .swiper-slide{
+    height: auto;
+}
+section.related.products .related_products_div .swiper-slide .price{
+    font-size: 1.56em;
+    font-weight: 700;
+}
+
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
         width: 39.5%;
     }
-    .product-article {
+    .product-main-info, .woocommerce-tabs, .related_products_div{
         padding-inline: 4.5em!important;
     }
     .wpgs-nav .slick-track {
@@ -250,13 +280,16 @@ bdi{
     h1.product_title.entry-title{
         font-size: 3.13em!important;
     }
-    .woocommerce-page div.product div.summary {
-        float: left;
-        margin-left: 20px;
-        display: flex;
-        flex-direction: column;
-        height: fit-content;
+    .woocommerce-product-short-description.mobile-description{
+        display: none;
     }
+    /*.woocommerce-page div.product div.summary {*/
+    /*    float: left;*/
+    /*    margin-left: 20px;*/
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+    /*    height: fit-content;*/
+    /*}*/
     .product-main-info{
         display: flex;
         flex-direction: row;
@@ -268,16 +301,10 @@ bdi{
         width: 5em;
         height: 5em;
     }
-    .quantity{
-        display: flex;
-    }
-    .woocommerce .quantity .qty {
-        font-size: 1.56em!important;
-    }
     .woocommerce-product-short-description p{
         font-size: 1.25em!important;
         font-family: 'Merriweather Sans', sans-serif!important;
-        margin-bottom: 3em!important;
+        margin: 0 0 3em 0!important;
     }
     .woocommerce-Tabs-panel--description{
         width: 75%!important;
@@ -285,10 +312,14 @@ bdi{
     .woocommerce-Tabs-panel--description>p{
         font-size: 1.25em!important;
     }
+    section.related.products .related_products_div .swiper-slide .price{
+        font-size: 1.56em;
+        font-weight: 400;
+    }
 }
 @media screen and (min-width: 968px) {
     .woocommerce-page div.product div.summary {
-         width: auto;
+         width: 100%;
      }
 }
 @media screen and (min-width: 1920px) {
@@ -300,4 +331,39 @@ bdi{
         margin-left: 25px;
     }
 }
-
+@media screen and (max-width: 35.5em){
+    .summary.entry-summary{
+        border: none;
+        padding: 0;
+    }
+    .woocommerce-product-short-description.desktop-description{
+        display: none;
+    }
+    .summary.entry-summary .product_title.entry-title{
+        font-size: 2.5em;
+    }
+    .woocommerce-page div.product div.summary {
+        margin-left: 0;
+    }
+    .product_meta .price-mobile{
+        font-size: 1.56em!important;
+    }
+    .woocommerce-product-short-description.mobile-description p{
+        color: #404c5c!important;
+        font-size: 1em!important;
+        font-family: 'Merriweather Sans',sans-serif!important;
+        margin: 2em 0 0;
+    }
+    .quantity {
+        width: 4.5em;
+        height: 2.5em;
+    }
+    button.single_add_to_cart_button.button.alt.wp-element-button {
+        font-size: 1.2em;
+    }
+}
+@media screen and (max-width: 25em){
+    button.single_add_to_cart_button.button.alt.wp-element-button {
+        font-size: 1em;
+    }
+}
