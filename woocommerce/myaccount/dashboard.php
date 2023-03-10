@@ -48,10 +48,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div id="dashboard-content" class="dashboard active" >
                 <div>
+                  
                     <p>From your account dashboard you can <a data-target="orders">view your recent orders</a>,<br>manage
                         your <a data-target="addresses">shipping and billing addresses</a>,<br>and <a  data-target="account-details">edit your
                             passwords and account details</a>
                     </p>
+                
                 </div>
             </div>
 

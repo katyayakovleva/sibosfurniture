@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 
 $notes = $order->get_customer_order_notes();
 ?>
-<section class="orders d-none d-sm-block">
+<section class="orders d-sm-block">
 <p class="orders__title">Order details</p>
     <p class="orders__subtitle">
 		<?php

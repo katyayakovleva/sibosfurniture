@@ -47,7 +47,6 @@ $col    = 1;
 		</p>
 
 		<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-			<!-- <div class="u-columns woocommerce-Addresses col2-set addresses"> -->
 		<?php endif; ?>
 		<div>
 			<?php foreach ( $get_addresses as $name => $address_title ) : ?>
@@ -58,7 +57,8 @@ $col    = 1;
 				?>
 
 				<div>
-					<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>"><?php echo esc_html( $address_title ); ?> <i class="fa-regular fa-pen-to-square"></i></a>   
+
+					<a href="<?php echo esc_url(wc_get_endpoint_url( 'edit-address', $name, get_permalink( get_option('woocommerce_myaccount_page_id') ) ));?>"><?php echo esc_html( $address_title ); ?> <i class="fa-regular fa-pen-to-square"></i></a>   
 					<p>
 						<?php
 							echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
@@ -69,6 +69,5 @@ $col    = 1;
 			<?php endforeach; ?>
 		</div>
 		<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-			<!-- </div> -->
 			<?php
 		endif;?>

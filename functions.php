@@ -613,6 +613,7 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
 		  passwords and account details</a>
   		</p>
 	  ';
+
 	}
 	
 	
@@ -630,7 +631,7 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
 	$action = (! empty( $_POST['order_action'] )) ? sanitize_text_field( wp_unslash( $_POST['order_action'] ) ) : '';
 	$order_id = (isset($_POST['order_id'])) ? $_POST['order_id'] : 0;
 	$out='';
-	if($action == 'View'){
+	if($action === 'View'){
 		$order = wc_get_order( $order_id );
 		wc_get_template(
 			'myaccount/view-order.php',
@@ -640,8 +641,21 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
 				)
 			);
 	}
+	if($action === 'Cancel'){
+		$order = wc_get_order( $order_id );
+		$order->update_status( 'cancelled' );
+	}
+	if($action === 'Pay'){
+		$order = wc_get_order( $order_id );
+		wc_get_template(
+			'checkout/form-pay.php',
+			array(
+				'order'    =>  $order,
+				)
+			);
+	}
 	else{
-		$out = '<h1>'.esc_html( $action ).'</h1>';
+		// $out = '<p>'.esc_html( $action ).'</p>';
 	}
 	
 	die($out);
@@ -650,3 +664,96 @@ add_filter( 'woocommerce_new_customer_data', function( $data ) {
   
   add_action('wp_ajax_nopriv_order_details_ajax', 'order_details_ajax');
   add_action('wp_ajax_order_details_ajax', 'order_details_ajax');
+
+
+// add_filter('woocommerce_valid_order_statuses_for_cancel', 'my_cancellable_statuses', 10, 2);
+ 
+// function my_cancellable_statuses($statuses, $order){
+//   return array('pending', 'processing', 'on-hold');
+// }
+
+add_filter( 'woocommerce_my_account_my_orders_query', 'custom_my_account_orders_query', 20, 1 );
+function custom_my_account_orders_query( $args ) {
+    $args['limit'] = -1;
+
+    return $args;
+}
+
+function filter_woocommerce_form_field_radio( $field, $key, $args, $value ) {
+	if ( $args['required'] ) {
+		$args['class'][] = 'validate-required';
+		$required        = '&nbsp;<span class="required">*</span>';
+	} else {
+		$required = '';
+	}
+	if ( $args['type'] == 'text' || $args['type'] == 'email' ||$args['type'] == 'tel'){
+		$field ='<div class="form-control">';
+		$field .= '<label for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+		$field.= '<input type="' . esc_attr( $args['type'] ) . '" class=""  name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '"  value="' . esc_attr( $value ) . '"  />';
+
+		$field .='</div>';
+	}
+	if ( $args['type'] == 'country'){
+		// $field ='<div class="form-control">';
+		$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+		$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
+		
+		if ( 1 === count( $countries ) ) {
+
+			$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
+
+			$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" class="country_to_state" readonly="readonly" />';
+
+		} else {
+			$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
+
+			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state"  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_attr__( 'Select a country / region&hellip;', 'woocommerce' ) ) . '" ' . $data_label . '>
+			<option value="">' . esc_html__( 'Select a country / region&hellip;', 'woocommerce' ) . '</option>';
+
+			foreach ( $countries as $ckey => $cvalue ) {
+				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
+			}
+
+			$field .= '</select>';
+
+			$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country / region', 'woocommerce' ) . '">' . esc_html__( 'Update country / region', 'woocommerce' ) . '</button></noscript>';
+			
+		}
+		// $field .='</div>';
+	}
+	if($args['type'] == 'state'){
+		$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+		$for_country = isset( $args['country'] ) ? $args['country'] : WC()->checkout->get_value( 'billing_state' === $key ? 'billing_country' : 'shipping_country' );
+		$states      = WC()->countries->get_states( $for_country );
+
+		if ( is_array( $states ) && empty( $states ) ) {
+
+			$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
+
+			$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
+
+		} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
+			$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
+
+			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state "  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . $data_label . '>
+				<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
+
+			foreach ( $states as $ckey => $cvalue ) {
+				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
+			}
+
+			$field .= '</select>';
+
+		} else {
+
+			$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
+
+		}
+	}
+	
+    
+    return $field;
+}
+add_filter( 'woocommerce_form_field', 'filter_woocommerce_form_field_radio', 10, 4 );
+
+// add_filter( 'woocommerce_form_field_email', 'filter_woocommerce_form_field_radio', 10, 4 );

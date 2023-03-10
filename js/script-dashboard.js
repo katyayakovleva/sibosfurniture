@@ -30,10 +30,7 @@
 
 // jQuery(document).ready(function($) {
     function loadOrderDetails(action, order_id){
-        // var action = $(this).data("action");
-        // var order_id = $(this).data("order_id");
-        // console.log(action);
-        // console.log(order_id);
+
         var str = '&order_action='+ action +  '&order_id='+ order_id + '&action=order_details_ajax';
         $.ajax({
             type: "POST",

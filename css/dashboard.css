@@ -178,7 +178,9 @@
     color: #789bce;
     text-align: center
 }
-
+.orders{
+    margin-bottom: 1em;
+}
 .orders>div {
     display: flex;
     flex-direction: column
@@ -517,7 +519,7 @@
         font-weight: 700;
         text-transform: uppercase
     }
-
+    
     .orders>div .orders-1 {
         gap: 0
     }
