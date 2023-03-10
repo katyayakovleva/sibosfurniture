@@ -192,7 +192,7 @@ function sibosfurniture_scripts() {
 
 	}elseif(is_account_page()){
 		if(is_user_logged_in() && !is_wc_endpoint_url()){
-			wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
+			wp_enqueue_style( 'dashboards', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
 			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
 			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
 			wp_localize_script( 'script-dashboard', 'ajax_posts', array(
@@ -207,7 +207,22 @@ function sibosfurniture_scripts() {
 			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
 		}
        
-	}  elseif(is_product()){
+	}elseif(is_checkout()){
+			wp_enqueue_style( 'dashboard', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
+			wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
+			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
+			// wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
+			wp_localize_script( 'script-dashboard', 'ajax_posts', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'noposts' => __('No older posts found', 'greenglobe'),
+			));
+			
+			// wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
+			wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
+			// wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+			// wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
+       
+	}elseif(is_product()){
         wp_enqueue_style( 'item-page-in', get_template_directory_uri(). '/css/item-page.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_single_product', get_template_directory_uri(). '/css/woocommerce_single_product.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
@@ -699,6 +714,14 @@ function filter_woocommerce_form_field_radio( $field, $key, $args, $value ) {
 		$field.= '<input type="' . esc_attr( $args['type'] ) . '" class=""  name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '"  value="' . esc_attr( $value ) . '"  />';
 
 		$field .='</div>';
+	}
+	if ( $args['type'] == 'textarea'){
+		$field ='<p class="form-row notes" id="order_comments_field">';
+		$field .= '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+		$field .= '<span  class="woocommerce-input-wrapper "><textarea name="' . esc_attr( $key ) . '" class="input-text note-textarea ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . '>' . esc_textarea( $value ) . '</textarea></span>';
+
+
+		$field .='</p>';
 	}
 	if ( $args['type'] == 'country'){
 		// $field ='<div class="form-control">';
