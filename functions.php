@@ -276,6 +276,12 @@ function wpb_preprocess_comment($comment) {
     }
     return $comment;
 }
+
+add_filter( 'woocommerce_output_related_products_args', 'bbloomer_change_number_related_products', 9999 );
+function bbloomer_change_number_related_products( $args ) {
+    $args['posts_per_page'] = 6;
+    return $args;
+}
 //
 //add_action('woocommerce_before_add_to_cart_quantity', 'bbloomer_display_dropdown_variation_add_cart');
 //function find_variation_id()
