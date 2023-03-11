@@ -502,7 +502,7 @@
         height: 100%;
         left: 0;
         top: 0;
-        border: 2px solid #0049af
+        border: 2px solid #0049af;
     }
 
     .menu__header button.active {
@@ -676,4 +676,21 @@
         -webkit-hyphens: manual;
         hyphens: manual
     }
+}
+
+.order-detail-shipping p{
+    margin: 0;
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-5);
+    color: #404c5c;
+}
+.order-detail-shipping-first-word{
+    color: #0049af;
+}
+.woocommerce-privacy-policy-text{
+    margin: 0;
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-5);
+    color: #404c5c;
+
 }

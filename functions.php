@@ -208,20 +208,17 @@ function sibosfurniture_scripts() {
 		}
        
 	}elseif(is_checkout()){
-			wp_enqueue_style( 'dashboard', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
-			wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
-			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
-			// wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
-			wp_localize_script( 'script-dashboard', 'ajax_posts', array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'noposts' => __('No older posts found', 'greenglobe'),
-			));
-			
-			// wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
-			wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
-			// wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-			// wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
-       
+		wp_enqueue_style( 'dashboards', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
+		wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
+		wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
+		
+		
+		wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-checkout', get_template_directory_uri() . '/js/script-checkout.js', array(), rand(111,9999), true );
+		wp_localize_script( 'script-dashboard', 'ajax_posts', array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'noposts' => __('No older posts found', 'greenglobe'),
+				));
 	}elseif(is_product()){
         wp_enqueue_style( 'item-page-in', get_template_directory_uri(). '/css/item-page.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_single_product', get_template_directory_uri(). '/css/woocommerce_single_product.css', array(), rand(111,9999));

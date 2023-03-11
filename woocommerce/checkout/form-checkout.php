@@ -57,19 +57,17 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                         <?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
                     <?php endif; ?>
-                    
                     <?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
-                    
-                    <p class="checkout_title"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></p>
-                    
+                                        
                     <?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
                     <div id="order_review" class="woocommerce-checkout-review-order">
                         <?php do_action( 'woocommerce_checkout_order_review' ); ?>
                     </div>
-
+                    </section>
+                    
                     <?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
-
+                    
                 </form>
             </section>
 		</article>

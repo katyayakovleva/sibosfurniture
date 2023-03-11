@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
 	<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
-		<p <?php if ( ! $gateway->chosen ) : /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
+		<q class="small" <?php if ( ! $gateway->chosen ) : /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
 			<?php $gateway->payment_fields(); ?>
-        </p>
+        </q>
 	<?php endif; ?>
