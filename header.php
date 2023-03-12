@@ -17,12 +17,12 @@
 	<?php wp_head(); ?>
 </head>
 <style>
-    .hero {
+    /* .hero {
         background: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-7.jpg) no-repeat center/cover;
-    }
-    .hidden-work span {
+    } */
+    /* .hidden-work span {
         background: rgba(0,73,175,.3) url(<?php echo get_template_directory_uri(); ?>/assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
-    }
+    } */
     .hero__right span:nth-child(5) {
         background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-328.jpg)
     }
@@ -30,12 +30,12 @@
         background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-334.jpg)
     }
     @media screen and (min-width: 35.5em) {
-        .hero {
+        /* .hero {
             background: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-6.jpg) no-repeat center/cover
-        }
-        .numbers>div:nth-child(1) {
+        } */
+        /* .numbers>div:nth-child(1) {
             background: rgba(0,73,175,.3) url(<?php echo get_template_directory_uri(); ?>/assets/images/couple-choosing-fabric-in-furniture-store-1.jpg) no-repeat center/cover;
-        }
+        } */
         .hero__left {
             background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/image-5.jpg);
         }

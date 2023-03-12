@@ -181,6 +181,15 @@
 .work h2 {
     font-size: var(--fs-4)
 }
+@media screen and (max-width: 35.5em){
+   .numbers>div:nth-child(1) {
+        background: unset !important;
+    } 
+    .hero {
+        background-position: 20% bottom !important;
+    }
+
+}
 
 @media screen and (min-width: 35.5em) {
     .hero {
