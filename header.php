@@ -43,12 +43,31 @@
 </style>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php
+
+$theme_locations = get_nav_menu_locations();
+
+$menu_obj = get_term( $theme_locations[ 'menu-primary'], 'nav_menu' );
+
+$menu_id = $menu_obj->term_id;
+
+$phone = get_field('menu_phone','menu_' . $menu_id);
+$email = get_field('menu_email','menu_' . $menu_id);
+
+?>
 <div id="preloader"><svg><circle id="preloader_animation" cx="50%" cy="50%" r="15" fill="rgba(0,0,0,0)" stroke-width="1" stroke="white" ;/></svg></div>
     <header>
         <nav class="navbar">
             <div class="navbar-main">
                 <div class="navbar-group">
-                    <div class="link-group" type="group"><a href="tel:+1818-696-3839" class="link xs">+1818-696-3839</a> <a href="mailto:orders@sibosfurniture" class="link xs">orders@sibosfurniture</a></div><a href="my-cart.html" class="link" type="button"><i class="icon-cart-icon fa-2xl"></i></a></div>
+                    <div class="link-group" type="group">
+                        <a href="tel:<?php echo esc_attr($phone);?>" class="link xs"><?php echo esc_attr($phone);?></a> 
+                        <a href="mailto:<?php echo esc_attr($email);?>" class="link xs"><?php echo esc_attr($email);?></a>
+                    </div>
+                    <a href="my-cart.html" class="link" type="button">
+                        <i class="icon-cart-icon fa-2xl"></i>
+                    </a>
+                </div>
                 <figure>
                     <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="navbar logo"></a>
                 </figure>

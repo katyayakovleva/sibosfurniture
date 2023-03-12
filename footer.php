@@ -6,11 +6,23 @@
  */
 
 ?>
+<?php
+
+$theme_locations = get_nav_menu_locations();
+
+$menu_obj = get_term( $theme_locations[ 'footer-menu'], 'nav_menu' );
+
+$menu_id = $menu_obj->term_id;
+
+$facebook = get_field('facebook','menu_' . $menu_id);
+$instagram = get_field('instagram','menu_' . $menu_id);
+// $contact_us_form = get_field('contact_us_form','menu_' . $menu_id);
+?>
     <footer id="contact-us" class="bg-blue-2">
         <div class="cols">
             <div class="col-1 col-sm-2-3">
                 <figure class="pb-2 pb-sm-3">
-                    <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos-white.svg" alt="logo"></a>
+                    <a href="<?php echo home_url();?>"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos-white.svg" alt="logo"></a>
                 </figure>
                 <div class="cols">
                     <div class="col-1 col-sm-1-2 col-xl-1-3 d-flex fd-col ai-center ai-sm-start">
@@ -56,8 +68,8 @@
                             </div>
                             <div class="col-1 my-2 mt-sm-0">
                                 <ul class="d-flex g-4 g-sm-2 p-0 pl-sm-3 jc-center jc-sm-start">
-                                    <li><a href="#" class="link blue fs-4" aria-label="Facebook"><i class="fa-brands fa-square-facebook fa-3x"></i></a></li>
-                                    <li><a href="#" class="link blue fs-4" aria-label="Instagram"><i class="fa-brands fa-instagram fa-3x"></i></a></li>
+                                    <li><a href="<?php echo esc_url($facebook); ?> " target="_blank" class="link blue fs-4" aria-label="Facebook"><i class="fa-brands fa-square-facebook fa-3x"></i></a></li>
+                                    <li><a href="<?php echo esc_url($instagram); ?>"target="_blank" class="link blue fs-4" aria-label="Instagram"><i class="fa-brands fa-instagram fa-3x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -73,7 +85,8 @@
 <!--                    <div class="form-control white"><label for="interest">I'm interested in</label> <input type="text" id="interest" name="interest" aria-label="Interest" placeholder=" "></div><button type="submit" class="btn white mt-1 as-center as-sm-start">Call me</button>-->
 <!--                </form>-->
                 <!-- <?php echo do_shortcode( '[contact-form-7 id="11" title="Contact form"]' );?> -->
-                <?php echo do_shortcode( '[contact-form-7 id="118" title="Contact form footer"]' );?>
+                <?php echo do_shortcode(get_field('contact_us_form','menu_' . $menu_id) );?>
+                <!-- <?php echo do_shortcode( '[contact-form-7 id="118" title="Contact form footer"]' );?> -->
             </div>
         </div>
         <div class="cols mt-3">
