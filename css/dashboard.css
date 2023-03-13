@@ -333,7 +333,21 @@
     margin-top: 1em;
     width: 100%
 }
-
+.no_orders{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+.no_orders p{
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: 1.5625em;
+    font-weight: 700;
+    color: #0049af;
+    text-transform: uppercase;
+    text-align: center;
+}
 .addresses>div {
     display: flex;
     flex-direction: column;
@@ -597,7 +611,9 @@
         width: -moz-fit-content;
         width: fit-content
     }
-
+    .no_orders p {
+        font-size: 3.125em
+    }
     .addresses>div {
         gap: 0
     }

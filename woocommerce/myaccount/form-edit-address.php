@@ -35,10 +35,10 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 				<h2><?php echo apply_filters( 'woocommerce_my_account_edit_address_title', $page_title, $load_address ); ?></h2><?php // @codingStandardsIgnoreLine ?>
 			</header>
 			<section class="header-block__body">
-				<form method="post">
+				<form method="post" class="form_edit">
 
 						<?php do_action( "woocommerce_before_edit_address_form_{$load_address}" ); ?>
-
+ 
 						<!-- <div class="woocommerce-address-fields__field-wrapper"> -->
 							<?php
 							foreach ( $address as $key => $field ) {

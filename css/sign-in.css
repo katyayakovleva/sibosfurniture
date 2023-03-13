@@ -163,7 +163,10 @@
         font-size:var(--fs-2)
     }
 }
-.edit-adress-form-label{
+.select-form-control{
+    width: 100%;
+}
+.select-form-control label{
     font-size: var(--fs-5);
     color: #0049af;
     /* text-align: end; */
@@ -171,21 +174,29 @@
     white-space: nowrap;
     padding-left: 1px;
     padding-right: 0.5em;
+}
+.select-form-control span{
+    color: #0049af !important;
+
+}
+.select2-selection--single {
+    border: 2px solid #0049af !important;
+    border-radius: 4px !important;
+    font-size: var(--fs-5);
+    height: unset !important;
+    
+}
+.select-form-control input[type='text']{
+    box-sizing: border-box;
+    width: 100%;
+    background: 0 0;
+    border: none;
+    border-radius: 0;
+    outline: 0;
+    caret-color: #d1d1d1;
+    transition: all ease-in-out .12s
 }
 
-.select-country-state{
-    width: 100%;
-    background-color: #fff;
-    border: 2px solid #0049af;
-    border-radius: 4px;
-    font-size: var(--fs-5);
-    color: #0049af;
-    /* text-align: end; */
-    margin-block: 0;
-    white-space: nowrap;
-    padding-left: 1px;
-    padding-right: 0.5em;
-}
 .checkout_title{
     font-weight: 700;
     color: #6da1eb;
@@ -207,8 +218,16 @@
     border-radius:4px;
     transform: translateY(-0.075em);
 }
-
-.note-textarea{
+.checkout-note label{
+    font-size: var(--fs-5);
+    color: #0049af;
+    /* text-align: end; */
+    margin-block: 0;
+    white-space: nowrap;
+    padding-left: 1px;
+    padding-right: 0.5em;
+}
+.checkout-note textarea{
     width: 100%;
     background-color: #fff;
     border: 2px solid #0049af;
@@ -221,7 +240,7 @@
     padding-right: 0.5em;
     resize:vertical;
 }
-.note-textarea::placeholder {
+.checkout-note textarea::placeholder {
     color: #0049af;
     opacity: 0.5;
   }

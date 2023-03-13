@@ -3300,8 +3300,8 @@ a.blue:hover {
     display: inline-flex;
     align-items: flex-end;
     position: relative;
-    padding-block: 1em;
-    overflow: hidden
+    padding-block: 1em !important;
+    overflow: hidden;
 }
 
 .form-control input {
@@ -3314,7 +3314,9 @@ a.blue:hover {
     caret-color: #d1d1d1;
     transition: all ease-in-out .12s
 }
-
+.form-control span{
+    color: #0049af;
+}
 .form-control input:-webkit-autofill {
     background-color: transparent
 }
@@ -3338,7 +3340,8 @@ a.blue:hover {
     margin-block: 0;
     white-space: nowrap;
     padding-left: 1px;
-    padding-right: .5em
+    padding-right: .5em;
+    line-height: unset !important;
 }
 
 .form-control::after {
@@ -4164,7 +4167,7 @@ footer {
         transform: none
     }
     .form-control {
-        padding-block: .5em
+        padding-block: .5em !important;
     }
     .form-group {
         max-width: none;
@@ -4401,6 +4404,9 @@ footer {
         --swiper-slide-number: 3
     }
 }
-/* .woocommerce{
+.woocommerce{
     width: 100%;
-} */
+}
+.required{
+    color: #0049af !important;
+}

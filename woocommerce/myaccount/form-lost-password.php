@@ -32,10 +32,10 @@ do_action( 'woocommerce_before_lost_password_form' );
 			<section class="header-block__body">	
 				<form method="post">
 
-					<p><?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
+					<p class="ff-ms fs-5 fc-dark my-2"><?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Lost your password? Please enter your email address. You will receive a link to create a new password via email.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
 
 					<div class="form-control">
-						<label for="user_login">Email</label>
+						<label for="user_login">Email&nbsp;<span class="required">*</span></label>
 						<input type="text" name="user_login" id="user_login" autocomplete="username" />
 					</div>
 

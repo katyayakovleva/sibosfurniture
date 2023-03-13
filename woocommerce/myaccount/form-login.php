@@ -49,7 +49,7 @@ if ( !is_user_logged_in() ) :
 						<h2>New account</h2>
 					</header>
 					<section class="header-block__body">
-						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?>action="<?php bloginfo('/myco/'); ?>/">
+						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?> action="<?php echo home_url('/my-account/');?>">
 							<?php do_action( 'woocommerce_register_form_start' ); ?>
 							<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -65,9 +65,10 @@ if ( !is_user_logged_in() ) :
 								<div class="form-control">
 									<label for="reg_password">Password&nbsp;<span class="required">*</span></label>
 									<input type="password" name="password" id="reg_password" autocomplete="new-password" />
+									<span id="toggle_pwd" class="fa fa-fw fa-eye field_icon"></span>
 								</div>
 							<?php else : ?>
-								<p><?php esc_html_e( 'A password will be sent to your email address.', 'woocommerce' ); ?></p>
+								<!-- <p><?php //esc_html_e( 'A password will be sent to your email address.', 'woocommerce' ); ?></p> -->
 							<?php endif; ?>
 							<?php do_action( 'woocommerce_register_form' ); ?>
 								<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>

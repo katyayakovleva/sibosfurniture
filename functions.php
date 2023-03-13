@@ -210,7 +210,7 @@ function sibosfurniture_scripts() {
 		wp_enqueue_style( 'dashboards', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
 		wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
 		wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
-		
+
 		
 		wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
 		wp_enqueue_script( 'script-checkout', get_template_directory_uri() . '/js/script-checkout.js', array(), rand(111,9999), true );
@@ -559,11 +559,11 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 
 
 
-add_filter( 'woocommerce_new_customer_data', function( $data ) {
-	$data['user_login'] = $data['user_email'];
+// add_filter( 'woocommerce_new_customer_data', function( $data ) {
+// 	$data['user_login'] = $data['user_email'];
 
-	return $data;
-} );
+// 	return $data;
+// } );
 
 /**
   * show more posts with ajax
@@ -719,67 +719,84 @@ function filter_woocommerce_form_field_radio( $field, $key, $args, $value ) {
 
 		$field .='</p>';
 	}
-	if ( $args['type'] == 'country'){
-		// $field ='<div class="form-control">';
-		$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
-		$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
+	// if ( $args['type'] == 'country'){
+	// 	// $field ='<div class="form-control">';
+	// 	$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+	// 	$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
 		
-		if ( 1 === count( $countries ) ) {
+	// 	if ( 1 === count( $countries ) ) {
 
-			$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
+	// 		$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
 
-			$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" class="country_to_state" readonly="readonly" />';
+	// 		$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" class="country_to_state" readonly="readonly" />';
 
-		} else {
-			$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
+	// 	} else {
+	// 		$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
 
-			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state"  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_attr__( 'Select a country / region&hellip;', 'woocommerce' ) ) . '" ' . $data_label . '>
-			<option value="">' . esc_html__( 'Select a country / region&hellip;', 'woocommerce' ) . '</option>';
+	// 		$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state"  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_attr__( 'Select a country / region&hellip;', 'woocommerce' ) ) . '" ' . $data_label . '>
+	// 		<option value="">' . esc_html__( 'Select a country / region&hellip;', 'woocommerce' ) . '</option>';
 
-			foreach ( $countries as $ckey => $cvalue ) {
-				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
-			}
+	// 		foreach ( $countries as $ckey => $cvalue ) {
+	// 			$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
+	// 		}
 
-			$field .= '</select>';
+	// 		$field .= '</select>';
 
-			$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country / region', 'woocommerce' ) . '">' . esc_html__( 'Update country / region', 'woocommerce' ) . '</button></noscript>';
+	// 		$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country / region', 'woocommerce' ) . '">' . esc_html__( 'Update country / region', 'woocommerce' ) . '</button></noscript>';
 			
-		}
-		// $field .='</div>';
-	}
-	if($args['type'] == 'state'){
-		$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
-		$for_country = isset( $args['country'] ) ? $args['country'] : WC()->checkout->get_value( 'billing_state' === $key ? 'billing_country' : 'shipping_country' );
-		$states      = WC()->countries->get_states( $for_country );
+	// 	}
+	// 	// $field .='</div>';
+	// }
+	// if($args['type'] == 'state'){
+	// 	$field = '<label class="edit-adress-form-label" for="'.esc_attr( $key ).'">'. wp_kses_post( $args['label'] ) .$required.'</label>';
+	// 	$for_country = isset( $args['country'] ) ? $args['country'] : WC()->checkout->get_value( 'billing_state' === $key ? 'billing_country' : 'shipping_country' );
+	// 	$states      = WC()->countries->get_states( $for_country );
 
-		if ( is_array( $states ) && empty( $states ) ) {
+	// 	if ( is_array( $states ) && empty( $states ) ) {
 
-			$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
+	// 		$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
 
-			$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
+	// 		$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
 
-		} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
-			$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
+	// 	} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
+	// 		$data_label = ! empty( $args['label'] ) ? 'data-label="' . esc_attr( $args['label'] ) . '"' : '';
 
-			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state "  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . $data_label . '>
-				<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
+	// 		$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select-country-state "  data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . $data_label . '>
+	// 			<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
 
-			foreach ( $states as $ckey => $cvalue ) {
-				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
-			}
+	// 		foreach ( $states as $ckey => $cvalue ) {
+	// 			$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . esc_html( $cvalue ) . '</option>';
+	// 		}
 
-			$field .= '</select>';
+	// 		$field .= '</select>';
 
-		} else {
+	// 	} else {
 
-			$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
+	// 		$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '"  data-input-classes="' . esc_attr( implode( ' ', $args['input_class'] ) ) . '"/>';
 
-		}
-	}
+	// 	}
+	// }
 	
     
     return $field;
 }
-add_filter( 'woocommerce_form_field', 'filter_woocommerce_form_field_radio', 10, 4 );
+// add_filter( 'woocommerce_form_field', 'filter_woocommerce_form_field_radio', 10, 4 );
 
-// add_filter( 'woocommerce_form_field_email', 'filter_woocommerce_form_field_radio', 10, 4 );
+
+function action_woocommerce_customer_save_address( $user_id, $load_address ) { 
+	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
+	exit;
+}; 
+add_action( 'woocommerce_customer_save_address', 'action_woocommerce_customer_save_address', 99, 2 ); 
+
+function action_woocommerce_customer_redirect_on_my_account_addresses( $user_id, $load_address ) { 
+	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
+	exit;
+}; 
+add_action( 'woocommerce_customer_save_address', 'action_woocommerce_customer_redirect_on_my_account_adresses', 99, 2 ); 
+
+function action_woocommerce_customer_redirect_on_my_account_account_details( $user_id ) { 
+	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
+	exit;
+};
+add_action('woocommerce_update_customer','action_woocommerce_customer_redirect_on_my_account_account_details', 99);

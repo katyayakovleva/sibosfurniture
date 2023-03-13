@@ -31,7 +31,7 @@ do_action( 'woocommerce_before_reset_password_form' );
             <section class="header-block__body">
                 <form method="post">
 
-                    <p><?php echo apply_filters( 'woocommerce_reset_password_message', esc_html__( 'Enter a new password below.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
+                    <p class="ff-ms fs-5 fc-dark my-2"><?php echo apply_filters( 'woocommerce_reset_password_message', esc_html__( 'Enter a new password below.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
 
                     <div class="form-control">
                         <label for="password_1">New password&nbsp;<span class="required">*</span></label>

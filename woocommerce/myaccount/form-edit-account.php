@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 // $user = get_customer(get_current_user_id() );
 do_action( 'woocommerce_before_edit_account_form' ); ?>
 
-        <form  action="" method="post" <?php do_action( 'woocommerce_edit_account_form_tag' ); ?> >
+        <form  method="post" <?php do_action( 'woocommerce_edit_account_form_tag' ); ?> >
 
             <?php do_action( 'woocommerce_edit_account_form_start' ); ?>
             <div>
