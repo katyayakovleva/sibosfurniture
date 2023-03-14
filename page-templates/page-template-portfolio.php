@@ -15,7 +15,17 @@ get_header();
                 <h1 class="ff-ms fs-2 fc-blue-2 fw-7">Portfolio</h1>
             </header>
             <section class="grid-container">
-                <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1.jpg" alt="grid item image"> </a>
+            <?php //echo do_shortcode(get_field('gallery_shortcode') );?>
+            <?php 
+            if ( $gallery = get_post_gallery( get_the_ID(), false ) ) :
+                foreach ( $gallery['src'] as $src ) {
+                            ?>                
+                           <a href="#" class="grid-item"> <img src="<?php echo $src; ?>"alt="portfolio"  /></a>
+                    <?php
+                }
+            endif;
+            ?>
+                <!-- <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1.jpg" alt="grid item image"> </a>
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-2.jpg" alt="grid item image"> </a>
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-3.jpg" alt="grid item image"> </a>
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1.jpg" alt="grid item image"> </a>
@@ -23,7 +33,7 @@ get_header();
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-3.jpg" alt="grid item image"> </a>
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-1.jpg" alt="grid item image"> </a>
                 <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-2.jpg" alt="grid item image"> </a>
-                <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-3.jpg" alt="grid item image"></a>
+                <a href="#" class="grid-item"><img src="assets/images/trend-K9pU2u0Z5WU-unsplash-3.jpg" alt="grid item image"></a> -->
             </section>
         </article>
         <article class="px-3 px-sm-4 bg-blue-5">
