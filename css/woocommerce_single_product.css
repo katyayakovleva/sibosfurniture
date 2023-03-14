@@ -1,3 +1,6 @@
+.woocommerce .product-main-info .onsale {
+    margin-inline: 5.25em!important;
+}
 .wpgs-for .slick-arrow {
     position: absolute;
     z-index: 1;
@@ -17,7 +20,7 @@ div.header-padding {
     align-items: center;
     gap: .5em
 }
-.product-main-info, .woocommerce-tabs, .related_products_div{
+.product-main-info, .woocommerce-tabs, .related_products_div, .breadcrumb{
     padding-inline: 1.5em!important;
 }
 .woocommerce div.product div.images img {
@@ -289,7 +292,7 @@ section.related.products .related_products_div .swiper-slide .price{
     .woocommerce-page div.product div.images{
         width: 39.5%;
     }
-    .product-main-info, .woocommerce-tabs, .related_products_div{
+    .product-main-info, .woocommerce-tabs, .related_products_div, .breadcrumb {
         padding-inline: 4.5em!important;
     }
     .wpgs-nav .slick-track {
@@ -356,6 +359,9 @@ section.related.products .related_products_div .swiper-slide .price{
     }
 }
 @media screen and (max-width: 35.5em){
+    .woocommerce .product-main-info .onsale {
+        margin-inline: 1.75em!important;
+    }
     .summary.entry-summary{
         border: none;
         padding: 0;

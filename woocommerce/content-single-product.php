@@ -26,6 +26,8 @@ $pieces = explode(' ', $SKU);
 $SKU_last_word = array_pop($pieces);
 $SKU_first_words = implode(' ', $pieces);
 $short_description = $product->get_short_description();
+$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
+$current_post = get_the_ID();
 /**
  * Hook: woocommerce_before_single_product.
  *
@@ -38,8 +40,14 @@ if ( post_password_required() ) {
     return;
 }
 ?>
+
     <div class="header-padding">
     <article class="product-article">
+        <div class="breadcrumb my-1">
+            <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
+            <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Shop</a></div>
+            <div class="breadcrumb__item"><a href="<?php echo get_permalink();?>" class="link"><?php the_title(); ?></a></div>
+        </div>
     <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
         <div class="product-main-info">
             <?php
