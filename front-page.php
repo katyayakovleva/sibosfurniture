@@ -44,29 +44,34 @@ get_header();
                 )
             );
         ?>
+        <?php
+            $slider_1 = get_field('slider_1');
+            $slider_2 = get_field('slider_2');
+            $slider_3 = get_field('slider_3');
+        ?>
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/IMG_7727-1.jpg" alt="slide 1 background">
+            <div class="swiper-slide"><img src="<?php echo esc_url($slider_1['image']); ?>" alt="slide 1 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0">Discount for 1st order</h2>
-                    <p class="ff-ms fs-5 fc-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_1['title']); ?></h2>
+                    <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_1['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
                     <p>01</p>
                 </div>
             </div>
-            <div class="swiper-slide"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/image_2023-01-25_19-47-462-1.jpg" alt="slide 2 background">
+            <div class="swiper-slide"><img src="<?php echo esc_url($slider_2['image']); ?>" alt="slide 2 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0">About us</h2>
-                    <p class="ff-ms fs-5 fc-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolvore magna aliqua.</p>
+                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_2['title']); ?></h2>
+                    <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_2['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
                     <p>02</p>
                 </div>
             </div>
-            <div class="swiper-slide"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Untitled-1-1.jpg" alt="slide 3 background">
+            <div class="swiper-slide"><img src="<?php echo esc_url($slider_3['image']); ?>" alt="slide 3 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0">High-quality material</h2>
-                    <p class="ff-ms fs-5 fc-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolvore magna aliqua.</p>
+                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_3['title']); ?></h2>
+                    <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_3['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
                     <p>03</p>
@@ -77,22 +82,29 @@ get_header();
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </article>
-    <article class="advantages"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/image-4.jpg" alt="advantages background">
+    <?php 
+        $our_advantages = get_field('our_advantages');
+        $advantage_1 = $our_advantages['advantage_1'];
+        $advantage_2 = $our_advantages['advantage_2'];
+        $advantage_3 = $our_advantages['advantage_3'];
+    ?>
+    <article class="advantages"><img src="<?php echo esc_url($our_advantages['our_advantages_background']); ?>" alt="advantages background">
         <header class="bg-blue-2 pt-2">
             <h1 class="offset ff-ms fs-1 fc-white">Our<br>advantages</h1>
         </header>
+
         <section>
             <article class="advantages-post">
-                <p class="fs-5 fc-white ff-ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p class="fs-3 fc-white ff-ms">Icon name</p>
+                <p class="fs-5 fc-white ff-ms"><?php echo esc_attr($advantage_1['text']); ?></p>
+                <p class="fs-3 fc-white ff-ms"><?php echo esc_attr($advantage_1['title']); ?></p>
             </article>
             <article class="advantages-post">
-                <p class="fs-5 fc-white ff-ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p class="fs-3 fc-white ff-ms">Icon name</p>
+                <p class="fs-5 fc-white ff-ms"><?php echo esc_attr($advantage_2['text']); ?></p>
+                <p class="fs-3 fc-white ff-ms"><?php echo esc_attr($advantage_2['title']); ?></p>
             </article>
             <article class="advantages-post">
-                <p class="fs-5 fc-white ff-ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p class="fs-3 fc-white ff-ms">Icon name</p>
+                <p class="fs-5 fc-white ff-ms"><?php echo esc_attr($advantage_3['text']); ?></p>
+                <p class="fs-3 fc-white ff-ms"><?php echo esc_attr($advantage_3['title']); ?></p>
             </article>
         </section>
     </article>
@@ -137,11 +149,23 @@ get_header();
             </a>
         </section>
     </article>
+    <?php
+            $galleries = get_post_galleries(get_the_ID(), false);
+            $first_gallery = $galleries[0];
+            $second_gallery = $galleries[1];
+        ?>
     <article class="cam" data-toggle="carousel" data-interval="1000">
         <section>
             <h2 class="ff-ms fs-1 fw-7 fc-white">CHOOSE<br>COLOR<br>AND<br>MATERIAL</h2>
-            <div class="cam-colors-images"><img aria-current="true" src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-10.jpg" alt="colors blue image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-11.jpg" alt="colors purple image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-12.jpg"
-                    alt="colors red image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/alexander-pogorelsky-5woHQB_1LLk-unsplash-13.jpg" alt="colors yellow image"></div>
+            <div class="cam-colors-images">
+                <?php if($first_gallery): 
+                    $number = 1;
+                    foreach($first_gallery['src'] as $src):?>
+                        <img aria-current="<?php if($number== 1): echo "true"; endif; ?>" src="<?php echo $src; ?>" alt="material blue image"> 
+
+                <?php endforeach;
+                endif;?>
+            </div>
         </section>
         <?php
             $page_template = get_pages( array(
@@ -150,11 +174,31 @@ get_header();
                 'meta_value' => 'page-templates/page-template-colors-and-materials.php',
                 ));
         ?>  
+        
         <section>
-            <div class="cam-materials-images"><img aria-current="true" src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-8.png" alt="material blue image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-9.png" alt="material purple image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-10.png" alt="material red image"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stil4uk-11.png"
-                    alt="material yellow image"></div><a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mt-1">Colors and Materials</a></section>
+            <div class="cam-materials-images">
+                <?php if($second_gallery): 
+                    $number = 1;
+                    foreach($second_gallery['src'] as $src):?>
+                        <img aria-current="<?php if($number== 1): echo "true"; endif; ?>" src="<?php echo $src; ?>" alt="material blue image"> 
+
+                    <?php endforeach;
+                    endif;
+                    ?>
+            </div>
+            <a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mt-1">Colors & Materials</a>
+        </section>
         <div class="cam-controll">
-            <div><span aria-current="true" type="button"></span> <span type="button"></span> <span type="button"></span> <span type="button"></span></div><span><a href="colors-and-materials.html" class="btn my-1 mx-auto">Colors & Materials</a></span></div>
+            <div>
+                <span aria-current="true" type="button"></span> 
+                <span type="button"></span> 
+                <span type="button"></span> 
+                <span type="button"></span>
+            </div>
+            <span>
+                <a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn my-1 mx-auto">Colors & Materials</a>
+            </span>
+        </div>
     </article>
     <article id="reviews" class="px-2 px-sm-4">
         <h2 class="w-75 w-sm-100 ff-ms fs-2 fc-blue-2 ta-center mx-auto">GOOGLE REVIEWS</h2>

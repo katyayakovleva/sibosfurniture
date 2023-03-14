@@ -69,7 +69,7 @@ $email = get_field('menu_email','menu_' . $menu_id);
                     </a>
                 </div>
                 <figure>
-                    <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="navbar logo"></a>
+                    <a href="<?php echo home_url();?>">"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="navbar logo"></a>
                 </figure>
                 <div class="navbar-group">
                     <div class="navbar-search">
