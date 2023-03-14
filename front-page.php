@@ -188,12 +188,15 @@ get_header();
             </div>
             <a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mt-1">Colors & Materials</a>
         </section>
+        <?php
+            $colors_and_materials_gallery =  get_field('colors_and_materials_gallery');
+        ?>
         <div class="cam-controll">
             <div>
-                <span aria-current="true" type="button"></span> 
-                <span type="button"></span> 
-                <span type="button"></span> 
-                <span type="button"></span>
+                <span aria-current="true" type="button" style="background-color: <?php echo esc_attr($colors_and_materials_gallery['color_1']); ?>"></span> 
+                <span type="button" style="background-color: <?php echo esc_attr($colors_and_materials_gallery['color_2']); ?>"></span> 
+                <span type="button" style="background-color: <?php echo esc_attr($colors_and_materials_gallery['color_3']); ?>"></span> 
+                <span type="button" style="background-color: <?php echo esc_attr($colors_and_materials_gallery['color_4']); ?>"></span>
             </div>
             <span>
                 <a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn my-1 mx-auto">Colors & Materials</a>

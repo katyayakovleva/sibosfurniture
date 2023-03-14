@@ -375,7 +375,7 @@
     height: 100%
 }
 
-.cam .cam-controll>div span:nth-child(1) {
+/* .cam .cam-controll>div span:nth-child(1) {
     background-color: #4f93b0
 }
 
@@ -389,7 +389,7 @@
 
 .cam .cam-controll>div span:nth-child(4) {
     background-color: #743c32
-}
+} */
 
 .cam .cam-controll>div span:hover {
     opacity: .8
