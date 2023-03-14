@@ -266,7 +266,25 @@ section.related.products .related_products_div .swiper-slide .price{
     font-size: 1.56em;
     font-weight: 700;
 }
-
+.cart_btn{
+    display: none;
+}
+.woocommerce-message{
+    display: none;
+}
+.var_info span.price{
+    color: #6da1eb!important;
+}
+.var_info span.price ins{
+    text-decoration: none;
+}
+.var_info{
+    width: min-content;
+}
+.woocommerce div.product form.cart .button {
+    height: min-content;
+    align-self: center;
+}
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
         width: 39.5%;
