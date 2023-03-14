@@ -244,11 +244,6 @@
     flex-direction: column;
     gap: 1em
 }
-
-.cart-coupon__coupon form .btn {
-    display: none
-}
-
 @media screen and (min-width:35.5em) {
     .stepper-input {
         display: flex;
@@ -304,7 +299,8 @@
     .cart-block__header {
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: 4fr 2fr 2fr 1fr;
+        /*grid-template-columns: 4fr 2fr 2fr 1fr;*/
+        grid-template-columns: 8fr 4fr 4fr 2fr 1fr;
         padding: 1em 2em
     }
 
@@ -326,7 +322,8 @@
     .cart-block__row {
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: 4fr 2fr 2fr 1fr;
+        /*grid-template-columns: 4fr 2fr 2fr 1fr;*/
+        grid-template-columns: 8fr 4fr 4fr 2fr 1fr;=
         grid-template-rows: 1fr;
         padding: 1em 2em
     }
@@ -390,7 +387,7 @@
         padding-block: 1em
     }
 
-    .cart-coupon .btn {
+    table.cart-coupon-table .btn {
         flex-shrink: 0
     }
 
@@ -415,7 +412,4 @@
         gap: 1em
     }
 
-    .cart-coupon__coupon form .btn {
-        display: block
-    }
 }
