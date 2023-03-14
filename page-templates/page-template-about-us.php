@@ -76,7 +76,8 @@ get_header();
             <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($our_goal_text); ?></p>
         </div>
     </article>
-    <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
+    <?php get_template_part( 'template-parts/content', 'popular-products' ); ?>
+    <!-- <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
         <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
         <div class="swiper-per-view">
             <div class="swiper-wrapper">
@@ -103,6 +104,12 @@ get_header();
         <p class="ff-ms fs-5 fc-blue-2 d-none d-sm-inline">Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum
             velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus
             nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.</p>
+    </article> -->
+    <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
+        <p class="ff-ms fs-5 fc-blue-2 d-none d-sm-inline">Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum
+            velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus
+            nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
+        </p>
     </article>
 </main>
 
