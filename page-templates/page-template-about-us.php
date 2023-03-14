@@ -106,10 +106,7 @@ get_header();
             nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.</p>
     </article> -->
     <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
-        <p class="ff-ms fs-5 fc-blue-2 d-none d-sm-inline">Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum
-            velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus
-            nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
-        </p>
+        <p class="ff-ms fs-5 fc-blue-2 d-none d-sm-inline"><?php the_field('after_top_sellings_text'); ?> </p>
     </article>
 </main>
 
