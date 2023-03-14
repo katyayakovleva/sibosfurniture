@@ -17,8 +17,8 @@
         )
     );
 ?>
-<article class="px-3 px-sm-4 bg-blue-5">
-    <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
+<!--<article class="px-3 px-sm-4 bg-blue-5 related products">-->
+<!--        <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>-->
     <div class="swiper-per-view">
         <div class="swiper-wrapper">
         <?php if ( $popular_products->have_posts() ):
@@ -41,4 +41,4 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
-</article>
+<!--</article>-->

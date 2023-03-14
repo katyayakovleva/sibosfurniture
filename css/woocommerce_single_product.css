@@ -259,16 +259,6 @@ bdi{
 section.related.products{
     background-color: rgba(0, 73, 175, .1019607843)!important;
 }
-section.related.products .related_products_div{
-    padding-top: 0.5em;
-}
-section.related.products .related_products_div .swiper-slide{
-    height: auto;
-}
-section.related.products .related_products_div .swiper-slide .price{
-    font-size: 1.56em;
-    font-weight: 700;
-}
 .cart_btn{
     display: none;
 }
@@ -335,10 +325,6 @@ section.related.products .related_products_div .swiper-slide .price{
     }
     .woocommerce-Tabs-panel--description>p{
         font-size: 1.25em!important;
-    }
-    section.related.products .related_products_div .swiper-slide .price{
-        font-size: 1.56em;
-        font-weight: 400;
     }
     .yith-wcwl-add-to-wishlist{
         margin-bottom: 3em;
