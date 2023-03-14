@@ -62,3 +62,4 @@ if ( ! wp_doing_ajax() ) {
 if ( ! wp_doing_ajax() ) {
 	do_action( 'woocommerce_review_order_after_payment' );
 }
+?>
