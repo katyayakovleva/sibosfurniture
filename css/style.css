@@ -82,6 +82,9 @@ input[type=button] {
     left: auto;
      margin: 0;
 }
+.woocommerce input:focus-visible{
+    outline: none!important;
+}
 abbr[title] {
     border-bottom: none;
     text-decoration: underline;

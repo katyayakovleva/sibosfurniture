@@ -142,7 +142,6 @@ add_action( 'widgets_init', 'sibosfurniture_widgets_init' );
  * Enqueue scripts and styles.
  */
 function sibosfurniture_scripts() {
-//    wp_enqueue_style( 'woocommerce_single_product', get_template_directory_uri(). '/css/woocommerce_single_product.css', array(), rand(111,9999));
     wp_enqueue_style( 'sibosfurniture-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_enqueue_style( 'style', get_template_directory_uri(). '/css/style.css', array(), rand(111,9999));
 	wp_enqueue_style( 'swiper-bundle', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css', array(), rand(111,9999));
@@ -229,7 +228,11 @@ function sibosfurniture_scripts() {
 //        wp_enqueue_script( 'swiper-item-gallery', get_template_directory_uri() . '/js/swiper-item-gallery.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
 
-	}
+	} elseif(is_cart()){
+        wp_enqueue_style( 'my-cart', get_template_directory_uri(). '/css/my-cart.css', array(), rand(111,9999));
+        wp_enqueue_style( 'woocommerce_my-cart', get_template_directory_uri(). '/css/woocommerce_my-cart.css', array(), rand(111,9999));
+        wp_enqueue_script( 'woocommerce_cart', get_template_directory_uri() . '/js/woocommerce_cart.js', array(), rand(111,9999), true );
+    }
     else{
 
 	}
@@ -331,6 +334,69 @@ function misha_rename_reviews_tab( $tabs ) {
     $tabs[ 'reviews' ][ 'title' ] = 'Feedback';
     return $tabs;
 }
+//function filter_woocommerce_cart_totals_coupon_html( $coupon_html, $coupon, $discount_amount_html ) {
+//    // Change returned text
+//    return str_replace( '[Remove]', '<i class="fa-solid fa-xmark"></i>', $coupon_html );
+//}
+//add_filter( 'woocommerce_cart_totals_coupon_html', 'filter_woocommerce_cart_totals_coupon_html', 10, 3 );
+
+// -------------
+// 1. Show plus minus buttons
+
+add_action( 'woocommerce_before_quantity_input_field', 'bbloomer_display_quantity_plus' );
+
+function bbloomer_display_quantity_plus() {
+    echo '<button type="button" class="plus cart_btn">+</button>';
+}
+
+add_action( 'woocommerce_after_quantity_input_field', 'bbloomer_display_quantity_minus' );
+
+function bbloomer_display_quantity_minus() {
+    echo '<button type="button" class="minus cart_btn">-</button>';
+}
+
+// -------------
+// 2. Trigger update quantity script
+
+add_action( 'wp_footer', 'bbloomer_add_cart_quantity_plus_minus' );
+
+function bbloomer_add_cart_quantity_plus_minus() {
+
+    if ( ! is_product() && ! is_cart() ) return;
+
+    wc_enqueue_js( "   
+           
+      $(document).on( 'click', 'button.plus, button.minus', function() {
+  
+         var qty = $( this ).parent( '.quantity' ).find( '.qty' );
+         var val = parseFloat(qty.val());
+         var max = parseFloat(qty.attr( 'max' ));
+         var min = parseFloat(qty.attr( 'min' ));
+         var step = parseFloat(qty.attr( 'step' ));
+ 
+         if ( $( this ).is( '.plus' ) ) {
+            if ( max && ( max <= val ) ) {
+               qty.val( max ).change();
+            } else {
+               qty.val( val + step ).change();
+            }
+         } else {
+            if ( min && ( min >= val ) ) {
+               qty.val( min ).change();
+            } else if ( val > 1 ) {
+               qty.val( val - step ).change();
+            }
+         }
+ 
+      });
+        
+   " );
+}
+add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+
+
+
+
 
 add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
 
