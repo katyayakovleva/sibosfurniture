@@ -1,3 +1,6 @@
+::-webkit-scrollbar {
+    display: none;
+}
 .woocommerce{
     display: contents;
 }
@@ -23,15 +26,9 @@
 .woocommerce .woocommerce-cart-form thead tr{
     border-bottom: 2px solid #0049af;
 }
-.woocommerce .woocommerce-cart-form thead tr th{
-    /*border-bottom: 2px solid #0049af;*/
-}
 .woocommerce .woocommerce-cart-form tbody tr td.product-name{
     padding-left: 2em;
 }
-/*.woocommerce .woocommerce-cart-form tbody tr:not(:last-of-type) td{*/
-/*    border-bottom: 2px solid #0049af;*/
-/*}*/
 table.shop_table tbody td{
     display: flex;
     gap: 0.5em;
@@ -68,18 +65,9 @@ div.total_price_and_coupon table.cart-coupon-table{
     order: 20;
     padding-block: 1em;
 }
-/*table.shop_table-totals{*/
-/*    border-top: none!important;*/
-/*}*/
 table.shop_table-totals tr{
     grid-template-columns: 16fr 4fr!important;
 }
-/*table.shop_table-totals tr:not(:last-of-type) th{*/
-/*    border-bottom: 2px solid #0049af;*/
-/*}*/
-/*table.shop_table-totals tr:not(:last-of-type) th{*/
-/*    border-bottom: 2px solid #0049af;*/
-/*}*/
 table.shop_table-totals tr th{
     font-size: var(--fs-4);
     font-weight: 400!important;
@@ -122,7 +110,7 @@ table.cart-coupon-table tbody tr.cart-coupon_block td.actions div.coupon label {
 /*    border: none;*/
 /*    border-bottom: 2px solid #0049af;*/
 /*}*/
-table.cart-coupon-table tbody tr .btn {
+a.button.wc-backward.wp-element-button, table.cart-coupon-table tbody tr .btn {
     box-sizing: border-box;
     width: -moz-fit-content;
     width: fit-content!important;
