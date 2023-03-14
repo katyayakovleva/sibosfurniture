@@ -222,3 +222,7 @@ defined( 'ABSPATH' ) || exit;?>
 
     <?php do_action( 'woocommerce_after_cart' ); ?>
 </article>
+    <article class="px-3 px-sm-4 bg-blue-5 related products">
+        <h2 class="ff-ms fs-4 fc-blue-2 my-1">Add more items</h2>
+<?php get_template_part('template-parts/content', 'popular-products');?>
+    </article>

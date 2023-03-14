@@ -76,8 +76,10 @@ get_header();
             <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($our_goal_text); ?></p>
         </div>
     </article>
-    <?php get_template_part( 'template-parts/content', 'popular-products' ); ?>
-    <!-- <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
+    <article class="px-3 px-sm-4 bg-blue-5 related products">
+        <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
+        <?php get_template_part('template-parts/content', 'popular-products');?>
+    </article>    <!-- <article class="px-3 px-sm-4 bg-blue-5 pb-sm-4">
         <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
         <div class="swiper-per-view">
             <div class="swiper-wrapper">
