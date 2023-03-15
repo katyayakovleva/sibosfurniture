@@ -795,3 +795,7 @@ function custom_my_account_orders_query( $args ) {
 // 	exit;
 // };
 // add_action('woocommerce_update_customer','action_woocommerce_customer_redirect_on_my_account_account_details', 99);
+
+add_filter('woocommerce_paypal_payments_checkout_button_renderer_hook', function() {
+    return 'woocommerce_review_order_before_submit';
+});
