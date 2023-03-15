@@ -223,9 +223,17 @@ table.shop_table-totals tr.order-total td strong{
         display: grid;
         grid-template-columns: 8fr 4fr 4fr 3fr 1fr
     }
-    table.shop_table tbody tr{
+    table.shop_table:not(.shop_table-totals) tbody tr{
         display: grid!important;
         grid-template-columns: 8fr 4fr 4fr 3fr 1fr
+    }
+    table.shop_table.shop_table-totals tbody tr{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    table.shop_table.shop_table-totals tbody tr:not(:last-of-type){
+        border-bottom: 2px solid #0049af;
     }
     .woocommerce .quantity .qty {
         width: 2rem;
@@ -266,12 +274,12 @@ table.shop_table-totals tr.order-total td strong{
         color: #0049af;
         margin: 0;
     }
-    table.shop_table-totals tr:not(:last-of-type) th{
-        border-bottom: 2px solid #0049af;
-    }
-    table.shop_table-totals tr:not(:last-of-type) th{
-        border-bottom: 2px solid #0049af;
-    }
+    /*table.shop_table-totals tr:not(:last-of-type) th{*/
+    /*    border-bottom: 2px solid #0049af;*/
+    /*}*/
+    /*table.shop_table-totals tr:not(:last-of-type) th{*/
+    /*    border-bottom: 2px solid #0049af;*/
+    /*}*/
     table.shop_table-totals tr th{
         display: flex;
         align-items: center;
@@ -280,7 +288,7 @@ table.shop_table-totals tr.order-total td strong{
         color: #0049af;
         margin: 0;
     }
-    .woocommerce .woocommerce-cart-form tbody tr:not(:last-of-type) td{
+    .woocommerce .woocommerce-cart-form table.shop_table:not(.shop_table-totals)tbody tr:not(:last-of-type) td{
         border-bottom: 2px solid #0049af;
     }
     table.shop_table-totals{
