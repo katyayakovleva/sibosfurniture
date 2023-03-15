@@ -132,32 +132,37 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         $('.form_edit .form-row:not(:has(select))').addClass('form-control');
         $('.form_edit .form-row:has(select)').addClass('select-form-control');
 
+        $('.checkout-form-adresses .form-row').addClass('form-group');
+        $('.checkout-form-adresses .form-row').addClass('form-control');
+        $('.checkout-form-adresses .form-row').addClass('dark');
+
+        // $('.checkout-form-adresses .form-row').addClass('select-form-control');
         $('.form-row:has(textarea)').addClass('checkout-note');
 
-        $(document).on('change', '#billing_country', function() {
+        // $(document).on('change', '#billing_country', function() {
   
-            if ( $('#billing_state_field:has(option)').length) {
-                // console.log('has select');
-                $('#billing_state_field').removeClass( 'form-control');
-                $('#billing_state_field').addClass( 'select-form-control');
-            } else {
-                // console.log('no select');
-                $('#billing_state_field').addClass( 'form-control');
-                $('#billing_state_field').removeClass( 'select-form-control');
-            }
+        //     if ( $('#billing_state_field:has(option)').length) {
+        //         // console.log('has select');
+        //         $('#billing_state_field').removeClass( 'form-control');
+        //         $('#billing_state_field').addClass( 'select-form-control');
+        //     } else {
+        //         // console.log('no select');
+        //         $('#billing_state_field').addClass( 'form-control');
+        //         $('#billing_state_field').removeClass( 'select-form-control');
+        //     }
             
-        });
-        $(document).on('change', '#shipping_country', function() {
+        // });
+        // $(document).on('change', '#shipping_country', function() {
   
-            if ( $('#shipping_state_field:has(option)').length) {
-                // console.log('has select');
-                $('#shipping_state_field').removeClass( 'form-control');
-                $('#shipping_state_field').addClass( 'select-form-control');
-            } else {
-                // console.log('no select');
-                $('#shipping_state_field').addClass( 'form-control');
-                $('#shipping_state_field').removeClass( 'select-form-control');
-            }
+        //     if ( $('#shipping_state_field:has(option)').length) {
+        //         // console.log('has select');
+        //         $('#shipping_state_field').removeClass( 'form-control');
+        //         $('#shipping_state_field').addClass( 'select-form-control');
+        //     } else {
+        //         // console.log('no select');
+        //         $('#shipping_state_field').addClass( 'form-control');
+        //         $('#shipping_state_field').removeClass( 'select-form-control');
+        //     }
             
-        });
+        // });
     });

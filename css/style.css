@@ -3576,10 +3576,10 @@ form label.has-value {
 }
 
 .form-group {
-    width: 100%;
+    width: 100% !important;
     display: flex;
-    flex-direction: column;
-    max-width: 85%
+    /* flex-direction: column; */
+    max-width: 85% !important;
 }
 
 .form-group .form-control {
@@ -4201,9 +4201,9 @@ footer {
         padding-block: .5em !important;
     }
     .form-group {
-        max-width: none;
+        max-width: none !important;
         flex-direction: row;
-        gap: clamp(2em, 5vw, 4em);
+        /* gap: clamp(2em, 5vw, 4em); */
         padding-block: .5em
     }
     .form-checkbox label,
@@ -4439,5 +4439,8 @@ footer {
     width: 100%;
 }
 .required{
-    color: #0049af !important;
+   display: none !important;
+}
+.optional{
+    color: #404c5c !important;
 }

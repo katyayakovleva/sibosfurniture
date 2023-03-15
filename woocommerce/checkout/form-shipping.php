@@ -21,21 +21,24 @@ defined( 'ABSPATH' ) || exit;
 <div class="woocommerce-shipping-fields">
 	<?php if ( true === WC()->cart->needs_shipping_address() ) : ?>
 
-		<h3 id="ship-to-different-address">
-			<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox checkout_title">
-				<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox " <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" /> <span >Ship to a different address?</span>
-			</label>
-		</h3>
+		<div id="ship-to-different-address" class="form-group mt-1">
+				<div class="form-checkbox">
+					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox checkout_title">
+						<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox " <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" /> <span >Ship to a different address?</span>
+					</label>
+				</div>
+		</div>
 
 		<div class="shipping_address">
 
 			<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
-			<div class="woocommerce-shipping-fields__field-wrapper checkout-form form_edit">
+			<div class="woocommerce-shipping-fields__field-wrapper checkout-form checkout-form-adresses">
 				<?php
 				$fields = $checkout->get_checkout_fields( 'shipping' );
 
 				foreach ( $fields as $key => $field ) {
+						
 					woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 				}
 				?>
@@ -58,7 +61,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php endif; ?>
 
-		<div class="woocommerce-additional-fields__field-wrapper">
+		<div class="woocommerce-additional-fields__field-wrapper mt-1 mt-sm-0">
 			<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) : ?>
 				<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 			<?php endforeach; ?>
