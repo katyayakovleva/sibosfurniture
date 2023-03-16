@@ -313,3 +313,104 @@
     flex-shrink: 0;
 
 }
+.payment_title{
+    font-weight: 700;
+    color: #6da1eb;
+    font-size: 1.5625em;
+    text-transform: uppercase
+}
+.checkout-payment{
+    background: none !important;
+    
+}
+.checkout-payment ul{
+    padding: 0 !important;
+    border-bottom: unset !important;
+}
+.checkout-payment-method input[type=radio]{
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+    position: relative;
+    width: 1em;
+    height: 1em;
+    margin-right: 1em;
+    border-radius: 0;
+    border: 1px solid #0049af;
+    background-color: transparent;
+}
+.payment_box::before {
+    content: "";
+    display: block;
+    border: unset !important;
+    position: absolute;
+    top: -0.75em;
+    left: 0;
+    margin: -1em 0 0 2em;
+
+}
+.payment_box {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: .92em;
+    line-height: 1.5;
+    background-color: unset !important;
+    /* color: #515151; */
+
+}
+
+.payment_box_inner {
+    position: relative;
+    display: block;
+    
+    margin-left: 2em;
+}
+.payment_box_inner p{
+     font-size: 90%;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #404c5c;
+}
+.payment_box p::after,
+.payment_box p::before {
+    content: ""
+}
+
+.payment_box_inner::before {
+    top: -1em;
+    left: -1.5em;
+    width: 2em;
+    height: 2em;
+    content: "";
+    position: absolute;
+    z-index: 0;
+ 
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 53 55" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M21.5381 55L22.1924 40.7468L24.1553 31.6073L17.285 38.1899L5.56173 46.0781L0.218107 36.9931L12.7593 30.2473L21.6471 27.5272C21.5381 27.4547 21.0473 27.2915 20.1749 27.0376C19.3388 26.7837 18.3573 26.5117 17.2305 26.2216C16.1399 25.8952 15.1403 25.605 14.2315 25.3511C13.3591 25.0973 12.832 24.9522 12.6502 24.9159L0 18.4965L5.18004 9.30267L17.0669 17.1909L24.0463 23.3383C24.0463 23.2295 23.9372 22.758 23.7191 21.9238C23.501 21.0534 23.2466 20.0742 22.9558 18.9862C22.7013 17.8619 22.465 16.8645 22.2469 15.9941C22.0288 15.0874 21.9016 14.5434 21.8652 14.362L20.8292 0H31.4074L30.6986 14.1444L28.7901 23.2295C28.8628 23.1569 29.2263 22.8124 29.8807 22.1958C30.535 21.5793 31.262 20.8721 32.0617 20.0742C32.8978 19.2763 33.643 18.5691 34.2973 17.9525C34.988 17.336 35.3879 16.9733 35.4969 16.8645L47.4928 8.97627L52.6728 17.9525L40.1317 24.4807L31.2438 27.4184L40.1317 30.0297L53 36.2315L47.5473 45.6429L35.8786 37.8635L28.7901 31.7161C28.8265 31.8249 28.9355 32.3145 29.1173 33.185C29.3354 34.0554 29.5717 35.0527 29.8261 36.1771C30.1169 37.2651 30.3532 38.2624 30.535 39.1691C30.7531 40.0396 30.8803 40.5654 30.9167 40.7468L32.1708 55H21.5381Z" fill="%230049AF" fill-opacity="0.2"/%3E%3C/svg%3E%0A');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center
+}
+.checkout-terms p{
+    font-family: 'Merriweather Sans', sans-serif!important;
+    color: #404c5c!important;
+    margin-block: 1.5em!important;
+    font-size: .75em!important;
+}
+
+
+@media screen and (min-width: 35.5em){
+    .checkout-terms p {
+    font-size: 1.25em!important;
+}
+}
+.payment_box label{
+    color: #404c5c !important;
+}
+fieldset div.form-row{
+    padding: 3px !important;
+}
+fieldset{
+    border: 2px solid #0049af;
+    border-radius: 4px;
+}

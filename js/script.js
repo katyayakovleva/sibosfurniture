@@ -127,7 +127,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     navbarBurger()
         }))
         $('.article-block p').addClass('ff-ms fs-5 fc-dark');
-        $('.woocommerce-privacy-policy-text p').addClass('ff-ms fs-5 fc-dark');        
+        $('.woocommerce-privacy-policy-text').addClass('ff-ms fs-5 fc-dark');        
 
         $('.form_edit .form-row:not(:has(select))').addClass('form-control');
         $('.form_edit .form-row:has(select)').addClass('select-form-control');
@@ -136,33 +136,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         $('.checkout-form-adresses .form-row').addClass('form-control');
         $('.checkout-form-adresses .form-row').addClass('dark');
 
-        // $('.checkout-form-adresses .form-row').addClass('select-form-control');
         $('.form-row:has(textarea)').addClass('checkout-note');
-
-        // $(document).on('change', '#billing_country', function() {
-  
-        //     if ( $('#billing_state_field:has(option)').length) {
-        //         // console.log('has select');
-        //         $('#billing_state_field').removeClass( 'form-control');
-        //         $('#billing_state_field').addClass( 'select-form-control');
-        //     } else {
-        //         // console.log('no select');
-        //         $('#billing_state_field').addClass( 'form-control');
-        //         $('#billing_state_field').removeClass( 'select-form-control');
-        //     }
-            
-        // });
-        // $(document).on('change', '#shipping_country', function() {
-  
-        //     if ( $('#shipping_state_field:has(option)').length) {
-        //         // console.log('has select');
-        //         $('#shipping_state_field').removeClass( 'form-control');
-        //         $('#shipping_state_field').addClass( 'select-form-control');
-        //     } else {
-        //         // console.log('no select');
-        //         $('#shipping_state_field').addClass( 'form-control');
-        //         $('#shipping_state_field').removeClass( 'select-form-control');
-        //     }
-            
-        // });
+        //  $('.woocommerce-privacy-policy-text p').addClass('ff-ms fs-5 fc-dark my-2');
+        
     });
