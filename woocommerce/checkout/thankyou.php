@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
             <header>
 				<h2>Checkout review</h2>
 			</header>
-            <section class=" woocommerce-order header-block__body">
+            <section class=" woocommerce-order checkout-review-body">
 
                 <?php
                 if ( $order ) :
@@ -90,7 +90,7 @@ defined( 'ABSPATH' ) || exit;
                         <div>
                             <section class="orders d-sm-block">
                                 <div>
-                                    <?php do_action( 'woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id() ); ?>
+                                    <?php //do_action( 'woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id() ); ?>
                                     <?php do_action( 'woocommerce_thankyou', $order->get_id() ); ?>
                                 <div>
                             </section>
