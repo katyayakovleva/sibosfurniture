@@ -799,3 +799,4 @@ function custom_my_account_orders_query( $args ) {
 add_filter('woocommerce_paypal_payments_checkout_button_renderer_hook', function() {
     return 'woocommerce_review_order_before_submit';
 });
+

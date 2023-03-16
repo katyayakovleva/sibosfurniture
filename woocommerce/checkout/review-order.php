@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 <header>
 	<h2>Your order</h2>
 </header>
-<section class="header-block__body">
+<section class="header-block__body shop_table woocommerce-checkout-review-order-table">
 <div class="header">
 	<div class="row">
 		<p>Product</p>
