@@ -1,6 +1,9 @@
 ::-webkit-scrollbar {
     display: none;
 }
+p.cart-empty.woocommerce-info{
+    display: none;
+}
 .woocommerce{
     display: contents;
 }
@@ -442,6 +445,12 @@ table.shop_table-totals tr.order-total td strong{
         justify-content: space-between;
         align-items: flex-start;
         gap: 0.5em;
+    }
+}
+@media screen and (min-width: 35.5em) {
+    .min-content-page{
+        margin: 15vh 0;
+        height: 56vh;
     }
 }
 
