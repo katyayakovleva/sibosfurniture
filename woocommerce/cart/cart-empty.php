@@ -23,17 +23,28 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_cart_is_empty' );
 
 if ( wc_get_page_id( 'shop' ) > 0 ) : ?>
-    <p class="return-to-shop">
-        <a class="button wc-backward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
-            <?php
-            /**
-             * Filter "Return To Shop" text.
-             *
-             * @since 4.6.0
-             * @param string $default_text Default text.
-             */
-            echo esc_html( apply_filters( 'woocommerce_return_to_shop_text', __( 'Return to shop', 'woocommerce' ) ) );
-            ?>
-        </a>
-    </p>
+<article class="px-2 px-sm-4 mb-2">
+    <div class="min-content-page">
+        <div>
+        <p class="ff-ms fs-4 fw-7 fc-blue-2">Your cart is currently empty.</p>
+        <p class="return-to-shop">
+            <a class="button wc-backward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
+                <?php
+                /**
+                 * Filter "Return To Shop" text.
+                 *
+                 * @since 4.6.0
+                 * @param string $default_text Default text.
+                 */
+                echo esc_html( apply_filters( 'woocommerce_return_to_shop_text', __( 'Return to shop', 'woocommerce' ) ) );
+                ?>
+            </a>
+        </p>
+        </div>
+    </div>
+</article>
+<!-- <article class="px-3 px-sm-4 bg-blue-5 related products">
+    <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
+    <?php //get_template_part('template-parts/content', 'popular-products');?>
+</article> -->
 <?php endif; ?>

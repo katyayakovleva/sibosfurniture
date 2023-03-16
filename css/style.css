@@ -4444,3 +4444,39 @@ footer {
 .optional{
     color: #404c5c !important;
 }
+
+.min-content-page{
+    margin: 4em 0;
+    box-sizing: border-box;
+    flex-basis: 100%;
+    border: 2px solid #0049af;
+    overflow-y: auto;
+    min-height: 20em;
+    display: flex;
+    align-items: center;
+}
+.min-content-page div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100%;
+    padding: 1.5em;
+}
+.min-content-page p{
+    text-align: center;
+    /* margin: 2em 0 0em; */
+}
+@media screen and (min-width: 35.5em) {
+    .min-content-page{
+        margin: 6em 0;
+       
+    }
+    .min-content-page div{
+        padding: 1.5em 3em;
+    }
+
+}
