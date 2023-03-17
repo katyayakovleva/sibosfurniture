@@ -682,7 +682,21 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 			)
 		  );
 	}elseif($dashboard_menu_item == 'payment-methods'){
-	  
+		// $saved_methods = wc_get_customer_saved_methods_list( get_current_user_id() );
+		// $has_methods   = (bool) $saved_methods;
+		// $types         = wc_get_account_payment_methods_types();
+		// // do_action( 'woocommerce_before_account_payment_methods', $has_methods );
+		// if ( $has_methods ) {
+		// 	foreach ( $saved_methods as $type => $methods ){
+		// 		foreach ( $methods as $method ){
+		// 			foreach ( wc_get_account_payment_methods_columns() as $column_id => $column_name ) {
+		// 				$out .=  esc_html( wc_get_credit_card_type_label( $method['method']['brand'] ) );
+		// 			}
+					
+		// 		}
+		// 	}
+			
+		// }
 	  wc_get_template(
 		'myaccount/payment-methods.php',
 		array(

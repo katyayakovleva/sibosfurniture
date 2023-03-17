@@ -26,9 +26,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 <?php else : ?>
 
 <article class="px-2 px-sm-4 mb-2">
-	<!-- <header class="header-primary">
-		<h1 class="ff-ms fs-2 fc-blue-2 fw-7">Registration</h1>
-	</header> -->
+
 	<section class="container g-2 g-lg-4 mb-2">
 		<article class="header-block mt-3">
 			<header>

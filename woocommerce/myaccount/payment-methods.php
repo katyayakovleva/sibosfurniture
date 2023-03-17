@@ -27,19 +27,18 @@ do_action( 'woocommerce_before_account_payment_methods', $has_methods ); ?>
 
 <?php if ( $has_methods ) : ?>
 
-	<table class="woocommerce-MyAccount-paymentMethods shop_table shop_table_responsive account-payment-methods-table">
-		<thead>
-			<tr>
-				<?php foreach ( wc_get_account_payment_methods_columns() as $column_id => $column_name ) : ?>
-					<th class="woocommerce-PaymentMethod woocommerce-PaymentMethod--<?php echo esc_attr( $column_id ); ?> payment-method-<?php echo esc_attr( $column_id ); ?>"><span class="nobr"><?php echo esc_html( $column_name ); ?></span></th>
-				<?php endforeach; ?>
-			</tr>
-		</thead>
+	<div class=" container woocommerce-MyAccount-paymentMethods shop_table shop_table_responsive account-payment-methods-table">
+		<div class="container__row container__header">
+			<?php foreach ( wc_get_account_payment_methods_columns() as $column_id => $column_name ) : ?>
+				<p class="woocommerce-PaymentMethod woocommerce-PaymentMethod--<?php echo esc_attr( $column_id ); ?> payment-method-<?php echo esc_attr( $column_id ); ?>"><?php echo esc_html( $column_name ); ?></p>
+			<?php endforeach; ?>
+		</div>
+				
 		<?php foreach ( $saved_methods as $type => $methods ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
 			<?php foreach ( $methods as $method ) : ?>
-				<tr class="payment-method<?php echo ! empty( $method['is_default'] ) ? ' default-payment-method' : ''; ?>">
+				<div class="container__row payment-method<?php echo ! empty( $method['is_default'] ) ? ' default-payment-method' : ''; ?>">
 					<?php foreach ( wc_get_account_payment_methods_columns() as $column_id => $column_name ) : ?>
-						<td class="woocommerce-PaymentMethod woocommerce-PaymentMethod--<?php echo esc_attr( $column_id ); ?> payment-method-<?php echo esc_attr( $column_id ); ?>" data-title="<?php echo esc_attr( $column_name ); ?>">
+						<p class="woocommerce-PaymentMethod woocommerce-PaymentMethod--<?php echo esc_attr( $column_id ); ?> payment-method-<?php echo esc_attr( $column_id ); ?>" data-title="<?php echo esc_attr( $column_name ); ?>">
 							<?php
 							if ( has_action( 'woocommerce_account_payment_methods_column_' . $column_id ) ) {
 								do_action( 'woocommerce_account_payment_methods_column_' . $column_id, $method );
@@ -54,16 +53,17 @@ do_action( 'woocommerce_before_account_payment_methods', $has_methods ); ?>
 								echo esc_html( $method['expires'] );
 							} elseif ( 'actions' === $column_id ) {
 								foreach ( $method['actions'] as $key => $action ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-									echo '<a href="' . esc_url( $action['url'] ) . '" class="button ' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>&nbsp;';
+									
+									echo '<a href="' .get_permalink( get_option('woocommerce_myaccount_page_id') ). esc_url( $action['url'] ) . '" class="' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>&nbsp;';
 								}
 							}
 							?>
-						</td>
+						</p>
 					<?php endforeach; ?>
-				</tr>
+				</div>
 			<?php endforeach; ?>
 		<?php endforeach; ?>
-	</table>
+	</div>
 
 <?php else : ?>
 	<p class="woocommerce-Message woocommerce-Message--info woocommerce-info"><?php esc_html_e( 'No saved methods found.', 'woocommerce' ); ?></p>
@@ -73,5 +73,5 @@ do_action( 'woocommerce_before_account_payment_methods', $has_methods ); ?>
 <?php do_action( 'woocommerce_after_account_payment_methods', $has_methods ); ?>
 
 <?php if ( WC()->payment_gateways->get_available_payment_gateways() ) : ?>
-	<a class="button" href="<?php echo esc_url( wc_get_endpoint_url( 'add-payment-method' ) ); ?>"><?php esc_html_e( 'Add payment method', 'woocommerce' ); ?></a>
+	<button class="btn " onclick="location.href = '<?php echo esc_url( wc_get_endpoint_url( 'add-payment-method', '', get_permalink( get_option('woocommerce_myaccount_page_id') ) )); ?>'">Add payment method</button>
 <?php endif; ?>
