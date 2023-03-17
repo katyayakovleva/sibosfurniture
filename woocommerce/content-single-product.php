@@ -45,7 +45,7 @@ if ( post_password_required() ) {
     <article class="product-article">
         <div class="breadcrumb my-1">
             <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
-            <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Shop</a></div>
+            <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Catalog</a></div>
             <div class="breadcrumb__item"><a href="<?php echo get_permalink();?>" class="link"><?php the_title(); ?></a></div>
         </div>
     <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
