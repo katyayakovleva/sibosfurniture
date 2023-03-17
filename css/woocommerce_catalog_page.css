@@ -1,0 +1,25 @@
+select.orderby:focus-visible{
+    outline: none!important;
+}
+select.orderby{
+    border: none!important;
+    padding: 0.5em;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: rgba(0,73,175,.3019607843);
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: 1.25em;
+}
+select.orderby option{
+    /*border: none!important;*/
+    /*padding: 0.5em;*/
+    /*box-sizing: border-box;*/
+    /*cursor: pointer;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*color: rgba(0,73,175,.3019607843);*/
+    /*font-family: 'Merriweather Sans',sans-serif;*/
+    /*font-size: 1.25em;*/
+}
