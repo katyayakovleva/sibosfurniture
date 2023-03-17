@@ -152,7 +152,10 @@ function sibosfurniture_scripts() {
 	wp_enqueue_script( 'jquery-throttle-debounce', 'https://cdn.jsdelivr.net/gh/cowboy/jquery-throttle-debounce@v1.1/jquery.ba-throttle-debounce.min.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'fontawesome', 'https://kit.fontawesome.com/13247fe767.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'swiper-bundle', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js', array(), _S_VERSION, true );
-
+    wp_localize_script( 'script', 'ajax_menu_popular_items', array(
+        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'noposts' => __('No older posts found', 'greenglobe'),
+    ));
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -407,6 +410,132 @@ function bbloomer_add_cart_quantity_plus_minus() {
    " );
 }
 add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+
+add_filter( 'template_include', 'woocommerce_archive_template', 99 );
+
+function woocommerce_archive_template( $template ) {
+
+    if ( is_woocommerce() && is_archive() ) {
+        $new_template = get_stylesheet_directory() . '/woocommerce/archive-product.php';
+        if ( !empty( $new_template ) ) {
+            return $new_template;
+        }
+    }
+
+    return $template;
+}
+
+add_filter ('yith_wcan_use_wp_the_query_object', '__return_true');
+
+function get_ajax_menu_popular_item_category(){
+    $main_category_slug = (!empty($_POST['slug']))? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
+    $out = '';
+    $category = get_term_by('slug', 'item-type', 'product_cat');
+    $category_id = $category->term_id; // Replace with the ID of your desired category
+    $subcategories = get_terms(array(
+        'taxonomy' => 'product_cat',
+        'parent' => $category_id,
+    ));
+    $category_slugs = array();
+    if (!empty($subcategories) && !is_wp_error($subcategories)) {
+        foreach ($subcategories as $subcategory) {
+            array_push($category_slugs, $subcategory->slug);
+        }
+    }
+
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => 15,
+        'product_cat' => $main_category_slug,
+        'meta_key' => 'total_sales',
+        'orderby' => 'meta_value_num',
+    );
+
+    $products_query = new WP_Query($args);
+
+    if ($products_query->have_posts()) {
+        $categories = array();
+        while ($products_query->have_posts()) {
+            $products_query->the_post();
+            global $product;
+            $product_categories = wp_get_post_terms($product->get_id(), 'product_cat');
+            foreach ($product_categories as $product_category) {
+                if (in_array($product_category->slug, $category_slugs)) {
+                    array_push($categories, $product_category->slug);
+                }
+            }
+        }
+        wp_reset_postdata();
+        $counted_values = array_count_values($categories);
+        $unique_values = array_keys($counted_values);
+        if (count($unique_values) >= 2) {
+            $arr = array_slice($unique_values, 0, 2, true);
+            $out_arr = array();
+            for ($i = 0; $i < count($arr); $i++) {
+                $category = get_term_by('slug', $arr[$i], 'product_cat');
+                $a_href = get_term_link( $category );
+                $name = $category->name;
+                $out_arr[$arr[$i]] = array($a_href, $name);
+            }
+        } elseif (count($unique_values) == 1) {
+            $unique_values_2 = get_more_categories($main_category_slug,$category_slugs);
+//            print_r(array_slice($unique_values_2, 0, 2, true));
+            $out_arr = array();
+            if(count($unique_values_2) == 1){
+                $category = get_term_by('slug', $unique_values_2[0], 'product_cat');
+                $a_href = get_term_link( $category );
+                $name = $category->name;
+                $out_arr[$unique_values_2[0]] = array($a_href, $name);
+            }else{
+                $arr = array_slice($unique_values_2, 0, 2, true);
+                for ($i = 0; $i < count($arr); $i++) {
+                    $category = get_term_by('slug', $arr[$i], 'product_cat');
+                    $a_href = get_term_link( $category );
+                    $name = $category->name;
+                    $out_arr[$arr[$i]] = array($a_href, $name);
+                }
+            }
+
+        } else {
+            $out_arr = [];
+        }
+        $out = $out_arr;
+//        print_r($unique_values);
+    }
+    die(json_encode($out));
+}
+add_action('wp_ajax_nopriv_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
+add_action('wp_ajax_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
+
+function get_more_categories($main_category_slug, $category_slugs){
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1,
+        'product_cat' => $main_category_slug,
+        'meta_key' => 'total_sales',
+        'orderby' => 'meta_value_num',
+    );
+
+    $products_query = new WP_Query($args);
+    if ($products_query->have_posts()) {
+        $categories = array();
+        while ($products_query->have_posts()) {
+            $products_query->the_post();
+            global $product;
+            $product_categories = wp_get_post_terms($product->get_id(), 'product_cat');
+            foreach ($product_categories as $product_category) {
+                if (in_array($product_category->slug, $category_slugs)) {
+                    array_push($categories, $product_category->slug);
+                }
+            }
+        }
+        wp_reset_postdata();
+        $counted_values = array_count_values($categories);
+        $unique_values = array_keys($counted_values);
+        return $unique_values;
+    }
+}
+
 
 
 

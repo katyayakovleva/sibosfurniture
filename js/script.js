@@ -101,14 +101,14 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     $(this).parent().parent().addClass('form-control-without-value');
                 }
             });
-        $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
-            var href_middle = this.href
-            $(this).replaceWith($('<button href = "' + href_middle +'" class="link link-navbar">' + this.innerHTML + '</button>'));
-        })
-        $('.navbar-collapse-right li:has(ul)>a').each(function (index){
-            var href_right = this.href
-            $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
-        })
+        // $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
+        //     var href_middle = this.href
+        //     $(this).replaceWith($('<button href = "' + href_middle +'" class="link link-navbar">' + this.innerHTML + '</button>'));
+        // })
+        // $('.navbar-collapse-right li:has(ul)>a').each(function (index){
+        //     var href_right = this.href
+        //     $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
+        // })
         $('i.flaticon-right-arrow.slick-arrow').each(function (index){
             $(this).replaceWith($('<div class="swiper-button-next"></div>'))
         })
@@ -127,7 +127,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     navbarBurger()
         }))
         $('.article-block p').addClass('ff-ms fs-5 fc-dark');
-        $('.woocommerce-privacy-policy-text').addClass('ff-ms fs-5 fc-dark');        
+        $('.woocommerce-privacy-policy-text').addClass('ff-ms fs-5 fc-dark');
 
         $('.form_edit .form-row:not(:has(select))').addClass('form-control');
         $('.form_edit .form-row:has(select)').addClass('select-form-control');
@@ -137,6 +137,47 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         $('.checkout-form-adresses .form-row').addClass('dark');
 
         $('.form-row:has(textarea)').addClass('checkout-note');
-        //  $('.woocommerce-privacy-policy-text p').addClass('ff-ms fs-5 fc-dark my-2');
-        
+
+        let types = $('.navbar-collapse-middle.place-type-section li').each(function () {
+            $(this).append('<ul></ul>')
+            let href = $(this).find('a').get(0).href;
+            let words= href.split("/");
+            let a = words.pop();
+            let slug = words.pop();
+            var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: ajax_menu_popular_items.ajaxurl,
+                data: str,
+                success: function(data){
+                    var data_parse = JSON.parse(data)
+                    console.log(data_parse)
+                    // if (data_parse.length >=1){
+                    //     data_parse.forEach(function (value){
+                    //         var newListItem = $("<li><a href='" + value[0] + "'>" + value[1] + "</a></li>");
+                    //         $(this).find('ul').append(newListItem);
+                    //     }.bind(this))
+                    // }
+                    if (Object.keys(data_parse).length >= 1) {
+                        Object.entries(data_parse).forEach(function([key, value]) {
+                            var newListItem = $("<li><a href='" + value[0] + "'>" + value[1] + "</a></li>");
+                            $(this).find('ul').append(newListItem);
+                        }.bind(this));
+                    }
+                   console.log(data)
+                }.bind(this),
+                error : function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+                }
+            });
+        });
+        $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
+            var href_middle = this.href
+            $(this).replaceWith($('<button href = "' + href_middle +'" class="link link-navbar">' + this.innerHTML + '</button>'));
+        })
+        $('.navbar-collapse-right li:has(ul)>a').each(function (index){
+            var href_right = this.href
+            $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
+        })
     });
