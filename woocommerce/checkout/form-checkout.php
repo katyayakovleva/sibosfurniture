@@ -29,10 +29,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                 <p class="ff-ms fs-4 fw-7 fc-blue-2">You must be logged in to checkout.</p>
                  <button class="btn" onclick="location.href = '<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>'">Sign up</button>
             </div>
-        </div>
-        
-                        <?php //echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );?>
-                
+        </div>                
     </article>
     <article class="px-3 px-sm-4 bg-blue-5 related products">
         <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>

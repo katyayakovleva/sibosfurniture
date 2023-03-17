@@ -215,7 +215,7 @@
 }
 .checkout-note label{
     font-size: var(--fs-5);
-    color: #0049af;
+    color: #404c5c;
     /* text-align: end; */
     margin-block: 0;
     white-space: nowrap;
@@ -236,7 +236,7 @@
     resize:vertical;
 }
 .checkout-note textarea::placeholder {
-    color: #0049af;
+    color: #999;
     opacity: 0.5;
   }
 .checkout_title-checkout-review{
@@ -299,20 +299,38 @@
     
     box-sizing: border-box;
     border-radius: 0 !important; 
-    padding: 2.5em !important;
+    padding: 1.5em !important;
     border: 2px solid #0049af !important; 
 }
 .checkout-form-coupon div{
     display: flex;
-    /* flex-direction: row; */
-    align-items: flex-end;
-    justify-content: space-between;
-    /* gap: 1em; */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+    width: 100%;
+    /* padding-block: 1em; */
 
 }
+@media screen and (min-width: 35.5em){
+    .checkout-form-coupon form{
+        padding: 2.5em !important;
+    }
+    .checkout-form-coupon div{
+        display: flex;
+        flex-direction: unset;
+        align-items: flex-end;
+        justify-content: space-between;
+        width: unset;
+        /* gap: 1em; */
+    
+    }
+    .checkout-form-coupon button{
+        font-size: var(--fs-4);
+    
+    }
+}
 .checkout-form-coupon button{
-    flex-shrink: 0;
-
+    font-size: var(--fs-5);
 }
 .payment_title{
     font-weight: 700;
@@ -396,15 +414,9 @@
     font-family: 'Merriweather Sans', sans-serif!important;
     color: #404c5c!important;
     margin-block: 1.5em!important;
-    font-size: .75em!important;
+    font-size: 1em!important;
 }
 
-
-@media screen and (min-width: 35.5em){
-    .checkout-terms p {
-    font-size: 1.25em!important;
-}
-}
 .payment_box label{
     color: #404c5c !important;
 }

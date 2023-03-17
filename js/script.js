@@ -179,4 +179,10 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         $('.checkout-form-adresses .form-row').addClass('dark');
 
         $('.form-row:has(textarea)').addClass('checkout-note');
+        $('#note-checkbox').change(function () {
+            if (this.checked) 
+               $('#note-content').show();
+            else 
+                $('#note-content').hide();
+        });
     });

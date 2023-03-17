@@ -23,8 +23,8 @@ defined( 'ABSPATH' ) || exit;
 
 		<div id="ship-to-different-address" class="form-group mt-1">
 				<div class="form-checkbox">
-					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox checkout_title">
-						<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox " <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" /> <span >Ship to a different address?</span>
+					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
+						<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox " <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" /> <span >Ship to a different address?</span>
 					</label>
 				</div>
 		</div>
@@ -50,7 +50,12 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php endif; ?>
 </div>
-<div class="woocommerce-additional-fields">
+<div class="form-checkbox">
+	<label>
+		<input id="note-checkbox" type="checkbox" name="notes-about-order">Notes about your order
+	</label>
+</div>
+<div id="note-content" class="woocommerce-additional-fields" style="display:none;">
 	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
 
 	<?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
