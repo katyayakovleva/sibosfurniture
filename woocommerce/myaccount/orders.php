@@ -63,8 +63,13 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                         if ( ! empty( $actions ) ){?>
                             <div class="actions">
                                 <?php foreach ( $actions as $key => $action ){ // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-                                    echo '<a class="" data-action="' . esc_html( $action['name'] ) .'" data-order_id="' .$order->get_order_number().'" >' . esc_html( $action['name'] ) . '</a>';
-                                    // echo '<a href="' . esc_url( $action['url'] ) . '" class="">' . esc_html( $action['name'] ) . '</a>';
+                                    if($action['name']=='Cancel' || $action['name']=='Pay'){
+                                        echo '<a href="' . esc_url( $action['url'] ) . '" class="">' . esc_html( $action['name'] ) . '</a>';
+                                    }
+                                    else{
+                                        echo '<a class="" data-action="' . esc_html( $action['name'] ) .'" data-order_id="' .$order->get_order_number().'" >' . esc_html( $action['name'] ) . '</a>';
+                                    }
+                                    
                                 }
                                 ?>
                             </div>

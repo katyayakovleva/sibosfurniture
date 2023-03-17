@@ -424,3 +424,57 @@ fieldset{
     min-height: 5em;
     padding: 2.5em;
 }
+
+.order-pay-form div.orders__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em
+}
+.orders__row {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    gap: 1em;
+}
+.order-pay-form .orders__row>div {
+    display: flex;
+    gap: 0.5em;
+}
+.orders__row p {
+    margin: 0;
+    font-family: 'Merriweather Sans',sans-serif;
+    font-size: var(--fs-5);
+}
+.orders__row>div :nth-child(1) {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+}
+.orders__row p:nth-child(1) {
+    color: #0049af;
+}
+.orders__footer {
+    margin-top: 0.5em;
+}
+
+@media screen and (min-width: 35.5em){
+    .order-pay-form{
+        padding: 2em 3em;
+    }
+    .order-pay-form .orders__row>div  {
+        flex-direction: column;
+    }
+    .orders__row {
+        display: grid;
+        grid-template-columns: 1.6fr 3.4fr 1fr;
+        padding: 1em 2em;
+        gap: 0;
+    }
+    .orders__footer {
+        grid-template-columns: 1.6fr 1.6fr 1.8fr 1fr;
+        margin-top: 1.8em;
+    }
+}
+.form-title{
+    font-size: var(--fs-2) !important;
+}

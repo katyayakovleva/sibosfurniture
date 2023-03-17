@@ -778,11 +778,11 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
   add_action('wp_ajax_order_details_ajax', 'order_details_ajax');
 
 
-// add_filter('woocommerce_valid_order_statuses_for_cancel', 'my_cancellable_statuses', 10, 2);
+add_filter('woocommerce_valid_order_statuses_for_cancel', 'my_cancellable_statuses', 10, 2);
  
-// function my_cancellable_statuses($statuses, $order){
-//   return array('pending', 'processing', 'on-hold');
-// }
+function my_cancellable_statuses($statuses, $order){
+  return array('pending', 'processing');
+}
 
 add_filter( 'woocommerce_my_account_my_orders_query', 'custom_my_account_orders_query', 20, 1 );
 function custom_my_account_orders_query( $args ) {

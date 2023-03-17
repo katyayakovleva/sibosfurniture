@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 	<section class="container g-2 g-lg-4 mb-2">
 		<article class="header-block mt-3">
             <header>
-				<h2>Checkout review</h2>
+				<h2 class="form-title">Checkout review</h2>
 			</header>
             <section class=" woocommerce-order checkout-review-body">
 
