@@ -897,26 +897,51 @@ function custom_my_account_orders_query( $args ) {
     return $args;
 }
 
-
-// function action_woocommerce_customer_save_address( $user_id, $load_address ) { 
-// 	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
-// 	exit;
-// }; 
-// add_action( 'woocommerce_customer_save_address', 'action_woocommerce_customer_save_address', 99, 2 ); 
-
-// function action_woocommerce_customer_redirect_on_my_account_addresses( $user_id, $load_address ) { 
-// 	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
-// 	exit;
-// }; 
-// add_action( 'woocommerce_customer_save_address', 'action_woocommerce_customer_redirect_on_my_account_adresses', 99, 2 ); 
-
-// function action_woocommerce_customer_redirect_on_my_account_account_details( $user_id ) { 
-// 	wp_safe_redirect(wc_get_page_permalink('myaccount')); 
-// 	exit;
-// };
-// add_action('woocommerce_update_customer','action_woocommerce_customer_redirect_on_my_account_account_details', 99);
-
 add_filter('woocommerce_paypal_payments_checkout_button_renderer_hook', function() {
     return 'woocommerce_review_order_before_submit';
 });
 
+add_action( 'woocommerce_save_account_details', 'redirect_to_my_account' );
+add_action( 'woocommerce_customer_save_address', 'redirect_to_my_account' );
+// add_action( 'woocommerce_add_payment_method_success', 'redirect_to_my_account' );
+// add_action( 'woocommerce_saved_payment_methods_for_user', 'redirect_to_my_account' );
+// add_action( 'woocommerce_payment_method_deleted', 'redirect_to_my_account' );
+
+function redirect_to_my_account() {
+   wp_safe_redirect( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
+   exit();
+}
+// add_filter( 'woocommerce_payment_gateways_settings', 'redirect_after_payment_method_saved' );
+
+// function redirect_after_payment_method_saved( $settings ) {
+//     if ( ! is_admin() ) {
+//         return $settings;
+//     }
+ 
+//     $current_screen = get_current_screen();
+ 
+//     if ( empty( $current_screen ) || $current_screen->id !== 'woocommerce_page_wc-settings' || empty( $_GET['section'] ) || $_GET['section'] !== 'checkout' ) {
+//         return $settings;
+//     }
+ 
+//     foreach ( WC()->payment_gateways()->payment_gateways() as $gateway ) {
+//         if ( isset( $_POST['woocommerce_' . $gateway->id . '_settings'] ) ) {
+//             $myaccount_page_url = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+//             $redirect_url = remove_query_arg( 'payment-methods', $myaccount_page_url );
+//             wp_safe_redirect( $redirect_url );
+//             exit;
+//         }
+//     }
+ 
+//     return $settings;
+// }
+
+add_action( 'template_redirect', 'redirect_from_payment_methods' );
+
+function redirect_from_payment_methods() {
+    if ( is_wc_endpoint_url( 'payment-methods' ) ) {
+        $myaccount_page_url = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+        wp_safe_redirect( $myaccount_page_url );
+        exit;
+    }
+}
