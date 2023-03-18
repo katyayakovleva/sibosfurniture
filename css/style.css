@@ -3337,6 +3337,7 @@ a.blue:hover {
 .form-control input {
     box-sizing: border-box;
     width: 100%;
+    min-width: 20em;
     background: 0 0;
     border: none;
     border-radius: 0;
