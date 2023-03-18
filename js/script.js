@@ -147,14 +147,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     data: str,
                     success: function(data){
                         var data_parse = JSON.parse(data)
-                        console.log(data_parse)
                         if (Object.keys(data_parse).length >= 1) {
                             Object.entries(data_parse).forEach(function([key, value]) {
                                 var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }.bind(this));
                         }
-                        console.log(data)
                     }.bind(this),
                     error : function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
