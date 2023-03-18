@@ -118,33 +118,50 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             let words= href.split("/");
             let a = words.pop();
             let slug = words.pop();
-            var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
-            $.ajax({
-                type: "POST",
-                dataType: "html",
-                url: ajax_menu_popular_items.ajaxurl,
-                data: str,
-                success: function(data){
-                    var data_parse = JSON.parse(data)
-                    console.log(data_parse)
-                    // if (data_parse.length >=1){
-                    //     data_parse.forEach(function (value){
-                    //         var newListItem = $("<li><a href='" + value[0] + "'>" + value[1] + "</a></li>");
-                    //         $(this).find('ul').append(newListItem);
-                    //     }.bind(this))
-                    // }
-                    if (Object.keys(data_parse).length >= 1) {
-                        Object.entries(data_parse).forEach(function([key, value]) {
-                            var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
-                            $(this).find('ul').append(newListItem);
-                        }.bind(this));
+            if(slug === "sale"){
+                var str1 = '&action=get_ajax_menu_popular_item_sales_category';
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: ajax_menu_popular_items.ajaxurl,
+                    data: str1,
+                    success: function(data){
+                        var data_parse = JSON.parse(data)
+                        if (Object.keys(data_parse).length >= 1) {
+                            Object.entries(data_parse).forEach(function([key, value]) {
+                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                                $(this).find('ul').append(newListItem);
+                            }.bind(this));
+                        }
+                    }.bind(this),
+                    error : function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
                     }
-                    console.log(data)
-                }.bind(this),
-                error : function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
-                }
-            });
+                });
+            }else{
+                var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: ajax_menu_popular_items.ajaxurl,
+                    data: str,
+                    success: function(data){
+                        var data_parse = JSON.parse(data)
+                        console.log(data_parse)
+                        if (Object.keys(data_parse).length >= 1) {
+                            Object.entries(data_parse).forEach(function([key, value]) {
+                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                                $(this).find('ul').append(newListItem);
+                            }.bind(this));
+                        }
+                        console.log(data)
+                    }.bind(this),
+                    error : function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+                    }
+                });
+            }
+
         });
         $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
             var href_middle = this.href

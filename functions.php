@@ -512,6 +512,50 @@ function get_ajax_menu_popular_item_category(){
 add_action('wp_ajax_nopriv_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
 add_action('wp_ajax_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
 
+function get_ajax_menu_popular_item_sales_category(){
+    $out = '';
+    $category = get_term_by('slug', 'item-type', 'product_cat');
+    $category_id = $category->term_id; // Replace with the ID of your desired category
+    $subcategories = get_terms(array(
+        'taxonomy' => 'product_cat',
+        'parent' => $category_id,
+    ));
+    $category_slugs = array();
+    if (!empty($subcategories) && !is_wp_error($subcategories)) {
+        foreach ($subcategories as $subcategory) {
+            array_push($category_slugs, $subcategory->slug);
+        }
+    }
+
+    $on_sale_product_ids = wc_get_product_ids_on_sale();
+    $on_sale_category_slugs = array();
+
+    foreach ($on_sale_product_ids as $product_id) {
+        $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'slugs'));
+
+        foreach ($product_categories as $category_slug) {
+            if (in_array($category_slug, $category_slugs)) {
+                $on_sale_category_slugs[] = $category_slug;
+            }
+        }
+    }
+    $counted_values = array_count_values($on_sale_category_slugs);
+    arsort($counted_values);
+    $unique_values = array_keys($counted_values);
+    $arr = array_slice($unique_values, 0, 2, true);
+    $out_arr = array();
+    for ($i = 0; $i < count($arr); $i++) {
+        $category = get_term_by('slug', $arr[$i], 'product_cat');
+        $a_href = get_term_link( $category );
+        $name = $category->name;
+        $out_arr[$arr[$i]] = array($a_href, $name);
+    }
+    $out = $out_arr;
+    die(json_encode($out));
+}
+add_action('wp_ajax_nopriv_get_ajax_menu_popular_item_sales_category', 'get_ajax_menu_popular_item_sales_category');
+add_action('wp_ajax_get_ajax_menu_popular_item_sales_category', 'get_ajax_menu_popular_item_sales_category');
+
 function get_more_categories($main_category_slug, $category_slugs){
     $args = array(
         'post_type' => 'product',
@@ -520,7 +564,6 @@ function get_more_categories($main_category_slug, $category_slugs){
         'meta_key' => 'total_sales',
         'orderby' => 'meta_value_num',
     );
-
     $products_query = new WP_Query($args);
     if ($products_query->have_posts()) {
         $categories = array();
@@ -541,7 +584,6 @@ function get_more_categories($main_category_slug, $category_slugs){
         return $unique_values;
     }
 }
-
 add_filter( 'woocommerce_default_catalog_orderby', 'change_default_sorting' );
 function change_default_sorting( $default_sorting ) {
     $default_sorting = 'popularity';
