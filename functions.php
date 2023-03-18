@@ -471,6 +471,7 @@ function get_ajax_menu_popular_item_category(){
         }
         wp_reset_postdata();
         $counted_values = array_count_values($categories);
+        arsort($counted_values);
         $unique_values = array_keys($counted_values);
         if (count($unique_values) >= 2) {
             $arr = array_slice($unique_values, 0, 2, true);
@@ -490,7 +491,7 @@ function get_ajax_menu_popular_item_category(){
                 $a_href = get_term_link( $category );
                 $name = $category->name;
                 $out_arr[$unique_values_2[0]] = array($a_href, $name);
-            }else{
+            }elseif(count($unique_values_2) > 1){
                 $arr = array_slice($unique_values_2, 0, 2, true);
                 for ($i = 0; $i < count($arr); $i++) {
                     $category = get_term_by('slug', $arr[$i], 'product_cat');
@@ -498,6 +499,8 @@ function get_ajax_menu_popular_item_category(){
                     $name = $category->name;
                     $out_arr[$arr[$i]] = array($a_href, $name);
                 }
+            }else{
+                $out_arr = [];
             }
 
         } else {
@@ -535,6 +538,7 @@ function get_more_categories($main_category_slug, $category_slugs){
         }
         wp_reset_postdata();
         $counted_values = array_count_values($categories);
+        arsort($counted_values);
         $unique_values = array_keys($counted_values);
         return $unique_values;
     }
