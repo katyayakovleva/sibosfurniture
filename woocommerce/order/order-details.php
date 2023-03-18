@@ -29,15 +29,15 @@ $show_customer_details = is_user_logged_in() && $order->get_user_id() === get_cu
 $downloads             = $order->get_downloadable_items();
 $show_downloads        = $order->has_downloadable_item() && $order->is_download_permitted();
 
-if ( $show_downloads ) {
-	wc_get_template(
-		'order/order-downloads.php',
-		array(
-			'downloads'  => $downloads,
-			'show_title' => true,
-		)
-	);
-}
+// if ( $show_downloads ) {
+// 	wc_get_template(
+// 		'order/order-downloads.php',
+// 		array(
+// 			'downloads'  => $downloads,
+// 			'show_title' => true,
+// 		)
+// 	);
+// }
 ?>
 
 
@@ -80,12 +80,16 @@ if ( $show_downloads ) {
 				<?php
 			}
 			?>
-			</div>
+			
+		</div>
+		<div class="order-note">
 			<?php if ( $order->get_customer_note() ) : ?>
-					<?php esc_html_e( 'Note:', 'woocommerce' ); ?>
-					<?php echo wp_kses_post( nl2br( wptexturize( $order->get_customer_note() ) ) ); ?>
+				<h2 class="ff-ms fs-4 fw-7 fc-blue-2">Note:</h2>
+				<div>
+					<p><?php echo wp_kses_post( nl2br( wptexturize( $order->get_customer_note() ) ) ); ?></p>
+				</div>						
 			<?php endif; ?>
-		
+		</div>	
 	<?php do_action( 'woocommerce_order_details_after_order_table', $order ); ?>
     
 <?php
@@ -98,7 +102,7 @@ if ( $show_downloads ) {
 do_action( 'woocommerce_after_order_details', $order );
 
 if ( $show_customer_details ) {
-	// wc_get_template( 'order/order-details-customer.php', array( 'order' => $order ) );
+	wc_get_template( 'order/order-details-customer.php', array( 'order' => $order ) );
 }
 
 ?>

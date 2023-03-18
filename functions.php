@@ -780,14 +780,6 @@ function sibosfurniture_custom_excerpt($post = null, $limit=20){
 }
 add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 
-
-
-// add_filter( 'woocommerce_new_customer_data', function( $data ) {
-// 	$data['user_login'] = $data['user_email'];
-
-// 	return $data;
-// } );
-
 /**
   * show more posts with ajax
   */
@@ -825,21 +817,7 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 			)
 		  );
 	}elseif($dashboard_menu_item == 'payment-methods'){
-		// $saved_methods = wc_get_customer_saved_methods_list( get_current_user_id() );
-		// $has_methods   = (bool) $saved_methods;
-		// $types         = wc_get_account_payment_methods_types();
-		// // do_action( 'woocommerce_before_account_payment_methods', $has_methods );
-		// if ( $has_methods ) {
-		// 	foreach ( $saved_methods as $type => $methods ){
-		// 		foreach ( $methods as $method ){
-		// 			foreach ( wc_get_account_payment_methods_columns() as $column_id => $column_name ) {
-		// 				$out .=  esc_html( wc_get_credit_card_type_label( $method['method']['brand'] ) );
-		// 			}
-					
-		// 		}
-		// 	}
-			
-		// }
+
 	  wc_get_template(
 		'myaccount/payment-methods.php',
 		array(
@@ -870,10 +848,7 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 	  ';
 
 	}
-	
-	
-	
-	
+
 	  die($out);
   }
   
@@ -896,19 +871,7 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 				)
 			);
 	}
-	if($action === 'Cancel'){
-		$order = wc_get_order( $order_id );
-		$order->update_status( 'cancelled' );
-	}
-	if($action === 'Pay'){
-		$order = wc_get_order( $order_id );
-		wc_get_template(
-			'checkout/form-pay.php',
-			array(
-				'order'    =>  $order,
-				)
-			);
-	}
+	
 	else{
 		// $out = '<p>'.esc_html( $action ).'</p>';
 	}
@@ -924,7 +887,7 @@ add_action( 'wpp_post_update_views', 'plumber_wpp_update_postviews' );
 add_filter('woocommerce_valid_order_statuses_for_cancel', 'my_cancellable_statuses', 10, 2);
  
 function my_cancellable_statuses($statuses, $order){
-  return array('pending', 'processing');
+  return array('pending', 'processing', 'on hold');
 }
 
 add_filter( 'woocommerce_my_account_my_orders_query', 'custom_my_account_orders_query', 20, 1 );
