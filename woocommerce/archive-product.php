@@ -33,7 +33,63 @@ do_action( 'woocommerce_before_main_content' );
     <article class="catalog px-2 px-md-4 pt-2">
         <aside>
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
-            <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p>
+            <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p> -->
+            <?php 
+                $args = array(
+                    'taxonomy' => 'product_cat',
+                    'hide_empty' => true,
+                    'parent'   => 0,
+                    'exclude'  =>array(get_term_by('slug','uncategorized','product_cat')->term_id)
+                );
+                $product_cat = get_terms( $args );
+            ?>
+            <ul class="link-category-list">
+                <?php foreach ($product_cat as $parent_product_cat) { ?>
+               
+                    <li>
+                        <a href="#" class="link-category"><?php echo $parent_product_cat->name; ?></a>
+                       <ol>
+                        <?php
+                            $child_args = array(
+                                        'taxonomy' => 'product_cat',
+                                        'hide_empty' => true,
+                                        'parent'   => $parent_product_cat->term_id
+                                    );
+                            $child_product_cats = get_terms( $child_args );
+                            foreach ($child_product_cats as $child_product_cat) { ?>
+
+                            <li><a href="<?php echo get_term_link($child_product_cat->term_id); ?>"><? echo $child_product_cat->name; ?></a></li>
+                            
+                            <?php } 
+                        ?>
+                        </ol>
+                    </li>
+
+                <?php } ?>
+                
+                <!-- <li>
+                    <a href="#" class="link-category">Place types</a>
+                    <ol>
+                        <li><a href="#">Beds</a></li>
+                        <li><a href="#">Beds</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#" class="link-category">Item types</a>
+                    <ol>
+                        <li><a href="#">Beds</a></li>
+                        <li><a href="#">Beds</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#" class="link-category">Collections</a>
+                    <ol>
+                        <li><a href="#">Beds</a></li>
+                        <li><a href="#">Beds</a></li>
+                    </ol>
+                </li> -->
+            </ul>
+            <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p>
             <ul class="link-category-list">
                 <li>
                     <a href="#" class="link-category">Beds</a>
@@ -56,31 +112,7 @@ do_action( 'woocommerce_before_main_content' );
                         <li><a href="#">Beds</a></li>
                     </ol>
                 </li>
-            </ul>
-            <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p>
-            <ul class="link-category-list">
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-            </ul>
+            </ul> -->
         </aside>
         <section>
             <div class="breadcrumb my-2">
