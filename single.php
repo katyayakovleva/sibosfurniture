@@ -43,7 +43,7 @@ $page_template = get_pages( array(
                 <div class="swiper-wrapper">
                     <?php 
                         $posts = new WP_Query( array(
-                            'posts_per_page' => 3,
+                            'posts_per_page' => 6,
                             'post_type'      => 'post',
                             'category' =>  get_category_by_slug( 'blog' )->term_id,
                             'post__not_in'  => array($current_post),

@@ -209,6 +209,7 @@ do_action( 'woocommerce_before_main_content' );
             </article>
         </section>
     </article>
+    
 <?php //echo do_shortcode('[wpf-filters id=1]') ?>
 <!--    <header class="woocommerce-products-header">-->
 <!--        --><?php //if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
@@ -281,6 +282,52 @@ do_action( 'woocommerce_after_main_content' );
  *
  * @hooked woocommerce_get_sidebar - 10
  */
-do_action( 'woocommerce_sidebar' );?>
+//do_action( 'woocommerce_sidebar' );?>
+<article class="px-3 px-sm-4 bg-blue-5">
+            <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top news</h2>
+            <div class="swiper-per-view">
+                <div class="swiper-wrapper">
+                    <?php 
+                        $posts = new WP_Query( array(
+                            'posts_per_page' => 6,
+                            'post_type'      => 'post',
+                            'category' =>  get_category_by_slug( 'blog' )->term_id,
+                            'meta_key' => 'views_total',
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            )
+                        );
+                    ?>
+                    <?php if ( $posts->have_posts() ):
+                        while ( $posts->have_posts() ) : $posts->the_post(); ?>
+                            <div class="swiper-slide item-blog">
+                                <div>
+                                    <div class="d-flex jc-between">
+                                        <figure class="ratio-4x3">
+                                        <?php if ( has_post_thumbnail() ) : ?>
+                                            <img src="<?php the_post_thumbnail_url();?>" alt="item image">
+                                        <?php else:?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="item image">
+                                        <?php endif;?>
+                                        </figure>
+                                        <div class="d-flex fd-col pl-1">
+                                            <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>
+                                            <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('Y'); ?></p>
+                                        </div>
+                                    </div>
+                                    <p class="ff-ms fs-4 fw-7 uppercase"><?php echo sibosfurniture_custom_title();?></p>
+                                    <p class="ff-ms fs-5 fc-dark"><?php echo sibosfurniture_custom_excerpt();?></p>
+                                </div><a href="<?php the_permalink($post->ID); ?>" class="btn as-start">Read more</a>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php wp_reset_postdata();
+                endif;?>
+                    
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </article>
     </main>
 <?php get_footer( 'shop' );
