@@ -4438,6 +4438,12 @@ footer {
 .woocommerce{
     width: 100%;
 }
+.woocommerce-info{
+    border-top-color: #0049af !important;
+}
+.woocommerce-info::before {
+    color: #0049af !important;
+}
 .required{
    display: none !important;
 }
