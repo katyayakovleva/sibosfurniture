@@ -1,6 +1,25 @@
 li{
     list-style-type: none;
 }
+span.onsale{
+    min-height: 3.236em;
+    min-width: 3.236em;
+    padding: 0.202em;
+    font-weight: 700;
+    position: absolute;
+    text-align: center;
+    line-height: 3.236;
+    font-size: .857em;
+    z-index: 9;
+    border: 2px solid #0049af;
+    background-color: transparent;
+    color: #0049af;
+    border-radius: 0;
+    top: 0;
+    right: 0;
+    left: auto;
+    margin: 1.75em;
+}
 .swiper-slide ins{
     text-decoration: none;
 }
