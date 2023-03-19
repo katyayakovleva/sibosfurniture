@@ -23,6 +23,10 @@ span.onsale{
 .swiper-slide ins{
     text-decoration: none;
 }
+.swiper-slide img{
+    height: auto;
+    width: 100%;
+}
 .related.products .grid-item-shop {
     display: block;
 }
