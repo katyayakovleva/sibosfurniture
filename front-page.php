@@ -111,42 +111,59 @@ get_header();
     <article>
         <h2 class="w-sm-75 ta-sm-center ff-ms fs-2 fc-blue-2 fw-7 px-1 mx-auto mt-1 mb-0">Customize & Decorate Your Home With Our Furniture!</h2>
         <section class="grid-container">
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
-            <a href="shop-page.html" class="grid-item-w-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rectangle-43.jpg" alt="grid item image">
-                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>
-            </a>
+            <?php $parent_term = get_term_by( 'slug', 'place-type', 'product_cat' );
+
+            $args = array(
+                'taxonomy' => 'product_cat',
+                'hide_empty' => false,
+                'parent' => $parent_term->term_id,
+            );
+
+            $subcategories = get_terms( $args );
+
+            foreach( $subcategories as $subcategory ) {
+                $href = get_term_link( $subcategory );
+                $name = $subcategory->name;
+                $thumbnail_id = get_woocommerce_term_meta( $subcategory->term_id, 'thumbnail_id', true );
+                $thumbnail = wp_get_attachment_url( $thumbnail_id);?>
+                <a href="<?php echo $href ?>" class="grid-item-w-header"><img src="<?php echo $thumbnail ?>" alt="grid item image">
+                    <p class="fs-2 fc-white ff-ms fw-7 ta-center"><?php echo $name ?></p>
+                </a>
+            <?php }?>
+
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
+<!--            <a href="shop-page.html" class="grid-item-w-header"><img src="--><?php //echo get_template_directory_uri(); ?><!--/assets/images/Rectangle-43.jpg" alt="grid item image">-->
+<!--                <p class="fs-2 fc-white ff-ms fw-7 ta-center">LIVING ROOM</p>-->
+<!--            </a>-->
         </section>
     </article>
     <?php
