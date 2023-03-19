@@ -1,6 +1,9 @@
 li{
     list-style-type: none;
 }
+.swiper-slide ins{
+    text-decoration: none;
+}
 .related.products .grid-item-shop {
     display: block;
 }
