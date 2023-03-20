@@ -1,7 +1,7 @@
 
 
 function filterProducts(selected){
-
+    var products_loop_content = $("#products-loop");
     var jsonString = JSON.stringify(selected);
     var str = '&selected='+ jsonString + '&action=filter_product_ajax';
     $.ajax({
@@ -12,7 +12,8 @@ function filterProducts(selected){
         success: function(data){
             var data = $(data);
             if(data.length){
-                $('#filter-checkout').append(data)
+                products_loop_content.html("");
+                products_loop_content.append(data);
             } else{
                 console.log('error');
             }
@@ -35,9 +36,18 @@ $(document).ready(function() {
             selected = filtered;
         }
         const url = new URL(window.location);
-        url.searchParams.set("categories", selected.join(','));
+        let myArrayString = JSON.stringify(selected);
+        let encodedArray = encodeURIComponent(myArrayString);
+        url.searchParams.set("categories", encodedArray);
         window.history.pushState({}, "", url);
-        // filterProducts(selected);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const categories = urlParams.get('categories');
+       
+        let decodedArrayString = decodeURIComponent(categories);
+         console.log(decodedArrayString);
+        // console.log(decodedArray);
+        filterProducts(selected);
         // console.log(selected);
     });
     

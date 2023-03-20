@@ -67,53 +67,7 @@ do_action( 'woocommerce_before_main_content' );
                         </form>
 
                 <?php } ?>
-                
-                <!-- <li>
-                    <a href="#" class="link-category">Place types</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Item types</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Collections</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li> -->
-            </div>
-            <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p>
-            <ul class="link-category-list">
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-                <li>
-                    <a href="#" class="link-category">Beds</a>
-                    <ol>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Beds</a></li>
-                    </ol>
-                </li>
-            </ul> -->
+            </div>   
         </aside>
         <section>
             <div class="breadcrumb my-2">
@@ -129,7 +83,7 @@ do_action( 'woocommerce_before_main_content' );
                         <?php  echo woocommerce_catalog_ordering(); ?>
                     </div>
                 </section>
-                <section class="grid-container py-2">
+                <section class="grid-container py-2" id="products-loop">
                     <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
