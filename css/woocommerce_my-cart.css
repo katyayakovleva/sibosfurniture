@@ -235,7 +235,7 @@ table.shop_table-totals tr.order-total td strong{
         flex-direction: row;
         justify-content: space-between;
     }
-    table.shop_table.shop_table-totals tbody tr:not(:last-of-type){
+    table.shop_table tbody tr:not(:last-of-type){
         border-bottom: 2px solid #0049af;
     }
     .woocommerce .quantity .qty {
