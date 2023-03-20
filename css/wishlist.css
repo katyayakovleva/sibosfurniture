@@ -1,0 +1,105 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&family=Merriweather:wght@700&display=swap);:root {
+}
+::-webkit-scrollbar {
+    display: none;
+}
+table.wishlist_table {
+     font-size: 100%;
+}
+.woocommerce table.shop_table {
+    display: flex;
+    flex-direction: column;
+    max-height: 30em;
+    width: 100%;
+}
+.woocommerce table.shop_table tbody{
+    overflow-y: scroll;
+}
+table.wishlist_table tr {
+    display: grid;
+    grid-template-columns: 1fr 3fr 4fr 2fr;
+}
+span.onsale {
+    max-height: 3.236em;
+    max-width: 3.236em;
+    right: 0;
+    left: auto!important;
+    margin: 1.75em!important;
+}
+.wishlist-title h2{
+    color: #0049af!important;
+    font-weight: 700!important;
+    font-size: 2.5em!important;
+    font-family: 'Merriweather Sans', sans-serif!important;
+    text-transform: uppercase;
+}
+.woocommerce table.shop_table {
+    border: 2px solid #0049af;
+    border-radius: 0;
+    border-collapse: collapse;
+}
+table.wishlist_table thead{
+    border-bottom: 2px solid #0049af;
+}
+table.wishlist_table thead th {
+    border-color: transparent;
+    padding: 9px 0 7px!important;
+    line-height: 1.5em;
+    font-size: var(--fs-4);
+    font-weight: 700;
+    color: #0049af;
+    margin: 0;
+    text-transform: uppercase;
+}
+.woocommerce table.shop_table tbody tr:not(:last-of-type) {
+    border-bottom: 2px solid #0049af;
+}
+.wishlist_table tr td {
+    text-align: start;
+}
+.woocommerce table.shop_table td {
+    border-top: none;
+}
+.wishlist_table tr td.product-thumbnail{
+    width: 5.65em;
+}
+.wishlist_table tr td.product-thumbnail a {
+    max-width: inherit;
+}
+.woocommerce table.shop_table td.product-name {
+    vertical-align: top;
+    padding-top: 15px;
+    padding-left: 0;
+}
+.woocommerce table.shop_table td:not(.product-name):not(.product-thumbnail){
+    display: flex;
+    align-items: center;
+}
+.woocommerce table.shop_table td.product-name a{
+    color: #404c5c!important;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: var(--fs-5);
+    margin: 0;
+    text-decoration: none!important;
+}
+.woocommerce table.shop_table td.product-price{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: var(--fs-5);
+    padding-left: 0;
+}
+.woocommerce table.shop_table td.product-price ins{
+    text-decoration: none;
+}
+.woocommerce table.shop_table td.product-add-to-cart{
+    display: grid!important;
+    grid-template-columns: 3fr 1fr;
+}
+.wishlist_table .product-add-to-cart a.button {
+    color: #0049af;
+    background-color: transparent;
+}
+@media screen and (min-width: 35.5em){
+    .wishlist-title h2 {
+        font-size: 3.13em!important;
+    }
+}
