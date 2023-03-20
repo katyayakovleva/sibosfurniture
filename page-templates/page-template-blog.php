@@ -69,7 +69,7 @@ get_header();
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else :?> 
-                    <a href="" class="link fs-3 disabled" aria-label="back">
+                    <a href="" class="link image.pngfs-3 disabled" aria-label="back">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php endif;?>

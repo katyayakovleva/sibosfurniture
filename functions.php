@@ -250,7 +250,11 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-
+        wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array(), rand(111,9999), true );
+        wp_localize_script( 'product-filter', 'ajax_filter_products', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'noposts' => __('No older posts found', 'greenglobe'),
+        ));
     }
     else{
 
@@ -589,8 +593,6 @@ function change_default_sorting( $default_sorting ) {
     $default_sorting = 'popularity';
     return $default_sorting;
 }
-
-
 
 
 
@@ -985,3 +987,18 @@ function redirect_from_payment_methods() {
         exit;
     }
 }
+
+
+function filter_product_ajax() {
+
+	$selected = json_decode(stripslashes($_POST['selected']));
+    // $size= sizeof($selected);
+	$out ='';
+  
+
+	die($out);
+  }
+  
+  add_action('wp_ajax_nopriv_filter_product_ajax', 'filter_product_ajax');
+  add_action('wp_ajax_filter_product_ajax', 'filter_product_ajax');
+

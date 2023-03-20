@@ -31,24 +31,23 @@ do_action( 'woocommerce_before_main_content' );
 ?>
     <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
-        <aside>
+    <aside>
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
             <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p> -->
             <?php 
                 $args = array(
                     'taxonomy' => 'product_cat',
-                    'hide_empty' => true,
+                    'hide_empty' => false,
                     'parent'   => 0,
                     'exclude'  =>array(get_term_by('slug','uncategorized','product_cat')->term_id)
                 );
                 $product_cat = get_terms( $args );
             ?>
-            <ul class="link-category-list">
+            <div class="link-category-list" id="filter-checkout">
                 <?php foreach ($product_cat as $parent_product_cat) { ?>
                
-                    <li>
-                        <a href="#" class="link-category"><?php echo $parent_product_cat->name; ?></a>
-                       <ol>
+                        <p class="link-category"><?php echo $parent_product_cat->name; ?></p>
+                       <form>
                         <?php
                             $child_args = array(
                                         'taxonomy' => 'product_cat',
@@ -58,12 +57,14 @@ do_action( 'woocommerce_before_main_content' );
                             $child_product_cats = get_terms( $child_args );
                             foreach ($child_product_cats as $child_product_cat) { ?>
 
-                            <li><a href="<?php echo get_term_link($child_product_cat->term_id); ?>"><? echo $child_product_cat->name; ?></a></li>
+                            <div class="form-checkbox">
+                                <label><input type="checkbox" data-category_id="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label>
+                                <!-- <a href="<?php echo get_term_link($child_product_cat->term_id); ?>"><? echo $child_product_cat->name; ?></a> -->
+                            </div>
                             
                             <?php } 
                         ?>
-                        </ol>
-                    </li>
+                        </form>
 
                 <?php } ?>
                 
@@ -88,7 +89,7 @@ do_action( 'woocommerce_before_main_content' );
                         <li><a href="#">Beds</a></li>
                     </ol>
                 </li> -->
-            </ul>
+            </div>
             <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p>
             <ul class="link-category-list">
                 <li>
