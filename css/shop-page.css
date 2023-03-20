@@ -267,7 +267,7 @@
     margin-top: .5em
 }
 
-.grid-item-shop .grid-item-shop__header span {
+.grid-item-shop .grid-item-shop__header span:not(.onsale) {
     width: 100%;
     aspect-ratio: 1;
     background-color: #0049af;
@@ -276,33 +276,33 @@
     display: none
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=beige] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=beige] {
     background-color: #fff3da
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=green] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=green] {
     background-color: #bab654
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=red] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=red] {
     background-color: #af4a00
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=blue] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=blue] {
     background-color: #5378ac
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=purple] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=purple] {
     background-color: #362646
 }
 
-.grid-item-shop .grid-item-shop__header span[aria-label=dark-red] {
+.grid-item-shop .grid-item-shop__header span:not(.onsale)[aria-label=dark-red] {
     background-color: #620f41
 }
 
-.grid-item-shop .grid-item-shop__header span:nth-child(1),.grid-item-shop .grid-item-shop__header span:nth-child(2),.grid-item-shop .grid-item-shop__header span:nth-child(3),.grid-item-shop .grid-item-shop__header span:nth-child(4),.grid-item-shop .grid-item-shop__header span:nth-child(5) {
-    display: block
-}
+/*.grid-item-shop .grid-item-shop__header span:not(.onsale):nth-child(1),.grid-item-shop .grid-item-shop__header span:not(.onsale):nth-child(2),.grid-item-shop .grid-item-shop__header span:not(.onsale):nth-child(3),.grid-item-shop .grid-item-shop__header span:not(.onsale):nth-child(4),.grid-item-shop .grid-item-shop__header span:nth-child(5) {*/
+/*    display: block*/
+/*}*/
 
 .grid-item-shop .price {
     font-size: var(--fs-4);
@@ -376,7 +376,7 @@
         margin-top: 0
     }
 
-    .grid-item-shop .grid-item-shop__header span {
+    .grid-item-shop .grid-item-shop__header span:not(.onsale) {
         display: block
     }
 

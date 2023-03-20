@@ -129,114 +129,51 @@ do_action( 'woocommerce_before_main_content' );
                     </div>
                 </section>
                 <section class="grid-container py-2">
+                    <?php $args = array(
+                        'post_type' => 'product',
+                        'orderby' => 'popularity',
+                        'order' => 'DESC',
+                        'posts_per_page' => -1
+                    );
+                    $products = new WC_Product_Query( $args );
+                    $products = $products->get_products();
+                    if ( $products ) {
+                    foreach ( $products as $product ) {
+                        $product_id = $product->get_id();
+                        $product_name = $product->get_name();
+                        $product_url = get_permalink( $product_id );
+                        $product_thumbnail = $product->get_image();
+                        $product_rating = $product->get_average_rating();
+                        $product_price = $product->get_price_html();?>
                     <div class="grid-item-shop">
                         <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
+                            <figure>
+                                <?php if ($product->is_on_sale()) {?>
+                                    <span class="onsale">Sale!</span>
+                                <?php }?>
+                                <?php echo $product_thumbnail ?>
+                            </figure>
+<!--                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>-->
+<!--                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>-->
                         </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
+                        <p class="ff-ms fs-5 fg-1 product_name"><?php echo $product_name ?></p>
+                        <div class="product-rating">
+                            <?php if($product_rating > 0){
+                                for ($i = 1; $i <= $product_rating; $i++){ ?>
+                                    <span class="checked"></span>
+                                <?php }
+                            for ($i = 1; $i <= 5-$product_rating; $i++){?>
+                            <span class="unchecked"></span>
+                            <?php }
+                            }?>
+                        </div>
                         <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                            <p class="grid-item-shop__price ff-ms m-0"><?php echo $product_price ?></p>
+                            <div class="grid-item-shop__buttons"><a href="<?php echo $product_url ?>" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
                         </div>
                     </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
-                    <div class="grid-item-shop">
-                        <div class="grid-item-shop__header changing-color-item">
-                            <figure><img src="assets/images/cm-br1855a-29-1-1.jpg" class="active" data-color="beige" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="green" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="red" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="blue" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="purple" alt="item image"> <img src="assets/images/cm-br1855a-29-1-1.jpg" data-color="dark-red" alt="item image"></figure>
-                            <div class="colors"><span role="button" aria-label="beige" data-color="beige"></span> <span role="button" aria-label="green" data-color="green"></span> <span role="button" aria-label="red" data-color="red"></span> <span role="button" aria-label="blue" data-color="blue"></span> <span role="button" aria-label="purple" data-color="purple"></span> <span role="button" aria-label="dark-red" data-color="dark-red"></span></div>
-                        </div>
-                        <p class="ff-ms fs-5 fg-1">Modrest Cartier - Modern Beige Velvet and Brushed Brass Bed</p>
-                        <p class="ff-ms d-sm-none fs-5 fc-blue-4">Lorem ipsum dolor sit amet, adipiscing elit</p>
-                        <div class="d-flex ai-center jc-between mt-2">
-                            <p class="grid-item-shop__price ff-ms m-0">679$</p>
-                            <div class="grid-item-shop__buttons"><a href="#" class="link fs-3 d-none d-sm-inline"><i class="icon-heart-icon"></i></a> <a href="item-page.html" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-                        </div>
-                    </div>
+                    <?php     }
+                    }?>
                 </section>
             </article>
         </section>
