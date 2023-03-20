@@ -238,9 +238,7 @@ function sibosfurniture_scripts() {
         wp_enqueue_style( 'my-cart', get_template_directory_uri(). '/css/my-cart.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_my-cart', get_template_directory_uri(). '/css/woocommerce_my-cart.css', array(), rand(111,9999));
         wp_enqueue_script( 'woocommerce_cart', get_template_directory_uri() . '/js/woocommerce_cart.js', array(), rand(111,9999), true );
-
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-
         wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
     }elseif( is_archive()){
@@ -255,6 +253,12 @@ function sibosfurniture_scripts() {
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'noposts' => __('No older posts found', 'greenglobe'),
         ));
+
+    }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){
+        wp_enqueue_style( 'wishlist', get_template_directory_uri(). '/css/wishlist.css', array(), rand(111,9999));
+        wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
     }
     else{
 
@@ -277,6 +281,13 @@ if ( !function_exists('add_custom_gravatar') ) {
 
         return $avatar_defaults;
     }
+}
+
+add_filter( 'loop_shop_per_page', 'bbloomer_redefine_products_per_page', 9999 );
+
+function bbloomer_redefine_products_per_page( $per_page ) {
+    $per_page = 12;
+    return $per_page;
 }
 
 //Hack the default beahvior of gravatar to enable custom avatars on localhost
@@ -994,11 +1005,11 @@ function filter_product_ajax() {
 	$selected = json_decode(stripslashes($_POST['selected']));
     // $size= sizeof($selected);
 	$out ='';
-  
+
 
 	die($out);
   }
-  
+
   add_action('wp_ajax_nopriv_filter_product_ajax', 'filter_product_ajax');
   add_action('wp_ajax_filter_product_ajax', 'filter_product_ajax');
 
