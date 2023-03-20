@@ -216,7 +216,14 @@ do_action( 'woocommerce_before_main_content' );
                 <p><?php echo $total[0]; ?></p>
             </div>
         </div>
-        <div class="d-flex jc-center pb-3 px-2"><a class="btn mx-auto">Search for your color and material</a></div>
+        <?php
+        $page_template = get_pages( array(
+            'post_type' => 'page',
+            'meta_key' => '_wp_page_template',
+            'meta_value' => 'page-templates/page-template-colors-and-materials.php',
+        ));
+        ?>
+        <div class="d-flex jc-center pb-3 px-2"><a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mx-auto">Search for your color and material</a></div>
         <article class="px-3 px-sm-4 bg-blue-5">
             <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top news</h2>
             <div class="swiper-per-view">
