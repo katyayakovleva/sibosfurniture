@@ -11,6 +11,7 @@ table.wishlist_table {
     flex-direction: column;
     max-height: 30em;
     width: 100%;
+    margin-bottom: 5em;
 }
 .woocommerce table.shop_table tbody{
     overflow-y: scroll;
@@ -101,5 +102,65 @@ table.wishlist_table thead th {
 @media screen and (min-width: 35.5em){
     .wishlist-title h2 {
         font-size: 3.13em!important;
+    }
+}
+@media screen and (max-width: 768px){
+
+    .wishlist_table.mobile{
+        padding-left: 0;
+        margin-bottom: 3em;
+    }
+    .woocommerce .wishlist-title {
+        margin-bottom: 0;
+    }
+    .woocommerce .wishlist-title .btn.button.show-title-form{
+        display: none;
+    }
+    .wishlist_table.mobile li:not(:last-of-type){
+        border-bottom: 2px solid #0049af;
+    }
+    .wishlist_table.mobile li .item-wrapper{
+        padding: 1em 0.5em 0;
+        display: flex;
+        flex-direction: row;
+    }
+    .wishlist_table.mobile li .item-wrapper .product-thumbnail {
+        max-width: 5.65em;
+        width: 5.65em;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details .product-name h3 {
+        margin-top: 5px;
+        color: #404c5c!important;
+        text-decoration: none!important;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details .product-name h3 a{
+        color: #404c5c!important;
+        text-transform: none;
+        font-size: 0.9em;
+        font-weight: 200;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details .item-details-table{
+        font-family: 'Merriweather Sans', sans-serif;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details .item-details-table .label {
+        font-weight: 200;
+    }
+    .wishlist_table.mobile li .item-wrapper .item-details .item-details-table .value ins {
+        text-decoration: none;
+    }
+    .wishlist_table.mobile li .additional-info-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 0.5em;
+        align-items: baseline;
+    }
+    .wishlist_table .product-add-to-cart a{
+        font-size: 0.75em;
     }
 }
