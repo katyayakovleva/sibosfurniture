@@ -37,13 +37,13 @@ do_action( 'woocommerce_before_main_content' );
             <?php 
                 $args = array(
                     'taxonomy' => 'product_cat',
-                    'hide_empty' => false,
+                    'hide_empty' => true,
                     'parent'   => 0,
                     'exclude'  =>array(get_term_by('slug','uncategorized','product_cat')->term_id)
                 );
                 $product_cat = get_terms( $args );
             ?>
-            <div class="link-category-list" id="filter-checkout">
+            <div class="link-category-list" id="filter-products">
                 <?php foreach ($product_cat as $parent_product_cat) { ?>
                
                         <p class="link-category"><?php echo $parent_product_cat->name; ?></p>
@@ -58,8 +58,9 @@ do_action( 'woocommerce_before_main_content' );
                             foreach ($child_product_cats as $child_product_cat) { ?>
 
                             <div class="form-checkbox">
-                                <label><input type="checkbox" data-category_id="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label>
-                                <!-- <a href="<?php echo get_term_link($child_product_cat->term_id); ?>"><? echo $child_product_cat->name; ?></a> -->
+                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label>
+
+                                <!-- <label><input type="checkbox" data-category_id="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label> -->
                             </div>
                             
                             <?php } 
@@ -67,6 +68,9 @@ do_action( 'woocommerce_before_main_content' );
                         </form>
 
                 <?php } ?>
+                <div class="form-checkbox">
+                    <label><input type="checkbox" name="sale">Sale</label>
+                </div>
             </div>   
         </aside>
         <section>
@@ -76,11 +80,17 @@ do_action( 'woocommerce_before_main_content' );
             </div>
             <article>
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
-                    <div class="dropdown d-sm-none">
-                        <?php  echo woocommerce_catalog_ordering(); ?>
-                    </div>
-                    <div class="dropdown">
-                        <?php  echo woocommerce_catalog_ordering(); ?>
+                    <div class="dropdown" id="sort-product">
+                        <div class="dropdown__trigger sort">Sort by</div>
+                        <div class="dropdown__content">
+                            <ul >
+                                <li><a value="popularity" class="link">Sort by popularity</a></li>
+                                <li><a value="rating" class="link">Sort by average rating</a></li>
+                                <li><a value="date" class="link">Sort  by latest</a></li>
+                                <li><a value="price" class="link">Sort by price: low to high</a></li>
+                                <li><a value="price-desc" class="link">Sort by price: high to low</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </section>
                 <section class="grid-container py-2" id="products-loop">
@@ -93,7 +103,17 @@ do_action( 'woocommerce_before_main_content' );
 //                        'meta_key' => 'views_total',
                         'orderby' => 'popularity',
                         'order' => 'DESC',
+                        'meta_query'     => array(
+                            'relation' => 'OR',
+
+                        )
                     );
+                    // $item_types =  json_decode(stripslashes(get_var('item_types', [])));
+                    // $sale = get_var('sale', false);
+                    //     if($sale == 'true'){
+                    //         $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+                    //         $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+                    //     }
                     $products = new WP_Query( $args );
 //                    $products = $products->get_products();
                     while ( $products->have_posts() ) : $products->the_post();

@@ -957,38 +957,12 @@ add_filter('woocommerce_paypal_payments_checkout_button_renderer_hook', function
 
 add_action( 'woocommerce_save_account_details', 'redirect_to_my_account' );
 add_action( 'woocommerce_customer_save_address', 'redirect_to_my_account' );
-// add_action( 'woocommerce_add_payment_method_success', 'redirect_to_my_account' );
-// add_action( 'woocommerce_saved_payment_methods_for_user', 'redirect_to_my_account' );
-// add_action( 'woocommerce_payment_method_deleted', 'redirect_to_my_account' );
+
 
 function redirect_to_my_account() {
    wp_safe_redirect( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
    exit();
 }
-// add_filter( 'woocommerce_payment_gateways_settings', 'redirect_after_payment_method_saved' );
-
-// function redirect_after_payment_method_saved( $settings ) {
-//     if ( ! is_admin() ) {
-//         return $settings;
-//     }
- 
-//     $current_screen = get_current_screen();
- 
-//     if ( empty( $current_screen ) || $current_screen->id !== 'woocommerce_page_wc-settings' || empty( $_GET['section'] ) || $_GET['section'] !== 'checkout' ) {
-//         return $settings;
-//     }
- 
-//     foreach ( WC()->payment_gateways()->payment_gateways() as $gateway ) {
-//         if ( isset( $_POST['woocommerce_' . $gateway->id . '_settings'] ) ) {
-//             $myaccount_page_url = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
-//             $redirect_url = remove_query_arg( 'payment-methods', $myaccount_page_url );
-//             wp_safe_redirect( $redirect_url );
-//             exit;
-//         }
-//     }
- 
-//     return $settings;
-// }
 
 add_action( 'template_redirect', 'redirect_from_payment_methods' );
 
@@ -1004,24 +978,59 @@ function redirect_from_payment_methods() {
 
 function filter_product_ajax() {
 
-    $selected = json_decode(stripslashes($_POST['selected']));
-    // $selected_str = implode(",",$selected);
+    $collections = json_decode(stripslashes($_POST['collections']));
+    $item_types = json_decode(stripslashes($_POST['item_types']));
+    $place_types = json_decode(stripslashes($_POST['place_types']));
+    $place_types_and_collections = array_merge($collections, $place_types);
+    $sale = $_POST['sale'];
+    $sort = (! empty( $_POST['sort'] )) ? sanitize_text_field( wp_unslash( $_POST['sort'] ) ) : '';
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $args = array(
-        'posts_per_page' => 12,
+        'posts_per_page' => -1,
         'post_type'      => 'product',
-        'paged'          => $paged,
+        // 'paged'          => $paged,
         //'meta_key' => 'views_total',
-        'orderby' => 'popularity',
-        'order' => 'DESC',
+        // 'orderby' => 'popularity',
+        // 'order' => 'DESC',
         'tax_query' => array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'term_id',
-                'terms'    => $selected,
-            ),
+            'relation' => 'AND',
+
         ),
+        'meta_query'     => array(
+            'relation' => 'OR',
+        )
     );
+    if(!empty($item_types)){
+        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
+    }
+    if(!empty($place_types_and_collections)){
+        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
+    }
+    if($sale == 'true'){
+        $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+        $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+    }
+    if($sort == 'rating'){
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = '_price';
+        $args['order'] = 'asc';
+    }elseif($sort == 'date'){
+        $args['orderby'] = 'date';
+        $args['order'] = 'desc';
+    }elseif($sort == 'price'){
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = '_price';
+        $args['order'] = 'asc';
+    }
+    elseif($sort == 'price-desc'){
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = '_price';
+        $args['order'] = 'desc';
+    }
+    else{
+        $args['orderby'] = 'popularity';
+        $args['order'] = 'desc';
+    }
     $products = new WP_Query( $args );
     $total= [$products -> max_num_pages];
     $out ='';
@@ -1033,8 +1042,10 @@ function filter_product_ajax() {
         $product_thumbnail = $product->get_image();
         $product_rating = $product->get_average_rating();
         $product_price = $product->get_price_html();
-        $out .= '<div class="grid-item-shop">
-            <div class="grid-item-shop__header changing-color-item">
+        $terms = get_the_terms( $product_id, 'product_cat' );
+        
+        $out .= '<div class="grid-item-shop">';
+        $out .= '<div class="grid-item-shop__header changing-color-item">
                 <figure>';
                     if ($product->is_on_sale()) {
                     $out.='<span class="onsale">Sale!</span>';
