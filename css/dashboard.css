@@ -186,20 +186,23 @@
     flex-direction: column
 }
 
-.orders>div .orders-1 {
+.orders>div .orders-main {
     display: flex;
     flex-direction: column;
     gap: 2em
 }
-
-.orders>div .orders-1 .orders__group {
+.orders > div .orders-main .orders-main__container {
+   display: flex;
+    flex-direction: column;
+}
+.orders > div .orders-main .orders-main__group {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 100%
 }
 
-.orders>div .orders-1 .orders-1__row {
+.orders > div .orders-main .orders-main__row {
     position: relative;
     box-sizing: border-box;
     height: 100%;
@@ -210,50 +213,51 @@
     gap: 1em
 }
 
-.orders>div .orders-1 .orders-1__row a,.orders>div .orders-1 .orders-1__row p {
+.orders > div .orders-main .orders-main__row p,
+.orders > div .orders-main .orders-main__row a {
     font-family: 'Merriweather Sans',sans-serif;
     text-align: left;
     font-size: var(--fs-5);
     margin: 0
 }
 
-.orders>div .orders-1 .orders-1__row .id {
+.orders > div .orders-main .orders-main__row .id {
     color: #0049af
 }
 
-.orders>div .orders-1 .orders-1__row .date {
+.orders > div .orders-main .orders-main__row .date {
     color: #789bce;
     position: absolute;
     right: .5em;
     top: .5em
 }
 
-.orders>div .orders-1 .orders-1__row .status {
+.orders > div .orders-main .orders-main__row .status {
     color: #404c5c
 }
 
-.orders>div .orders-1 .orders-1__row .total {
+.orders > div .orders-main .orders-main__row .total {
     color: #404c5c
 }
 
-.orders>div .orders-1 .orders-1__row .actions {
+.orders > div .orders-main .orders-main__row .actions {
     margin-top: 1em
 }
 
-.orders>div .orders-1 .orders-1__row div.actions {
+.orders > div .orders-main .orders-main__row div.actions {
     display: flex;
     gap: .5em
 }
 
-.orders>div .orders-1 .orders-1__header .date {
+.orders > div .orders-main .orders-main__header .date {
     display: none
 }
 
-.orders>div .orders-1 .orders-1__header p {
+.orders > div .orders-main .orders-main__header p {
     color: #789bce!important
 }
 
-.orders>div .orders-1 .orders-1__header p:first-of-type,.orders>div .orders-1 .orders-1__header p:last-of-type {
+.orders > div .orders-main .orders-main__header p:first-of-type, #orders > div .orders-main .orders-main__header p:last-of-type {
     text-align: left
 }
 
@@ -539,51 +543,53 @@
         text-transform: uppercase
     }
     
-    .orders>div .orders-1 {
+    .orders>div .orders-main {
         gap: 0
     }
 
-    .orders>div .orders-1 .orders__group {
+    .orders > div .orders-main .orders-main__group {
         display: flex;
         flex-direction: column
     }
 
-    .orders>div .orders-1 .orders__group:not(:first-child) .orders-1__header {
-        display: none
+    .orders > div .orders-main .orders-main__container:not(:first-child) .orders-main__header {
+       display: none;
     }
 
-    .orders>div .orders-1 .orders-1__row {
+    .orders>div .orders-main .orders-main__row {
         display: grid;
         grid-template-columns: .5fr 1.5fr 1fr 2fr 1fr;
+        grid-template-rows: 100%;
+        align-items: center;
         padding: 1em 2em;
         gap: 0
     }
 
-    .orders>div .orders-1 .orders-1__row p {
+    .orders>div .orders-main .orders-main__row p {
         text-align: center
     }
 
-    .orders>div .orders-1 .orders-1__row p:first-of-type {
+    .orders>div  .orders-main .orders-main__row p:first-of-type {
         text-align: left
     }
 
-    .orders>div .orders-1 .orders-1__row .date {
+    .orders>div .orders-main .orders-main__row .date {
         position: static
     }
 
-    .orders>div .orders-1 .orders-1__row .actions {
+    .orders>div  .orders-main .orders-main__row .actions {
         margin-top: auto
     }
 
-    .orders>div .orders-1 .orders-1__row div.actions {
+    .orders>div  .orders-main .orders-main__row div.actions {
         justify-content: flex-start;
         align-items: center
     }
 
-    .orders>div .orders-1 .orders-1__header {
+    .orders>div  .orders-main .orders-main__header {
         padding-block:1.5em}
 
-    .orders>div .orders-1 .orders-1__header .date {
+    .orders>div  .orders-main .orders-main__header .date {
         display: block
     }
 
@@ -604,6 +610,7 @@
 
     .orders>div .orders .orders__footer {
         grid-template-columns: 1.6fr 1.6fr 1.8fr 1fr;
+        grid-template-rows: 100%;
         margin-top: 1.8em
     }
 
@@ -634,6 +641,7 @@
 
     .payment-methods>div .container .container__row {
         grid-template-columns: 4fr 3fr 2fr;
+        grid-template-rows: 100%;
         row-gap: 0
     }
 
@@ -642,7 +650,8 @@
     }
 
     .payment-methods>div .container .container__header {
-        grid-template-columns: 4fr 5fr
+        grid-template-columns: 4fr 5fr;
+        grid-template-rows: 100%;
     }
 
     .payment-methods>div .container .container__header p:not(:first-of-type) {

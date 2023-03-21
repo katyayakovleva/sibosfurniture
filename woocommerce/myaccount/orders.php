@@ -22,14 +22,16 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <?php if ( $has_orders ) : ?>
-    <section class="orders-1">
+    <section class="orders-main">
+    
     <?php
      foreach ( $customer_orders->orders as $customer_order ){
             $order      = wc_get_order( $customer_order ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
             $item_count = $order->get_item_count() - $order->get_item_count_refunded();
             ?>
-        <div id="<?php echo $order->get_order_number() ; ?>" class="orders__group" >
-            <div class="orders-1__row orders-1__header">
+    <div id="<?php echo $order->get_order_number() ; ?>" class="orders-main__container">
+        <div class="orders-main__group" >
+            <div class="orders-main__row orders-main__header">
                 <p class="id">Order</p>
                 <p class="date">Date</p>
                 <p class="status">Status</p>
@@ -37,7 +39,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 <p class="actions">Actions</p>
             </div>
 
-            <div class="orders-1__row">
+            <div class="orders-main__row">
                 <?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
                     <?php if ( has_action( 'woocommerce_my_account_my_orders_column_' . $column_id ) ) : ?>
                                     <?php do_action( 'woocommerce_my_account_my_orders_column_' . $column_id, $order ); ?>    
@@ -78,7 +80,9 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 <?php endforeach; ?>    
             </div>
         </div>
+    </div>
         <?php } ?>
+        
     </section>
 
 		
