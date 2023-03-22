@@ -27,6 +27,31 @@ get_header( 'shop' );
  * @hooked WC_Structured_Data::generate_website_data() - 30
  */
 do_action( 'woocommerce_before_main_content' );
+if (isset($_GET['collections'])) {
+    $collections = json_decode(urldecode($_GET['collections']), true);
+} else {
+    $collections = [];
+}
+if (isset($_GET['item_types'])) {
+    $item_types = json_decode(urldecode($_GET['item_types']), true);
+} else {
+    $item_types = [];
+}
+if (isset($_GET['place_types'])) {
+    $place_types = json_decode(urldecode($_GET['place_types']), true);
+} else {
+    $place_types = [];
+}
+if (isset($_GET['sale'])) {
+    $sale = $_GET['sale'];
+} else {
+    $sale = '';
+}
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+} else {
+    $sort = '';
+}
 
 ?>
     <main class="header-padding">
@@ -35,41 +60,76 @@ do_action( 'woocommerce_before_main_content' );
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
             <!-- <p class="ff-ms fs-5 fc-blue-2 ta-center">Living room</p> -->
             <?php 
-                $args = array(
-                    'taxonomy' => 'product_cat',
-                    'hide_empty' => true,
-                    'parent'   => 0,
-                    'exclude'  =>array(get_term_by('slug','uncategorized','product_cat')->term_id)
-                );
-                $product_cat = get_terms( $args );
+                // $args = array(
+                //     'taxonomy' => 'product_cat',
+                //     'hide_empty' => true,
+                //     'parent'   => 0,
+                //     'exclude'  =>array(get_term_by('slug','uncategorized','product_cat')->term_id)
+                // );
+                // $product_cat = get_terms( $args );
             ?>
             <div class="link-category-list" id="filter-products">
-                <?php foreach ($product_cat as $parent_product_cat) { ?>
                
-                        <p class="link-category"><?php echo $parent_product_cat->name; ?></p>
+                        <p class="link-category">Collections</p>
                        <form>
                         <?php
-                            $child_args = array(
+                        $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
+                            $cat_args = array(
                                         'taxonomy' => 'product_cat',
                                         'hide_empty' => true,
                                         'parent'   => $parent_product_cat->term_id
                                     );
-                            $child_product_cats = get_terms( $child_args );
+                            $child_product_cats = get_terms( $cat_args );
                             foreach ($child_product_cats as $child_product_cat) { ?>
 
                             <div class="form-checkbox">
-                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label>
+                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                            </div>
+                            
+                            <?php } 
+                        ?>
+                        </form>
+                        <p class="link-category">Item types</p>
+                       <form>
+                        <?php
+                        $parent_product_cat = get_term_by( 'slug', 'item-type', 'product_cat' );
+                            $cat_args = array(
+                                        'taxonomy' => 'product_cat',
+                                        'hide_empty' => true,
+                                        'parent'   => $parent_product_cat->term_id
+                                    );
+                            $child_product_cats = get_terms( $cat_args );
+                            foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                <!-- <label><input type="checkbox" data-category_id="<?php echo $child_product_cat->term_id; ?>"><? echo $child_product_cat->name; ?></label> -->
+                            <div class="form-checkbox">
+                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$item_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                            </div>
+                            
+                            <?php } 
+                        ?>
+                        </form>
+                        <p class="link-category">Place types</p>
+                       <form>
+                        <?php
+                        $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+                            $cat_args = array(
+                                        'taxonomy' => 'product_cat',
+                                        'hide_empty' => true,
+                                        'parent'   => $parent_product_cat->term_id
+                                    );
+                            $child_product_cats = get_terms( $cat_args );
+                            foreach ($child_product_cats as $child_product_cat) { ?>
+
+                            <div class="form-checkbox">
+                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
                             </div>
                             
                             <?php } 
                         ?>
                         </form>
 
-                <?php } ?>
                 <div class="form-checkbox">
-                    <label><input type="checkbox" name="sale">Sale</label>
+                    <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                 </div>
             </div>   
         </aside>
@@ -84,11 +144,11 @@ do_action( 'woocommerce_before_main_content' );
                         <div class="dropdown__trigger sort">Sort by</div>
                         <div class="dropdown__content">
                             <ul >
-                                <li><a value="popularity" class="link">Sort by popularity</a></li>
-                                <li><a value="rating" class="link">Sort by average rating</a></li>
-                                <li><a value="date" class="link">Sort  by latest</a></li>
-                                <li><a value="price" class="link">Sort by price: low to high</a></li>
-                                <li><a value="price-desc" class="link">Sort by price: high to low</a></li>
+                                <li><a href="" value="popularity" class="link">popularity</a></li>
+                                <li><a href="" value="rating" class="link">rating</a></li>
+                                <li><a href="" value="date" class="link">date</a></li>
+                                <li><a href="" value="price" class="link">price: low to high</a></li>
+                                <li><a href="" value="price-desc" class="link">price: high to low</a></li>
                             </ul>
                         </div>
                     </div>
@@ -101,19 +161,81 @@ do_action( 'woocommerce_before_main_content' );
                         'post_type'      => 'product',
                         'paged'          => $paged,
 //                        'meta_key' => 'views_total',
-                        'orderby' => 'popularity',
-                        'order' => 'DESC',
+                        // 'orderby' => 'popularity',
+                        // 'order' => 'DESC',
+                        'tax_query' => array(
+                            'relation' => 'AND',
+                
+                        ),
                         'meta_query'     => array(
-                            'relation' => 'OR',
+                            'relation' => 'AND',
 
                         )
+                       
                     );
-                    // $item_types =  json_decode(stripslashes(get_var('item_types', [])));
-                    // $sale = get_var('sale', false);
-                    //     if($sale == 'true'){
-                    //         $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
-                    //         $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
-                    //     }
+                    if(!empty($item_types)){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
+                    }
+                    $place_types_and_collections = array_merge($collections, $place_types);
+                    if(!empty($place_types_and_collections)){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
+                    }
+                    if($sale == 'true'){
+                        $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+                        // $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+                    }
+                    if($sort == 'rating'){
+                        if($sale == 'true'){
+                           $args['meta_query'][] =  array(
+                            'relation' => 'OR',
+                            array(
+                                'key'     => '_wc_average_rating',
+                                'value'   => '',
+                                'compare' => 'NOT EXISTS'
+                            ),
+                            array(
+                                'key'     => '_wc_average_rating',
+                                'value'   => 0,
+                                'compare' => '>'
+                            )
+                        ); 
+                        }
+                        else{
+                            $args['meta_query']= array(
+                                'relation' => 'OR',
+                                array(
+                                    'key'     => '_wc_average_rating',
+                                    'value'   => '',
+                                    'compare' => 'NOT EXISTS'
+                                ),
+                                array(
+                                    'key'     => '_wc_average_rating',
+                                    'compare' => 'EXISTS'
+                                )
+                            ); 
+                        }
+                        $args['orderby'] = 'meta_value_num';
+                        $args['order'] = 'DESC';
+                        $args['meta_key'] = '_wc_average_rating';
+                        
+
+                    }elseif($sort == 'date'){
+                        $args['orderby'] = 'date';
+                        $args['order'] = 'desc';
+                    }elseif($sort == 'price'){
+                        $args['orderby'] = 'meta_value_num';
+                        $args['meta_key'] = '_price';
+                        $args['order'] = 'asc';
+                    }
+                    elseif($sort == 'price-desc'){
+                        $args['orderby'] = 'meta_value_num';
+                        $args['meta_key'] = '_price';
+                        $args['order'] = 'desc';
+                    }
+                    else{
+                        $args['orderby'] = 'popularity';
+                        $args['order'] = 'desc';
+                    }
                     $products = new WP_Query( $args );
 //                    $products = $products->get_products();
                     while ( $products->have_posts() ) : $products->the_post();
@@ -123,8 +245,14 @@ do_action( 'woocommerce_before_main_content' );
                         $product_url = get_permalink( $product_id );
                         $product_thumbnail = $product->get_image();
                         $product_rating = $product->get_average_rating();
-                        $product_price = $product->get_price_html();?>
+                        $product_price = $product->get_price_html();
+                        $terms = get_the_terms( $product_id, 'product_cat' );?>
                         <div class="grid-item-shop">
+                            <?php
+                            //  foreach($terms as $term){
+                            //     echo '<p>'.$term->name.'</p>';
+                            // }
+                            ?>
                             <div class="grid-item-shop__header changing-color-item">
                                 <figure>
                                     <?php if ($product->is_on_sale()) {?>

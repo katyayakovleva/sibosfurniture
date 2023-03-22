@@ -976,104 +976,104 @@ function redirect_from_payment_methods() {
 
 
 
-function filter_product_ajax() {
+// function filter_product_ajax() {
 
-    $collections = json_decode(stripslashes($_POST['collections']));
-    $item_types = json_decode(stripslashes($_POST['item_types']));
-    $place_types = json_decode(stripslashes($_POST['place_types']));
-    $place_types_and_collections = array_merge($collections, $place_types);
-    $sale = $_POST['sale'];
-    $sort = (! empty( $_POST['sort'] )) ? sanitize_text_field( wp_unslash( $_POST['sort'] ) ) : '';
-    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-    $args = array(
-        'posts_per_page' => -1,
-        'post_type'      => 'product',
-        // 'paged'          => $paged,
-        //'meta_key' => 'views_total',
-        // 'orderby' => 'popularity',
-        // 'order' => 'DESC',
-        'tax_query' => array(
-            'relation' => 'AND',
+//     $collections = json_decode(stripslashes($_POST['collections']));
+//     $item_types = json_decode(stripslashes($_POST['item_types']));
+//     $place_types = json_decode(stripslashes($_POST['place_types']));
+//     $place_types_and_collections = array_merge($collections, $place_types);
+//     $sale = $_POST['sale'];
+//     $sort = (! empty( $_POST['sort'] )) ? sanitize_text_field( wp_unslash( $_POST['sort'] ) ) : '';
+//     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+//     $args = array(
+//         'posts_per_page' => -1,
+//         'post_type'      => 'product',
+//         // 'paged'          => $paged,
+//         //'meta_key' => 'views_total',
+//         // 'orderby' => 'popularity',
+//         // 'order' => 'DESC',
+//         'tax_query' => array(
+//             'relation' => 'AND',
 
-        ),
-        'meta_query'     => array(
-            'relation' => 'OR',
-        )
-    );
-    if(!empty($item_types)){
-        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
-    }
-    if(!empty($place_types_and_collections)){
-        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
-    }
-    if($sale == 'true'){
-        $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
-        $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
-    }
-    if($sort == 'rating'){
-        $args['orderby'] = 'meta_value_num';
-        $args['meta_key'] = '_price';
-        $args['order'] = 'asc';
-    }elseif($sort == 'date'){
-        $args['orderby'] = 'date';
-        $args['order'] = 'desc';
-    }elseif($sort == 'price'){
-        $args['orderby'] = 'meta_value_num';
-        $args['meta_key'] = '_price';
-        $args['order'] = 'asc';
-    }
-    elseif($sort == 'price-desc'){
-        $args['orderby'] = 'meta_value_num';
-        $args['meta_key'] = '_price';
-        $args['order'] = 'desc';
-    }
-    else{
-        $args['orderby'] = 'popularity';
-        $args['order'] = 'desc';
-    }
-    $products = new WP_Query( $args );
-    $total= [$products -> max_num_pages];
-    $out ='';
-    while ( $products->have_posts() ) : $products->the_post();
-        global $product;
-        $product_id = $product->get_id();
-        $product_name = $product->get_name();
-        $product_url = get_permalink( $product_id );
-        $product_thumbnail = $product->get_image();
-        $product_rating = $product->get_average_rating();
-        $product_price = $product->get_price_html();
-        $terms = get_the_terms( $product_id, 'product_cat' );
+//         ),
+//         'meta_query'     => array(
+//             'relation' => 'OR',
+//         )
+//     );
+//     if(!empty($item_types)){
+//         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
+//     }
+//     if(!empty($place_types_and_collections)){
+//         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
+//     }
+//     if($sale == 'true'){
+//         $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+//         $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+//     }
+//     if($sort == 'rating'){
+//         $args['orderby'] = 'meta_value_num';
+//         $args['meta_key'] = '_price';
+//         $args['order'] = 'asc';
+//     }elseif($sort == 'date'){
+//         $args['orderby'] = 'date';
+//         $args['order'] = 'desc';
+//     }elseif($sort == 'price'){
+//         $args['orderby'] = 'meta_value_num';
+//         $args['meta_key'] = '_price';
+//         $args['order'] = 'asc';
+//     }
+//     elseif($sort == 'price-desc'){
+//         $args['orderby'] = 'meta_value_num';
+//         $args['meta_key'] = '_price';
+//         $args['order'] = 'desc';
+//     }
+//     else{
+//         $args['orderby'] = 'popularity';
+//         $args['order'] = 'desc';
+//     }
+//     $products = new WP_Query( $args );
+//     $total= [$products -> max_num_pages];
+//     $out ='';
+//     while ( $products->have_posts() ) : $products->the_post();
+//         global $product;
+//         $product_id = $product->get_id();
+//         $product_name = $product->get_name();
+//         $product_url = get_permalink( $product_id );
+//         $product_thumbnail = $product->get_image();
+//         $product_rating = $product->get_average_rating();
+//         $product_price = $product->get_price_html();
+//         $terms = get_the_terms( $product_id, 'product_cat' );
         
-        $out .= '<div class="grid-item-shop">';
-        $out .= '<div class="grid-item-shop__header changing-color-item">
-                <figure>';
-                    if ($product->is_on_sale()) {
-                    $out.='<span class="onsale">Sale!</span>';
-                     }
-                    $out.= $product->get_image();
-                $out .='</figure>
-            </div>
-            <p class="ff-ms fs-5 fg-1 product_name">'.esc_attr($product_name).'</p>
-            <div class="product-rating">';
-                 if($product_rating > 0){
-                    for ($i = 1; $i <= $product_rating; $i++){
-                    $out .= '<span class="checked"></span>';
-                    }
-                    for ($i = 1; $i <= 5-$product_rating; $i++){
-                    $out .= '<span class="unchecked"></span>';
-                    }
-                }
-            $out .= ' </div>
-            <div class="d-flex ai-center jc-between mt-2">
-                <p class="grid-item-shop__price ff-ms m-0">'.$product->get_price_html().'</p>
-                <div class="grid-item-shop__buttons"><a href="'.esc_url($product_url).'" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
-            </div>
-        </div>';
-    endwhile;
+//         $out .= '<div class="grid-item-shop">';
+//         $out .= '<div class="grid-item-shop__header changing-color-item">
+//                 <figure>';
+//                     if ($product->is_on_sale()) {
+//                     $out.='<span class="onsale">Sale!</span>';
+//                      }
+//                     $out.= $product->get_image();
+//                 $out .='</figure>
+//             </div>
+//             <p class="ff-ms fs-5 fg-1 product_name">'.esc_attr($product_name).'</p>
+//             <div class="product-rating">';
+//                  if($product_rating > 0){
+//                     for ($i = 1; $i <= $product_rating; $i++){
+//                     $out .= '<span class="checked"></span>';
+//                     }
+//                     for ($i = 1; $i <= 5-$product_rating; $i++){
+//                     $out .= '<span class="unchecked"></span>';
+//                     }
+//                 }
+//             $out .= ' </div>
+//             <div class="d-flex ai-center jc-between mt-2">
+//                 <p class="grid-item-shop__price ff-ms m-0">'.$product->get_price_html().'</p>
+//                 <div class="grid-item-shop__buttons"><a href="'.esc_url($product_url).'" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+//             </div>
+//         </div>';
+//     endwhile;
 
 
-    die($out);
-}
+//     die($out);
+// }
 
 add_action('wp_ajax_nopriv_filter_product_ajax', 'filter_product_ajax');
 add_action('wp_ajax_filter_product_ajax', 'filter_product_ajax');
