@@ -167,10 +167,6 @@ if (isset($_GET['sort'])) {
                             'relation' => 'AND',
                 
                         ),
-                        'meta_query'     => array(
-                            'relation' => 'AND',
-
-                        )
                        
                     );
                     if(!empty($item_types)){
@@ -181,12 +177,11 @@ if (isset($_GET['sort'])) {
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
                     }
                     if($sale == 'true'){
-                        $args['meta_query'][] = array('key' => '_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
-                        // $args['meta_query'][] = array('key' => '_min_variation_sale_price', 'value' => 0, 'compare' => '>', 'type' => 'numeric');
+                        $args['post__in'] =  wc_get_product_ids_on_sale();
                     }
                     if($sort == 'rating'){
-                        if($sale == 'true'){
-                           $args['meta_query'][] =  array(
+                        
+                        $args['meta_query']= array(
                             'relation' => 'OR',
                             array(
                                 'key'     => '_wc_average_rating',
@@ -195,29 +190,13 @@ if (isset($_GET['sort'])) {
                             ),
                             array(
                                 'key'     => '_wc_average_rating',
-                                'value'   => 0,
-                                'compare' => '>'
+                                'compare' => 'EXISTS'
                             )
                         ); 
-                        }
-                        else{
-                            $args['meta_query']= array(
-                                'relation' => 'OR',
-                                array(
-                                    'key'     => '_wc_average_rating',
-                                    'value'   => '',
-                                    'compare' => 'NOT EXISTS'
-                                ),
-                                array(
-                                    'key'     => '_wc_average_rating',
-                                    'compare' => 'EXISTS'
-                                )
-                            ); 
-                        }
+                        
                         $args['orderby'] = 'meta_value_num';
                         $args['order'] = 'DESC';
                         $args['meta_key'] = '_wc_average_rating';
-                        
 
                     }elseif($sort == 'date'){
                         $args['orderby'] = 'date';
