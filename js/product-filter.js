@@ -29,10 +29,10 @@
 // }
 
 $(document).ready(function() {
+
     const url = new URL(window.location);
-    
     var filterCheckboxes = $('#filter-products input[type="checkbox"]');
-    var sortProducts = $('#sort-products a');
+    // var sortProducts = $('#sort-products a');
     var collections = [];
     var item_types = [];
     var place_types = [];
@@ -69,17 +69,18 @@ $(document).ready(function() {
         url.searchParams.set("place_types", encodedplace_typesArrayString);
         url.searchParams.set("sale", sale);
         window.history.pushState({}, "", url);
-        window.location.reload();
+        
+        window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');     
         collections = [];
         item_types = [];
         place_types = [];
         
     });
-    $('a').click( function(){
+    $('#sort_product a').click( function(){
         sort = $(this).attr('value');
         url.searchParams.set("sort", sort);
         window.history.pushState({}, "", url);
-        url.reload();
+        window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
     });
     
 });

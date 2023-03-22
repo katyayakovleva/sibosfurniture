@@ -140,15 +140,15 @@ if (isset($_GET['sort'])) {
             </div>
             <article>
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
-                    <div class="dropdown" id="sort-product">
+                    <div class="dropdown">
                         <div class="dropdown__trigger sort">Sort by</div>
                         <div class="dropdown__content">
-                            <ul >
-                                <li><a href="" value="popularity" class="link">popularity</a></li>
-                                <li><a href="" value="rating" class="link">rating</a></li>
-                                <li><a href="" value="date" class="link">date</a></li>
-                                <li><a href="" value="price" class="link">price: low to high</a></li>
-                                <li><a href="" value="price-desc" class="link">price: high to low</a></li>
+                            <ul id="sort_product">
+                                <li><a value="popularity" class="link">popularity</a></li>
+                                <li><a value="rating" class="link">rating</a></li>
+                                <li><a value="date" class="link">date</a></li>
+                                <li><a value="price" class="link">price: low to high</a></li>
+                                <li><a value="price-desc" class="link">price: high to low</a></li>
                             </ul>
                         </div>
                     </div>
