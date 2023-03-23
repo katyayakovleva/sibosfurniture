@@ -1,3 +1,4 @@
+
 function collapseCross() {
     const a = $("body"),
         e = $('.navbar-burger[data-toggle="collapse"]');
@@ -76,6 +77,7 @@ body.toggleClass("fixed");
 let preloader_animation = new TimelineMax({
     repeat: -1
 });
+
 preloader_animation.fromTo($("#preloader_animation"), 2, {
         transformOrigin: "center",
         autoAlpha: 1,
@@ -116,6 +118,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             $(this).append('<ul></ul>')
             let href = $(this).find('a').get(0).href;
             let words= href.split("/");
+            
             let a = words.pop();
             let slug = words.pop();
             if(slug === "sale"){
@@ -159,7 +162,19 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     }
                 });
             }
-
+            var url = words.slice(0, 3).join('/');
+            if(slug === "sale"){
+                url = url + '/shop?sale=true';  
+            }else{
+                var id = $('#'+slug).val();
+                var place_type_param = [];
+                place_type_param.push(id);
+                
+                let placeTypesJson = JSON.stringify(place_type_param);
+                url = url + '/shop?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+            }
+             
+            $(this).find('a').attr("href", url);    
         });
         $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
             var href_middle = this.href
@@ -169,6 +184,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             var href_right = this.href
             $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
         })
+        // $('.navbar-collapse-middle.place-type-section li a').on('click', function(){
+        //     // let href = $(this).get(0).href;
+        //     // let words= href.split("/");
+        //     // let slug = words.pop();
+        //     console.log(click);
+        // });
         $("#preloader").fadeOut({
                 duration: 400,
                 complete: function() {
@@ -201,3 +222,4 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 $('#note-content').hide();
         });
     });
+

@@ -1087,3 +1087,20 @@ function get_var($name = false, $default = false) {
     }
     return $default;
 }
+
+function get_place_types(){
+    $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+    $cat_args = array(
+                'taxonomy' => 'product_cat',
+                'hide_empty' => true,
+                'parent'   => $parent_product_cat->term_id
+            );
+    $child_product_cats = get_terms( $cat_args );
+    $place_types_arr = [[]];
+    $n = 0;
+    foreach($child_product_cats as $child_product_cat){
+        $place_types_arr[$n] = array($child_product_cat->slug, $child_product_cat->term_id);
+        $n++;
+    }
+    return $place_types_arr;
+}

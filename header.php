@@ -56,7 +56,9 @@ $email = get_field('menu_email','menu_' . $menu_id);
 
 ?>
 <div id="preloader"><svg><circle id="preloader_animation" cx="50%" cy="50%" r="15" fill="rgba(0,0,0,0)" stroke-width="1" stroke="white" ;/></svg></div>
-    <header>
+ 
+<header>
+
         <nav class="navbar">
             <div class="navbar-main">
                 <div class="navbar-group">
@@ -90,6 +92,12 @@ $email = get_field('menu_email','menu_' . $menu_id);
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
                 </div>
             </div>
+            <?php 
+            $place_types = get_place_types();
+            foreach($place_types as $place_type){
+                echo '<input type="hidden" id="'.$place_type[0].'" name="custId" value="'.$place_type[1].'">';
+            }
+            ?>
             <div class="navbar-collapse" id="navbar-collapse">
                 <div class="navbar-collapse-cross" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
                 <menu class="navbar-collapse-left"></menu>
