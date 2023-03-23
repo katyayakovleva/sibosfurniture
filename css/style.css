@@ -4275,7 +4275,7 @@ footer {
     .navbar-main>.navbar-group>.navbar-search {
         display: flex
     }
-    .navbar-main>.navbar-group>.navbar-search form {
+    .navbar-main>.navbar-group>.navbar-search div {
         display: flex;
         align-items: flex-end;
         gap: 1em
