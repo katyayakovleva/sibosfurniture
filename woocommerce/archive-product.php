@@ -165,7 +165,12 @@ if (isset($_GET['sort'])) {
                         // 'order' => 'DESC',
                         'tax_query' => array(
                             'relation' => 'AND',
-                
+                                array(
+                                    'taxonomy' => 'product_cat',
+                                    'field'    => 'slug',
+                                    'terms'    => 'waiting',
+                                    'operator' => 'NOT IN',
+                                ),
                         ),
                        
                     );
