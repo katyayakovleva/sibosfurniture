@@ -29,17 +29,17 @@
 
 
 
-function orderDetailToggle() {
-    const orderDetailBtn = $('.actions').find('a[data-toggle="order-detail"]');
-    orderDetailBtn.click(function () {
-        const container = $(this).parent().parent().parent().parent();
-        const orderDetailBlock = container.find('.orders-detail');
-        orderDetailBlock.toggleClass('active');
-        if (!window.matchMedia('screen and (min-width: 35.5em)').matches) {
-            $('html,body').animate({scrollTop: container.offset().top});
-        }
-    });
-}
+// function orderDetailToggle() {
+//     const orderDetailBtn = $('.actions').find('a[data-toggle="order-detail"]');
+//     orderDetailBtn.click(function () {
+//         const container = $(this).parent().parent().parent().parent();
+//         const orderDetailBlock = container.find('.orders-detail');
+//         orderDetailBlock.toggleClass('active');
+//         if (!window.matchMedia('screen and (min-width: 35.5em)').matches) {
+//             $('html,body').animate({scrollTop: container.offset().top});
+//         }
+//     });
+// }
 // function orderPaymentToggle() {
 //     const orderPaymentBtn = $('.actions').find('a[data-toggle="order-payment"]');
 //     orderPaymentBtn.click(function () {
@@ -61,9 +61,9 @@ function loadOrderDetails(action, order_id){
         data: str,
         success: function(data){
             var $data = $(data);
-            if($data.length){
-                
-                $("#"+ order_id).append($data);                    
+            if($data.length){     
+                $("#"+ order_id).append($data);   
+                $("#"+ order_id).addClass('active_order');                    
             } else{
                 console.log('error');
             }
@@ -103,7 +103,7 @@ function loadDashboard(dashboard_menu_item){
                     opacity: "toggle",
                     height: "toggle"
                 }, {
-                    duration: 100,
+                    // duration: 100,
 
                 }),
                 dasboard_content_class.toggleClass("active");
@@ -146,8 +146,16 @@ $(document).ready(function() {
     $(document).on("click",".actions a",function(){
         var action = $(this).data("action");
         var order_id = $(this).data("order_id");
-        console.log(order_id);
-        loadOrderDetails(action, order_id);
+        var order_container = $("#"+ order_id);
+        if(!order_container.hasClass('active_order')){
+            // console.log(order_id);
+            loadOrderDetails(action, order_id); 
+        }else{
+            var old_order = $(".active_order section");
+            old_order.remove();
+            order_container.removeClass('active_order');
+        }
+        
 
     });
 });
