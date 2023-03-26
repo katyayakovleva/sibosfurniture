@@ -287,6 +287,14 @@ section.related.products{
     height: min-content;
     align-self: center;
 }
+form.cart.without-variation-cart{
+    order: 7;
+    display: flex;
+    flex-direction: column;
+}
+form.cart.without-variation-cart .price-and-button-block{
+    align-self: flex-end;
+}
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
         width: 39.5%;
