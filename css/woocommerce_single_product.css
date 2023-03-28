@@ -291,9 +291,10 @@ form.cart.without-variation-cart{
     order: 7;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
-form.cart.without-variation-cart .price-and-button-block{
-    align-self: flex-end;
+form.cart.without-variation-cart .price-and-button-block bdi{
+    font-size: var(--fs-2)!important;
 }
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
@@ -345,6 +346,9 @@ form.cart.without-variation-cart .price-and-button-block{
     }
     .yith-wcwl-add-to-wishlist{
         margin-bottom: 3em;
+    }
+    .simple-prod-mobile-price{
+        display: none;
     }
 }
 @media screen and (min-width: 968px) {
@@ -411,6 +415,12 @@ form.cart.without-variation-cart .price-and-button-block{
     }
     .related_products_div {
         padding-inline: 3em!important;
+    }
+    form.cart.without-variation-cart .single_add_to_cart_button{
+        align-self: flex-end;
+    }
+    form.cart.without-variation-cart .price-and-button-block bdi{
+        display: none;
     }
 }
 @media screen and (max-width: 25em){

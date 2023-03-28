@@ -36,7 +36,6 @@ $short_description = apply_filters( 'woocommerce_short_description', $post->post
     </div>
     <?php echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
     <div class="price-and-button-block">
-<!--        <p class="ff-ms fs-2 fw-7 fc-blue-3 m-sm-0 variation-price"></p>-->
         <?php bbloomer_echo_variation_info()?>
         <button type="submit" class="single_add_to_cart_button button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?> btn d-none d-sm-block"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
     </div>

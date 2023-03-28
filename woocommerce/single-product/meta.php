@@ -34,7 +34,12 @@ $short_description = apply_filters( 'woocommerce_short_description', $post->post
 	<?php if ( wc_product_sku_enabled() && ( $product->get_sku() || $product->is_type( 'variable' ) ) ) : ?>
         <p class="ff-ms fs-6 fc-dark my-0 mt-sm-1"><?php echo ( $SKU_first_words ) ? $SKU_first_words : esc_html__( 'N/A', 'woocommerce' ); ?></p>
         <p class="ff-ms fs-6 fc-dark my-0 my-sm-1"><?php echo ( $SKU_last_word ) ? $SKU_last_word : esc_html__( 'N/A', 'woocommerce' ); ?></p>
+        <?php if( $product->is_type( 'variable' ) ){?>
         <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0 price-mobile"><?php echo $product->get_price_html(); ?></p>
+        <?php }?>
+        <?php if( !$product->is_type( 'variable' ) ){?>
+        <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0 price-mobile simple-prod-mobile-price"><?php echo $product->get_price_html(); ?></p>
+        <?php }?>
         <hr class="d-sm-none mt-0 mb-1">
         <div class="mobile-description woocommerce-product-short-description">
             <?php echo $short_description; ?>
