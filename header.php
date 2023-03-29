@@ -78,14 +78,10 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         
                         <div>
                             <?php  get_search_form(); ?>
-                            <!-- <form class="form-control sm">
-                                <label for="search" aria-label="Search"> <i class="fa-solid fa-magnifying-glass fa-sm"></i> </label> 
-                                <input type="text" id="search" name="search" placeholder=" ">
-                            </form> -->
                             <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true"> 
                             <?php if ( is_user_logged_in() ) { ?>
                                 <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-blue xs">My Account</a>
-                            <?php } 
+                            <?php }
                             else { ?>
                                 <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-blue xs">Sign in</a>
                             <?php } ?>
@@ -129,32 +125,49 @@ $email = get_field('menu_email','menu_' . $menu_id);
                     )
                 );
                 ?>
-                <?php
-                wp_nav_menu(
-                    array(
-                        'theme_location' => 'menu-primary',
-                        'menu_id'        => 'menu-primary',
-                        'container'            => '',
-                        'container_class'      => '',
-                        'container_id'         => '',
-                        'container_aria_label' => '',
-                        'menu_class'           => '',
-                        'menu_id'              => '',
-                        'echo'                 => true,
-                        'fallback_cb'          => 'wp_page_menu',
-                        'before'               => '',
-                        'after'                => '',
-                        'link_before'          => '',
-                        'link_after'           => '',
-                        'items_wrap'           => '<menu class="navbar-collapse-right %2$s">%3$s</menu>',
-                        'item_spacing'         => 'preserve',
-                        'depth'                => 0,
-                        'walker'               => '',
-                        'link_class'     => 'link link-navbar',
+                <menu class="navbar-collapse-right">
+                    <?php
+                    wp_nav_menu(
+                        array(
+                            'theme_location' => 'menu-primary',
+                            'menu_id'        => 'menu-primary',
+                            'container'            => '',
+                            'container_class'      => '',
+                            'container_id'         => '',
+                            'container_aria_label' => '',
+                            'menu_class'           => '',
+                            'menu_id'              => '',
+                            'echo'                 => true,
+                            'fallback_cb'          => 'wp_page_menu',
+                            'before'               => '',
+                            'after'                => '',
+                            'link_before'          => '',
+                            'link_after'           => '',
+                            'items_wrap'           => '<ul class="%2$s">%3$s</ul>',
+//                            'items_wrap'           => '<menu class="navbar-collapse-right %2$s">%3$s</menu>',
+                            'item_spacing'         => 'preserve',
+                            'depth'                => 0,
+                            'walker'               => '',
+                            'link_class'     => 'link link-navbar',
 
-                    )
-                );
-                ?>
+                        )
+                    );
+                    ?>
+                    <div class="navbar-search">
+
+                        <div>
+                            <?php if ( is_user_logged_in() ) { ?>
+                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-navbar">My Account</a>
+                            <?php }
+                            else { ?>
+                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-navbar">Sign in</a>
+                            <?php } ?>
+                            <?php  get_search_form(); ?>
+
+                        </div>
+                    </div>
+                </menu>
+
             </div>
         </nav>
     </header>

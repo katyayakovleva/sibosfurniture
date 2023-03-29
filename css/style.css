@@ -3795,6 +3795,10 @@ form label.has-value {
     padding-left: 1.375em;
     padding-right: 0
 }
+.navbar-collapse .navbar-collapse-right>ul {
+    display: block;
+    padding-left: 0;
+}
 
 .navbar-collapse .link {
     white-space: nowrap;
@@ -3873,7 +3877,26 @@ form label.has-value {
 .navbar-collapse .navbar-collapse-right li~div {
     display: none!important
 }
-
+.navbar-collapse .navbar-collapse-right .navbar-search div {
+    display: flex;
+    flex-direction: column;
+}
+.navbar-collapse .navbar-collapse-right .navbar-search label {
+    color: #ffffff;
+    font-size: 1.25em;
+}
+.navbar-collapse .navbar-collapse-right .navbar-search .form-control input {
+    color: #ffffff;
+    font-size: 1em;
+    min-width: 0;
+}
+.navbar-collapse .navbar-collapse-right .navbar-search .form-control::after {
+    background-color: #ffffff;
+}
+.navbar-collapse .navbar-collapse-right .navbar-search a{
+    color: #ffffff;
+    margin-top: 0.7em;
+}
 .swiper-pagination {
     bottom: 2.125em!important;
     -webkit-user-select: none;
@@ -4197,6 +4220,9 @@ footer {
         content: "";
         opacity: 1;
         transform: none
+    }
+    .navbar-collapse .navbar-collapse-right .navbar-search{
+        display: none!important;
     }
     .form-control {
         padding-block: .5em !important;
@@ -4569,4 +4595,16 @@ fieldset{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center
+}
+@media screen and (max-width: 35.5em) {
+    .navbar-collapse{
+        overflow-y: auto;
+    }
+    .navbar-collapse .navbar-collapse-cross span{
+        position: fixed;
+        right: 2em;
+    }
+    .navbar-collapse .navbar-search{
+        padding-bottom: 5em;
+    }
 }
