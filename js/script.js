@@ -164,14 +164,14 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             }
             var url = words.slice(0, 3).join('/');
             if(slug === "sale"){
-                url = url + '/shop?sale=true';  
+                url = url + '/catalog?sale=true';  
             }else{
                 var id = $('#'+slug).val();
                 var place_type_param = [];
                 place_type_param.push(id);
                 
                 let placeTypesJson = JSON.stringify(place_type_param);
-                url = url + '/shop?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+                url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
             }
              
             $(this).find('a').attr("href", url);    
