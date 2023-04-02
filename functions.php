@@ -285,24 +285,18 @@ function sibosfurniture_scripts() {
 
 	}
 }
-//add_filter( 'avatar_defaults', 'new_gravatar' );
-//function new_gravatar ($avatar_defaults) {
-/*    $myavatar = '<?php echo get_template_directory_uri(); ?>/assets/images/Default_avatar.jpg';*/
-//    $avatar_defaults[$myavatar] = "Default Gravatar";
-//    return $avatar_defaults;
-//}
-
 /* AVATAR */
-// Add a default avatar to Settings > Discussion
-add_filter( 'avatar_defaults', 'add_custom_gravatar' );
-if ( !function_exists('add_custom_gravatar') ) {
-    function add_custom_gravatar( $avatar_defaults ) {
-        $myavatar = get_stylesheet_directory_uri() . '/assets/images/Default_avatar.jpg';
-        $avatar_defaults[$myavatar] = 'Avatar Santé Ensemble';
+/**
+ * Change default gravatar.
+ */
 
-        return $avatar_defaults;
-    }
+add_filter( 'avatar_defaults', 'new_gravatar' );
+function new_gravatar ($avatar_defaults) {
+    $myavatar = 'https://sibosfurniture.com/wp-content/uploads/2023/04/Default_avatar.png';
+    $avatar_defaults[$myavatar] = "Default Gravatar";
+    return $avatar_defaults;
 }
+/* AVATAR */
 
 add_filter( 'loop_shop_per_page', 'bbloomer_redefine_products_per_page', 9999 );
 
@@ -311,28 +305,6 @@ function bbloomer_redefine_products_per_page( $per_page ) {
     return $per_page;
 }
 
-//Hack the default beahvior of gravatar to enable custom avatars on localhost
-add_filter( 'get_avatar', 'so_14088040_localhost_avatar', 10, 5 );
-function so_14088040_localhost_avatar( $avatar, $id_or_email, $size, $default, $alt )
-{
-    $whitelist = array( 'localhost', '127.0.0.1' );
-
-    if( !in_array( $_SERVER['SERVER_ADDR'] , $whitelist ) )
-        return $avatar;
-
-    $doc = new DOMDocument;
-    $doc->loadHTML( $avatar );
-    $imgs = $doc->getElementsByTagName('img');
-    if ( $imgs->length > 0 )
-    {
-        $url = urldecode( $imgs->item(0)->getAttribute('src') );
-        $url2 = explode( 'd=', $url );
-        $url3 = explode( '&', $url2[1] );
-        $avatar= "<img src='{$url3[0]}' alt='' class='avatar avatar-64 photo' height='42' width='42' />";
-    }
-    return $avatar;
-}
-/* AVATAR */
 
 add_filter( 'preprocess_comment', 'wpb_preprocess_comment' );
 
