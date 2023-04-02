@@ -303,8 +303,18 @@ form.cart.without-variation-cart{
     flex-direction: column;
     justify-content: space-between;
 }
-form.cart.without-variation-cart .price-and-button-block bdi{
-    font-size: var(--fs-2)!important;
+.simple-product-price{
+    width: min-content;
+}
+.simple-product-price span.price{
+    color: #6da1eb!important;
+}
+.simple-product-price del{
+    opacity: .5;
+    display: inline-block;
+}
+.simple-product-price ins{
+    text-decoration: none;
 }
 @media screen and (min-width: 35.5em){
     .woocommerce-page div.product div.images{
