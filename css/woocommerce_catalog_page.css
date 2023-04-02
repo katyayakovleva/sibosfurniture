@@ -95,3 +95,37 @@ span.onsale{
         aspect-ratio: 1/1;
     }
 }
+.form-filter{
+    display: flex;
+    align-items: center;
+    gap: .5em
+}
+
+.form-filter label {
+    display: inline-flex;
+    align-items: center;
+    padding-block: .5em;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1rem;
+    color: #404c5c
+}
+
+.form-filter input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 1em;
+    border-radius: 0;
+    border: 1px solid #404c5c;
+    background-color: transparent
+}
+
+.form-filter input[type=checkbox]:checked {
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M1 4.29412L5.05263 8L12 1" stroke="%230049AF" stroke-width="2"/%3E%3C/svg%3E%0A');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat
+}
