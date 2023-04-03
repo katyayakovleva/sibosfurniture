@@ -35,7 +35,7 @@ get_header();
                     'after'                => '',
                     'link_before'          => '',
                     'link_after'           => '',
-                    'items_wrap'           => '<menu class=" swiper-menu %2$s">%3$s</menu>',
+                    'items_wrap'           => '<menu id="home-page-menu" class=" swiper-menu %2$s">%3$s</menu>',
                     'item_spacing'         => 'preserve',
                     'depth'                => 0,
                     'walker'               => '',
