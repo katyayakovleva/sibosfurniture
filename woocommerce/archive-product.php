@@ -133,7 +133,7 @@ if (isset($_GET['sort'])) {
                 <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Shop</a></div>
             </div>
             <article>
-                <section class="d-flex jc-between g-1 jc-sm-end">
+                <section class="d-flex jc-between g-1 jc-sm-end px-2">
                     <div class="dropdown d-sm-none">
                         <div class="dropdown__trigger filter">Filter</div>
                         <div class="dropdown__content">
