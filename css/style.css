@@ -4455,6 +4455,19 @@ footer {
         font-size: var(--fs-4);
         font-weight: 400
     }
+    .grid-container {
+        width: 100%;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 1fr;
+        -moz-column-gap: 5em;
+        column-gap: 5em;
+        row-gap: 2.5em;
+        justify-content: center;
+        justify-content: flex-start;
+        padding: 2.5em 1.5em
+    }
+      
 }
 
 @media screen and (min-width: 64em) {
@@ -4607,4 +4620,7 @@ fieldset{
     .navbar-collapse .navbar-search{
         padding-bottom: 5em;
     }
+}
+.grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(0, 17em))
 }

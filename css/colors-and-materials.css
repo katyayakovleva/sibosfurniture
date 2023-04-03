@@ -177,9 +177,9 @@
 }
 
 .grid-container {
-    width: 100%;
+    /* width: 100%;
     box-sizing: border-box;
-    display: grid;
+    display: grid; */
     grid-template-columns: repeat(2,minmax(0,1fr));
     -moz-column-gap: 2.5em;
     column-gap: 2.5em;
@@ -309,9 +309,10 @@
     }
 
     .grid-container {
-        grid-template-columns: repeat(4,minmax(0,1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         -moz-column-gap: 6em;
         column-gap: 6em
+    
     }
 
     .colors>h2,.materials>h2 {

@@ -84,15 +84,15 @@
     margin-block:.5em}
 
 .grid-container {
-    width: 100%;
+    /* width: 100%;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(17em,1fr));
     -moz-column-gap: 5em;
     column-gap: 5em;
-    row-gap: 2.5em;
+    row-gap: 2.5em; */
     justify-content: center;
-    padding: 2.5em 1.5em
+    /* padding: 2.5em 1.5em */
 }
 
 .grid-item {
