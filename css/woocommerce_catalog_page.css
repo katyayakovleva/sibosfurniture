@@ -76,6 +76,11 @@ span.onsale{
 /*    flex-direction: row;*/
 /*    justify-content: flex-start;*/
 /*}*/
+@media screen and (min-width: 35.5em){
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(0, 18.5em));
+    }
+}
 @media screen and (max-width: 35.5em){
     main.header-padding {
         /*display: flex;*/
