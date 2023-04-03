@@ -9,7 +9,7 @@ body {
     margin: 0
 }
 
-main {
+main:not(.site-main) {
     display: block
 }
 
@@ -3060,7 +3060,7 @@ q.small::before {
     height: 2em
 }
 
-main {
+main:not(.site-main) {
     display: flex;
     flex-direction: column;
     align-items: center
