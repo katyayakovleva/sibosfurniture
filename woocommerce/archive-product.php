@@ -58,27 +58,29 @@ if (isset($_GET['sort'])) {
     <article class="catalog px-2 px-md-4 pt-2">
         <aside  >
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
-            <ul class="link-category-list" id="filter-products">
+            <ul class="link-category-list" id="filter-products-desktop"> 
                 <li>    
                     <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
-                    <ol class="link-category-list">
-                        <?php
-                            $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
-                            $cat_args = array(
-                                        'taxonomy' => 'product_cat',
-                                        'hide_empty' => true,
-                                        'parent'   => $parent_product_cat->term_id
-                                    );
-                            $child_product_cats = get_terms( $cat_args );
-                            foreach ($child_product_cats as $child_product_cat) { ?>
+                        <ol class="link-category-list">
+                            <?php
+                                $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
+                                $cat_args = array(
+                                            'taxonomy' => 'product_cat',
+                                            'hide_empty' => true,
+                                            'parent'   => $parent_product_cat->term_id
+                                        );
+                                $child_product_cats = get_terms( $cat_args );
+                                foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                <li class="form-filter">
-                                    <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
-                                </li>
-                            
-                            <?php } 
-                        ?>
-                    </ol>
+                                    <li class="form-filter">
+                                        
+                                            <label><input type="checkbox" name="<?php echo $parent_product_cat->slug; ?>" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                        
+                                    </li>
+                                
+                                <?php } 
+                            ?>
+                        </ol>
                 </li>
                 <li>
                     <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Item types</a>
@@ -137,7 +139,7 @@ if (isset($_GET['sort'])) {
                     <div class="dropdown d-sm-none">
                         <div class="dropdown__trigger filter">Filter</div>
                         <div class="dropdown__content">
-                        <ul class="link-category-list" id="filter-products">
+                        <ul class="link-category-list" id="filter-products-mobile">
                             <li>    
                                 <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
                                 <ol class="link-category-list">
