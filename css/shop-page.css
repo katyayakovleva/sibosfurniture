@@ -200,7 +200,15 @@
     background-color: #fff;
     z-index: 9999
 }
-
+.filter__content{
+    width: 77vw;
+    margin-top: -2px;
+    border-top: 2px solid #0049af;
+}
+.filter__content>ul>li ol {
+    display: none;
+    padding: 0.5em 0em 0.5em 1em;
+}
 .dropdown__content ul {
     padding-left: 0;
     margin-block:.5em}

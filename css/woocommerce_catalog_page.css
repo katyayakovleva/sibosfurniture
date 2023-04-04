@@ -120,6 +120,8 @@ span.onsale{
     position: relative;
     width: 0.8em;
     height: 0.8em;
+    min-width: 0.8em;
+    min-height: 0.8em;
     margin-right: 1em;
     border-radius: 0;
     border: 1px solid #404c5c;

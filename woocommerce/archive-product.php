@@ -138,10 +138,10 @@ if (isset($_GET['sort'])) {
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
                     <div class="dropdown d-sm-none">
                         <div class="dropdown__trigger filter">Filter</div>
-                        <div class="dropdown__content">
+                        <div class="dropdown__content filter__content">
                         <ul class="link-category-list" id="filter-products-mobile">
                             <li>    
-                                <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
+                                <a class="link-category ff-ms fc-blue-2 ta-center">Collections</a>
                                 <ol class="link-category-list">
                                     <?php
                                         $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
@@ -162,7 +162,7 @@ if (isset($_GET['sort'])) {
                                 </ol>
                             </li>
                             <li>
-                                <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Item types</a>
+                                <a class="link-category ff-ms  fc-blue-2 ta-center">Item types</a>
                                 <ol class="link-category-list">
                                     <?php
                                         $parent_product_cat = get_term_by( 'slug', 'item-type', 'product_cat' );
@@ -183,7 +183,7 @@ if (isset($_GET['sort'])) {
                                 </ol>
                             </li>
                             <li>
-                                <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Place types</a>
+                                <a class="link-category ff-ms  fc-blue-2 ta-center">Place types</a>
                                 <ol class="link-category-list">
                                     <?php
                                         $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
