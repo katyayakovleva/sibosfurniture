@@ -34,7 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-<!-- <main class="header-padding">		 -->
 <?php  
 if ( !is_user_logged_in() ) :
 	if (strpos($_SERVER['REQUEST_URI'], "register") !== false):
@@ -134,6 +133,5 @@ endif;
         <h2 class="ff-ms fs-4 fc-blue-2 my-1">Top sellings</h2>
         <?php get_template_part('template-parts/content', 'popular-products');?>
     </article>
-    <!-- </main> -->
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>

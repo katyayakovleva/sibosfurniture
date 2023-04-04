@@ -143,3 +143,9 @@
         order: 1
     }
 }
+.default-page-content{
+    display: block !important;
+}
+.article-block h2,h3, h4, h5, h6 {
+    color: #0049af!important;
+}
