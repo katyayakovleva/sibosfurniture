@@ -3337,7 +3337,7 @@ a.blue:hover {
 .form-control input {
     box-sizing: border-box;
     width: 100%;
-    min-width: 20em;
+    /*min-width: 20em;*/
     background: 0 0;
     border: none;
     border-radius: 0;
@@ -3345,7 +3345,7 @@ a.blue:hover {
     caret-color: #d1d1d1;
     transition: all ease-in-out .12s
 }
-.form-control span{
+.form-control span:not(.wpcf7-not-valid-tip){
     color: #0049af;
 }
 .form-control input:-webkit-autofill {
