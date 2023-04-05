@@ -23,6 +23,9 @@ if ( ! wp_doing_ajax() ) {
 ?>
 <div id="payment" class="woocommerce-checkout-payment checkout-payment">
 	<p class="payment_title">Payment process</p>
+	<div class="sibos_stripe_payment_request_button">
+		<?php do_action( 'sibos_stripe_payment_request_button' ); ?>
+	</div>
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">
 			<?php

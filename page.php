@@ -27,19 +27,13 @@ get_header();
                 <h1 class="ff-ms fs-1 fw-7 fc-blue-2 m-0"><?php the_title();?></h1>
                 <div class="breadcrumb my-1">
                     <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
-                    <!-- <div class="breadcrumb__item"><a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="link">Blog</a></div> -->
                     <div class="breadcrumb__item"><a href="<?php echo get_permalink();?>" class="link"><?php the_title(); ?></a></div>
                 </div>
             </div>
-            <!-- <div class="d-flex fd-col pl-sm-1">
-                <p class="ff-ms fs-5 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>
-                <p class="ff-ms fs-5 fc-blue-4 m-0"><?php echo get_the_date('Y'); ?></p>
-            </div> -->
         </article>
         <section class="px-2 px-sm-4 pb-3 pb-sm-4">
             <article class="article-block default-page-content">
                 <?php the_content();?>
-                <!-- <figure><?php the_post_thumbnail(); ?></figure> -->
             </article>
         </section>
         <article class="px-3 px-sm-4 bg-blue-5">
