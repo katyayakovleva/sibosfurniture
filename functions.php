@@ -1098,3 +1098,303 @@ function get_place_types(){
     }
     return $place_types_arr;
 }
+
+add_action('delete_coaster_furniture_cron_hook', 'delete_coaster_furniture_cron_exec');
+
+function delete_coaster_furniture_cron_exec()
+{
+    $args = array(
+        'status' => 'publish',
+        'limit' => -1,
+    );
+
+    $products = wc_get_products( $args );
+    foreach ($products as $product)
+    {
+        $product->delete();
+    }
+}
+add_action('set_or_update_product_coaster_furniture_cron_hook', 'set_or_update_product_coaster_furniture_cron_exec');
+
+function set_or_update_product_coaster_furniture_cron_exec()
+{
+    $params = array(
+        "keycode" => "45FDCB85CF2F440E9750F1E96A"
+    );
+    $isDiscontinued = false;
+
+
+    $filter_api = "http://api.coasteramer.com/api/product/GetFilter?isDiscontinued=false";
+    $filter_response = wp_remote_get($filter_api, array(
+        'headers' => $params
+    ));
+// $filter = $filter_response['body'];
+    $filterCode = str_replace('"', '', $filter_response['body']);
+//var_dump($filterCode);
+
+    $api_string = "http://api.coasteramer.com/api/product/GetProductList?filterCode=" . $filterCode;
+//    $api_string_full = "http://api.coasteramer.com/api/product/GetProductList";
+//var_dump($api_string);
+    $product_response = wp_remote_get($api_string, array(
+        'timeout' => 3000,
+        'headers' => $params
+    ));
+    $json = json_decode($product_response['body'], true);
+
+//    for ($k = 1; $k <= 6; $k++) {
+    for ($k = 0; $k <= sizeof($json); $k++) {
+        $product = $json[$k];
+        $SKU = $product['ProductNumber'];
+        $existing_product_id = wc_get_product_id_by_sku($SKU);
+        if ($existing_product_id != null) {
+            //Updating product
+            $existing_product = new WC_Product_Simple($existing_product_id);
+            set_or_update_product_coaster_furniture($SKU, $product, $existing_product);
+            $existing_product->save();
+        }
+        else {
+            //Creating product
+            $new_product = new WC_Product_Simple();
+            $new_product->set_status('publish');
+            //Set if the product is featured. | bool
+            $new_product->set_featured(FALSE);
+            //Set catalog visibility. | string $visibility Options: 'hidden', 'visible', 'search' and 'catalog'.
+            $new_product->set_catalog_visibility('visible');
+            $new_product->set_reviews_allowed(TRUE);
+            set_or_update_product_coaster_furniture($SKU, $product, $new_product);
+            $img_urls_array = explode(',', $product['PictureFullURLs']);
+            $img_ids = [];
+            foreach ($img_urls_array as $url){
+                array_push($img_ids, rs_upload_from_url($url));
+            }
+            $main_img_id = $img_ids[0];
+            unset($img_ids[0]); // remove item at index 0
+            $img_ids = array_values($img_ids); // 'reindex' array
+            $new_product->set_image_id($main_img_id);
+            $new_product->set_gallery_image_ids($img_ids);
+            $new_product->save();
+        }
+    }
+}
+function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
+{
+    $name = $product['Name'];
+    $description = $product['Description'];
+    $new_product->set_name($name);
+    //Set product description.
+    $new_product->set_description($description);
+    //Set SKU
+    $new_product->set_sku($SKU);
+
+    $raw_attributes = array();
+    if(isset($product['MeasurementList'])){
+        $measurementList = $product['MeasurementList'];
+        $measurement_array = [];
+        if (count($measurementList) == 1) {
+            $allKeys = array_keys($measurementList[0]);
+            $allValues = array_values($measurementList[0]);
+            for ($i = 1; $i < count($measurementList[0]); $i++) {
+                $attribute = new WC_Product_Attribute();
+                $attribute->set_name($allKeys[$i]);
+                $attribute->set_options(array($allValues[$i]));
+                $attribute->set_visible(true);
+                $attribute->set_variation(false);
+                $raw_attributes[] = $attribute;
+            }
+        } else {
+            for ($i = 0; $i < count($measurementList); $i++) {
+                $piece_name = $measurementList[$i]['PieceName'];
+                $allKeys = array_keys($measurementList[$i]);
+                $allValues = array_values($measurementList[$i]);
+                for ($j = 1; $j < count($measurementList[$i]); $j++) {
+                    if ($allValues[$j] > 0) {
+                        $attribute = new WC_Product_Attribute();
+                        $attribute->set_name($piece_name . " " . $allKeys[$j]);
+                        $attribute->set_options(array($allValues[$j]));
+                        $attribute->set_visible(1);
+                        $attribute->set_variation(0);
+                        $raw_attributes[] = $attribute;
+                    }
+                }
+            }
+        }
+    }
+
+    if(isset($product['MaterialList'])){
+        $product_materials = $product['MaterialList'];
+        $materials_array = [];
+        foreach ($product_materials as $product_material) {
+            array_push($materials_array, $product_material['Value']);
+        }
+        $materials = implode(', ', $materials_array);
+        $attribute = new WC_Product_Attribute();
+        $attribute->set_name("Materials");
+        $attribute->set_options(array($materials));
+        $attribute->set_visible(1);
+        $attribute->set_variation(0);
+        $raw_attributes[] = $attribute;
+    }
+
+    if(isset($product['CountryOfOrigin'])){
+        $countryOfOrigin = $product['CountryOfOrigin'];
+        $attribute = new WC_Product_Attribute();
+        $attribute->set_name("Country of origin");
+        $attribute->set_options(array($countryOfOrigin));
+        $attribute->set_visible(1);
+        $attribute->set_variation(0);
+        $raw_attributes[] = $attribute;
+    }
+
+    if(isset($product['FabricColor'])){
+        $fabricColor = $product['FabricColor'];
+        $attribute = new WC_Product_Attribute();
+        $attribute->set_name("Fabric color");
+        $attribute->set_options(array($fabricColor));
+        $attribute->set_visible(1);
+        $attribute->set_variation(0);
+        $raw_attributes[] = $attribute;
+    }
+
+    if(isset($product['FinishColor'])){
+        $finishColor = $product['FinishColor'];
+        $attribute = new WC_Product_Attribute();
+        $attribute->set_name("Finish color");
+        $attribute->set_options(array($finishColor));
+        $attribute->set_visible(1);
+        $attribute->set_variation(0);
+        $raw_attributes[] = $attribute;
+    }
+
+    if(isset($product['AdditionalFieldList'])){
+        $additionalFieldList = $product['AdditionalFieldList'];
+        foreach ($additionalFieldList as $additionalField) {
+            $attribute = new WC_Product_Attribute();
+            $attribute->set_name($additionalField['Field']);
+            $attribute->set_options(array($additionalField['Value']));
+            $attribute->set_visible(1);
+            $attribute->set_variation(0);
+            $raw_attributes[] = $attribute;
+        }
+    }
+
+    $new_product->set_attributes($raw_attributes);
+//    $img_urls_array = explode(',', $product['PictureFullURLs']);
+//    $img_ids = [];
+//    foreach ($img_urls_array as $url){
+//        array_push($img_ids, rs_upload_from_url($url));
+//    }
+//    $main_img_id = $img_ids[0];
+//    unset($img_ids[0]); // remove item at index 0
+//    $img_ids = array_values($img_ids); // 'reindex' array
+//    $new_product->set_image_id($main_img_id);
+//    $new_product->set_gallery_image_ids($img_ids);
+//    $new_product->save();
+}
+
+add_action('remove_discontinued_product_coaster_furniture_cron_hook', 'remove_discontinued_product_coaster_furniture_cron_exec');
+
+function remove_discontinued_product_coaster_furniture_cron_exec()
+{
+    $params = array(
+        "keycode" => "45FDCB85CF2F440E9750F1E96A"
+    );
+
+
+    $filter_api = "http://api.coasteramer.com/api/product/GetFilter?isDiscontinued=true";
+    $filter_response = wp_remote_get($filter_api, array(
+        'headers' => $params
+    ));
+// $filter = $filter_response['body'];
+    $filterCode = str_replace('"', '', $filter_response['body']);
+//var_dump($filterCode);
+
+    $api_string = "http://api.coasteramer.com/api/product/GetProductList?filterCode=" . $filterCode;
+//    $api_string_full = "http://api.coasteramer.com/api/product/GetProductList";
+//var_dump($api_string);
+    $product_response = wp_remote_get($api_string, array(
+        'timeout' => 1000,
+        'headers' => $params
+    ));
+    $json = json_decode($product_response['body'], true);
+    foreach ($json as $product)
+    {
+        $SKU = $product['ProductNumber'];
+        $existing_product_id = wc_get_product_id_by_sku($SKU);
+        if ($existing_product_id != null) {
+            $existing_product = wc_get_product($existing_product_id);
+            $existing_product->delete();
+        }
+    }
+}
+function rs_upload_from_url($url, $title = null)
+{
+    require_once(ABSPATH . "/wp-load.php");
+    require_once(ABSPATH . "/wp-admin/includes/image.php");
+    require_once(ABSPATH . "/wp-admin/includes/file.php");
+    require_once(ABSPATH . "/wp-admin/includes/media.php");
+
+    // Download url to a temp file
+    $tmp = download_url($url, 300);
+    if (is_wp_error($tmp)){
+        var_dump($tmp);
+        var_dump("Download url to a temp file error");
+        return false;
+    }
+
+    // Get the filename and extension ("photo.png" => "photo", "png")
+    $filename = pathinfo($url, PATHINFO_FILENAME);
+    $extension = pathinfo($url, PATHINFO_EXTENSION);
+
+    // An extension is required or else WordPress will reject the upload
+    if (!$extension) {
+        // Look up mime type, example: "/photo.png" -> "image/png"
+        $mime = mime_content_type($tmp);
+        $mime = is_string($mime) ? sanitize_mime_type($mime) : false;
+
+        // Only allow certain mime types because mime types do not always end in a valid extension (see the .doc example below)
+        $mime_extensions = array(
+            // mime_type         => extension (no period)
+            'text/plain' => 'txt',
+            'text/csv' => 'csv',
+            'application/msword' => 'doc',
+            'image/jpg' => 'jpg',
+            'image/jpeg' => 'jpeg',
+            'image/gif' => 'gif',
+            'image/png' => 'png',
+            'video/mp4' => 'mp4',
+        );
+
+        if (isset($mime_extensions[$mime])) {
+            // Use the mapped extension
+            $extension = $mime_extensions[$mime];
+        } else {
+            // Could not identify extension
+            @unlink($tmp);
+            var_dump("Could not identify extension error");
+            return false;
+        }
+    }
+
+
+    // Upload by "sideloading": "the same way as an uploaded file is handled by media_handle_upload"
+    $args = array(
+        'name' => "$filename.$extension",
+        'tmp_name' => $tmp,
+    );
+
+    // Do the upload
+    $attachment_id = media_handle_sideload($args, 0, $title);
+
+    // Cleanup temp file
+    @unlink($tmp);
+
+    // Error uploading
+    if (is_wp_error($attachment_id)){
+        var_dump("Error uploading");
+        var_dump($attachment_id);
+        return false;
+    }
+
+    // Success, return attachment ID (int)
+    return (int)$attachment_id;
+}
