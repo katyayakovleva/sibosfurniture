@@ -540,3 +540,7 @@ fieldset{
 .form-title{
     font-size: var(--fs-2) !important;
 }
+.sibos_stripe_payment_request_button{
+    display: flex;
+    flex-direction: column-reverse;
+}
