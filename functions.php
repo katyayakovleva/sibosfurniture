@@ -1085,7 +1085,12 @@ function set_or_update_product_coaster_furniture_cron_exec()
 function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
 {
     $name = $product['Name'];
-    $description = $product['Description'];
+    if (isset($product['Description'])){
+        $description = $product['Description'];
+    }else{
+        $description = $name;
+    }
+
     $new_product->set_name($name);
     //Set product description.
     $new_product->set_description($description);
