@@ -237,7 +237,7 @@ if (isset($_GET['sort'])) {
                                 array(
                                     'taxonomy' => 'product_cat',
                                     'field'    => 'slug',
-                                    'terms'    => 'waiting',
+                                    'terms'    => array( 'waiting', 'uncategorized' ),
                                     'operator' => 'NOT IN',
                                 ),
                         ),

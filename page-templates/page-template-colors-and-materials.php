@@ -17,13 +17,14 @@ get_header();
             </div>
             <div class="hero__right"><span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span></div>
         </article>
+        <?php
+            $materials = get_field('materials');
+            $colors = get_field('colors');
+
+        ?>
         <article class="materials px-2 px-sm-4">
-            <h2>Premium quality<br>materials</h2>
-            <p>Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum
-                velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus
-                nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi.
-                Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula
-                vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.</p>
+            <h2><?php echo esc_attr($materials['title_1']); ?> <br> <?php echo esc_attr($materials['title_2']); ?> </h2>
+            <p><?php echo esc_attr($materials['text']); ?></p>
             <div class="grid-container">
             <?php 
                $materials = new WP_Query( array(
@@ -50,7 +51,7 @@ get_header();
             </div>
         </article>
         <article class="colors px-2 px-sm-4">
-            <h2>Colors</h2><q class="mb-3">There are no limitations in color, you can type you favorite and desire one in your notes for the item while making the order.</q>
+            <h2><?php echo esc_attr($colors['title']); ?></h2><q class="mb-3"><?php echo esc_attr($colors['text']); ?></q>
             <div class="grid-colors">
                 <?php 
                 $color_categories = get_terms( array(
