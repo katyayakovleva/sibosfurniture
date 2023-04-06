@@ -308,13 +308,17 @@ if (isset($_GET['sort'])) {
                             ?>
                             <div class="grid-item-shop__header changing-color-item">
                                 <figure>
-                                    <?php if ($product->is_on_sale()) {?>
-                                        <span class="onsale">Sale!</span>
-                                    <?php }?>
-                                    <?php echo $product_thumbnail ?>
+                                    <a href="<?php echo $product_url?>">
+                                        <?php if ($product->is_on_sale()) {?>
+                                            <span class="onsale">Sale!</span>
+                                        <?php }?>
+                                        <?php echo $product_thumbnail ?>
+                                    </a>
                                 </figure>
                             </div>
-                            <p class="ff-ms fs-5 fg-1 product_name"><?php echo $product_name ?></p>
+                            <a href="<?php echo $product_url?>">
+                                <p class="ff-ms fs-5 fg-1 product_name"><?php echo $product_name ?></p>
+                            </a>
                             <div class="product-rating">
                                 <?php if($product_rating > 0){
                                     for ($i = 1; $i <= $product_rating; $i++){ ?>
