@@ -33,7 +33,7 @@ $page_template = get_pages( array(
         </article>
         <section class="px-2 px-sm-4 pb-3 pb-sm-4">
             <article class="article-block">
-                <?php the_content();?>
+                <div><?php the_content();?></div>
                 <figure><?php the_post_thumbnail(); ?></figure>
             </article>
         </section>
@@ -62,8 +62,7 @@ $page_template = get_pages( array(
                                         <?php if ( has_post_thumbnail() ) : ?>
                                             <img src="<?php the_post_thumbnail_url();?>" alt="item image">
                                         <?php else:?>
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="item image">
-                                        <?php endif;?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/default_img.png" alt="item image">                                        <?php endif;?>
                                         </figure>
                                         <div class="d-flex fd-col pl-1">
                                             <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>

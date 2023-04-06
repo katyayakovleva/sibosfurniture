@@ -106,7 +106,7 @@
     order: 1
 }
 
-.article-block p {
+.article-block div {
     order: 2
 }
 
@@ -130,7 +130,7 @@
         gap: clamp(2em,5%,4em)
     }
 
-    .article-block figure,.article-block p {
+    .article-block figure,.article-block div {
         flex: 1
     }
 
@@ -139,7 +139,7 @@
         order: 2
     }
 
-    .article-block p {
+    .article-block div {
         order: 1
     }
 }

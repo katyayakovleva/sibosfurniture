@@ -132,7 +132,7 @@ if (isset($_GET['sort'])) {
         <section>
             <div class="breadcrumb my-2">
                 <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
-                <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Shop</a></div>
+                <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Catalog</a></div>
             </div>
             <article>
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
@@ -407,8 +407,7 @@ if (isset($_GET['sort'])) {
                                         <?php if ( has_post_thumbnail() ) : ?>
                                             <img src="<?php the_post_thumbnail_url();?>" alt="item image">
                                         <?php else:?>
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sibos.svg" alt="item image">
-                                        <?php endif;?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/default_img.png" alt="item image">                                        <?php endif;?>
                                         </figure>
                                         <div class="d-flex fd-col pl-1">
                                             <p class="ff-ms fs-1-25 fc-blue-4 m-0"><?php echo get_the_date('d/m'); ?></p>
