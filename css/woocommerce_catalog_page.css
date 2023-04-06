@@ -79,6 +79,11 @@ span.onsale{
 a p.product_name{
     color: black;
 }
+a p.product_name:hover{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    /* text-decoration-color: #0049af; */
+}
 @media screen and (min-width: 35.5em){
     .grid-container {
         grid-template-columns: repeat(auto-fit, minmax(0, 17.5em));
