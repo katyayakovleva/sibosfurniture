@@ -1311,3 +1311,5 @@ function rs_upload_from_url($url, $title = null)
 }
 
 
+	
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
