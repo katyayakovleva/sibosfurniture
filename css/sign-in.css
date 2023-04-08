@@ -79,7 +79,13 @@
         --fs-7: 0.63em
     }
 }
-
+span.onsale {
+    max-height: 3.236em;
+    max-width: 3.236em;
+    right: 0;
+    left: auto!important;
+    margin: 1.75em!important;
+}
 .header-primary {
     display: none
 }
