@@ -110,7 +110,7 @@ get_header();
     </article>
     <article>
         <h2 class="w-sm-75 ta-sm-center ff-ms fs-2 fc-blue-2 fw-7 px-1 mx-auto mt-1 mb-0">Customize & Decorate Your Home With Our Furniture!</h2>
-        <section class="grid-container">
+        <section class="grid-container" id="place_type_categories">
             <?php $parent_term = get_term_by( 'slug', 'place-type', 'product_cat' );
 
             $args = array(

@@ -486,9 +486,10 @@ function get_ajax_menu_popular_item_category(){
             $out_arr = array();
             for ($i = 0; $i < count($arr); $i++) {
                 $category = get_term_by('slug', $arr[$i], 'product_cat');
-                $a_href = get_term_link( $category );
+                // $a_href = get_term_link( $category );
+                $id = $category->term_id;
                 $name = $category->name;
-                $out_arr[$arr[$i]] = array($a_href, $name);
+                $out_arr[$arr[$i]] = array($id, $name);
             }
         } elseif (count($unique_values) == 1) {
             $unique_values_2 = get_more_categories($main_category_slug,$category_slugs);
@@ -496,16 +497,18 @@ function get_ajax_menu_popular_item_category(){
             $out_arr = array();
             if(count($unique_values_2) == 1){
                 $category = get_term_by('slug', $unique_values_2[0], 'product_cat');
-                $a_href = get_term_link( $category );
+                // $a_href = get_term_link( $category );
+                $id = $category->term_id;
                 $name = $category->name;
-                $out_arr[$unique_values_2[0]] = array($a_href, $name);
+                $out_arr[$unique_values_2[0]] = array($id, $name);
             }elseif(count($unique_values_2) > 1){
                 $arr = array_slice($unique_values_2, 0, 2, true);
                 for ($i = 0; $i < count($arr); $i++) {
                     $category = get_term_by('slug', $arr[$i], 'product_cat');
-                    $a_href = get_term_link( $category );
+                    // $a_href = get_term_link( $category );
+                    $id = $category->term_id;
                     $name = $category->name;
-                    $out_arr[$arr[$i]] = array($a_href, $name);
+                    $out_arr[$arr[$i]] = array($id, $name);
                 }
             }else{
                 $out_arr = [];
@@ -556,9 +559,10 @@ function get_ajax_menu_popular_item_sales_category(){
     $out_arr = array();
     for ($i = 0; $i < count($arr); $i++) {
         $category = get_term_by('slug', $arr[$i], 'product_cat');
-        $a_href = get_term_link( $category );
+        $id = $category->term_id;
+        // $a_href = get_term_link( $category );
         $name = $category->name;
-        $out_arr[$arr[$i]] = array($a_href, $name);
+        $out_arr[$arr[$i]] = array($id, $name);
     }
     $out = $out_arr;
     die(json_encode($out));
@@ -1313,3 +1317,12 @@ function rs_upload_from_url($url, $title = null)
 
 	
 remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
+
+function woocommerce_category_redirect() {
+    if (is_product_category()) {
+      wp_redirect(get_permalink(wc_get_page_id('shop')));
+      exit();
+    }
+  }
+  add_action('template_redirect', 'woocommerce_category_redirect');
+  

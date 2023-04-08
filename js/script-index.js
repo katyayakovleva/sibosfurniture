@@ -59,6 +59,25 @@ $(document).ready(function() {
             
         $(this).attr("href", url);
    });
+   $('#place_type_categories a').each(function () {
+    let href = $(this).attr('href');
+    let words= href.split("/");
+    let a = words.pop();
+    let slug = words.pop();
+    var url = words.slice(0, 3).join('/');
+    if(slug === "sale"){
+        url = url + '/catalog?sale=true';  
+    }else{
+        var id = $('#'+slug).val();
+        var place_type_param = [];
+        place_type_param.push(id);
+        
+        let placeTypesJson = JSON.stringify(place_type_param);
+        url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+    }
+        
+    $(this).attr("href", url);
+});
     swiperMenuLink(),
         camCarousel(),
         $(window).resize(function() {})

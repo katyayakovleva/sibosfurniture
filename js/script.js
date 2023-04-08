@@ -121,7 +121,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             
             let a = words.pop();
             let slug = words.pop();
+            
+            var url = words.slice(0, 3).join('/');
+
             if(slug === "sale"){
+                url = url + '/catalog?sale=true'; 
+                $(this).find('a').attr("href", url); 
                 var str1 = '&action=get_ajax_menu_popular_item_sales_category';
                 $.ajax({
                     type: "POST",
@@ -132,7 +137,13 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                         var data_parse = JSON.parse(data)
                         if (Object.keys(data_parse).length >= 1) {
                             Object.entries(data_parse).forEach(function([key, value]) {
-                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
+
+                                var item_type_param = [];
+                                item_type_param.push(value[0]);
+                                let itemTypesJson = JSON.stringify(item_type_param);
+                                var item_url = url + '&item_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+
+                                var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }.bind(this));
                         }
@@ -142,6 +153,13 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     }
                 });
             }else{
+                var id = $('#'+slug).val();
+                var place_type_param = [];
+                place_type_param.push(id);
+                let placeTypesJson = JSON.stringify(place_type_param);
+                url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
+                $(this).find('a').attr("href", url); 
+
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
                 $.ajax({
                     type: "POST",
@@ -152,7 +170,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                         var data_parse = JSON.parse(data)
                         if (Object.keys(data_parse).length >= 1) {
                             Object.entries(data_parse).forEach(function([key, value]) {
-                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                                var item_type_param = [];
+                                item_type_param.push(value[0]);
+                                let itemTypesJson = JSON.stringify(item_type_param);
+                                var item_url = url + '&item_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+                                
+                                var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }.bind(this));
                         }
@@ -162,19 +185,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     }
                 });
             }
-            var url = words.slice(0, 3).join('/');
-            if(slug === "sale"){
-                url = url + '/catalog?sale=true';  
-            }else{
-                var id = $('#'+slug).val();
-                var place_type_param = [];
-                place_type_param.push(id);
-                
-                let placeTypesJson = JSON.stringify(place_type_param);
-                url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
-            }
-             
-            $(this).find('a').attr("href", url);    
+               
         });
         $('.navbar-collapse-middle li:has(ul)>a').each(function (index){
             var href_middle = this.href
@@ -184,12 +195,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             var href_right = this.href
             $(this).replaceWith($('<button href = "' + href_right +'" class="link link-navbar" data-toggle="collapse">' + this.innerHTML + '</button>'));
         })
-        // $('.navbar-collapse-middle.place-type-section li a').on('click', function(){
-        //     // let href = $(this).get(0).href;
-        //     // let words= href.split("/");
-        //     // let slug = words.pop();
-        //     console.log(click);
-        // });
+
         $("#preloader").fadeOut({
                 duration: 400,
                 complete: function() {
