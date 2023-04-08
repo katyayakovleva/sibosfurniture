@@ -15,20 +15,29 @@
  * @version 7.0.1
  */
 
-if ( is_user_logged_in() ) { 
-  	if (strpos($_SERVER['REQUEST_URI'], "register") !== false){
- 		// wp_redirect( home_url('/myaccount/') ); exit; 
-		 header('Location: https:myaccount.php');
-	//header("location:myaccount.php"); or sth that you want.
-	} else if (strpos($_SERVER['REQUEST_URI'], "login") !== false) {
-	header('Location: https:myaccount.php');
-	//header("location:myaccount.php"); or sth that you want. 
-	} else {}
-	if (strpos($_SERVER['REQUEST_URI'], "myaccount") !== false){
-	header('Location: https:myaccount.php');
-	//header("location:myaccount.php"); or sth that you want. 
-	} else {};
- }
+// if ( is_user_logged_in() ) { 
+//   	if (strpos($_SERVER['REQUEST_URI'], "register") !== false){
+//  		// wp_redirect( home_url('/myaccount/') ); exit; 
+// 		 header('Location: https:myaccount.php');
+// 	//header("location:myaccount.php"); or sth that you want.
+// 	} else if (strpos($_SERVER['REQUEST_URI'], "login") !== false) {
+// 	header('Location: https:myaccount.php');
+// 	//header("location:myaccount.php"); or sth that you want. 
+// 	} else {}
+// 	if (strpos($_SERVER['REQUEST_URI'], "myaccount") !== false){
+// 	header('Location: https:myaccount.php');
+// 	//header("location:myaccount.php"); or sth that you want. 
+// 	} else {};
+//  }
+
+if (isset($_GET['registration'])) {
+    $registration = $_GET['registration'];
+} else {
+    $registration = '';
+}
+if (isset($_GET['alg_wc_ev_activate_account_message'])) {
+    $registration = 'false';
+} 
 if ( ! defined( 'ABSPATH' ) ) {
  exit; // Exit if accessed directly.
 }
@@ -36,7 +45,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php  
 if ( !is_user_logged_in() ) :
-	if (strpos($_SERVER['REQUEST_URI'], "register") !== false):
+	if ($registration == 'true'):
 		?>
 		<article class="px-2 px-sm-4 mb-2">
 				<header class="header-primary">
@@ -48,7 +57,7 @@ if ( !is_user_logged_in() ) :
 						<h2>New account</h2>
 					</header>
 					<section class="header-block__body">
-						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?> action="<?php echo home_url('/my-account/');?>">
+						<form  method="post" <?php do_action( 'woocommerce_register_form_tag' ); ?> action="<?php echo get_permalink( wc_get_page_id( 'myaccount' ) ); ?>?registration=true">
 							<?php do_action( 'woocommerce_register_form_start' ); ?>
 							<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -120,7 +129,7 @@ if ( !is_user_logged_in() ) :
 					
 					<section class="header-block__body">
 						<p class="ff-ms fs-4 fc-blue-4 fw-7 fg-1 ta-center ta-sm-start pb-2 pb-sm-0">Sign up and cutomize your futniture!</p>
-						<button class="btn as-center" onclick="location.href = '<?php echo get_permalink( wc_get_page_id( 'myaccount' ) ); ?>register'">Sign up</button>
+						<button class="btn as-center" onclick="location.href = '<?php echo get_permalink( wc_get_page_id( 'myaccount' ) ); ?>?registration=true'">Sign up</button>
 					</section>
 				</article>
 			</section>

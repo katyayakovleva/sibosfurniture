@@ -1320,9 +1320,9 @@ remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0
 
 function woocommerce_category_redirect() {
     if (is_product_category()) {
-      wp_redirect(get_permalink(wc_get_page_id('shop')));
-      exit();
+        wp_redirect(get_permalink(wc_get_page_id('shop')));
+        exit();
     }
-  }
-  add_action('template_redirect', 'woocommerce_category_redirect');
+}
+add_action('template_redirect', 'woocommerce_category_redirect');
   
