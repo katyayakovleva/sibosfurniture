@@ -40,6 +40,7 @@ $(document).ready(function() {
     var collections = [];
     var item_types = [];
     var place_types = [];
+    var brands = [];
     var sale = 'false';
     var sort = 'popularity';
     
@@ -54,6 +55,9 @@ $(document).ready(function() {
         $("#filter-products-mobile input:checkbox[name=place-type]:checked").each(function(){
             place_types.push($(this).val());
         });
+        $("#filter-products-mobile input:checkbox[name=brand]:checked").each(function(){
+            brands.push($(this).val());
+        });
         if($('#filter-products-mobile input:checkbox[name="sale"]').is(':checked')){
             sale = 'true';
         }else{
@@ -63,14 +67,17 @@ $(document).ready(function() {
         let collectionsArrayString = JSON.stringify(collections);
         let item_typesArrayString = JSON.stringify(item_types);
         let place_typesArrayString = JSON.stringify(place_types);
+        let brandsArrayString = JSON.stringify(brands);
         
         let encodedcollectionsArrayString = encodeURIComponent(collectionsArrayString);
         let encodeditem_typesArrayString = encodeURIComponent(item_typesArrayString);
         let encodedplace_typesArrayString = encodeURIComponent(place_typesArrayString);
-
+        let encodedbrandsArrayString = encodeURIComponent(brandsArrayString);
+        
         url.searchParams.set("collections", encodedcollectionsArrayString);
         url.searchParams.set("item_types", encodeditem_typesArrayString);
         url.searchParams.set("place_types", encodedplace_typesArrayString);
+        url.searchParams.set("brands", encodedbrandsArrayString);
         url.searchParams.set("sale", sale);
         window.history.pushState({}, "", url);
         
@@ -78,6 +85,8 @@ $(document).ready(function() {
         collections = [];
         item_types = [];
         place_types = [];
+        brands = [];
+
         
     });
     $('#filter-products-desktop input[type="checkbox"]').on('change', function(){
@@ -90,6 +99,9 @@ $(document).ready(function() {
         $("#filter-products-desktop input:checkbox[name=place-type]:checked").each(function(){
             place_types.push($(this).val());
         });
+        $("#filter-products-desktop input:checkbox[name=brand]:checked").each(function(){
+            brands.push($(this).val());
+        });
         if($('#filter-products-desktop input:checkbox[name="sale"]').is(':checked')){
             sale = 'true';
         }else{
@@ -99,14 +111,19 @@ $(document).ready(function() {
         let collectionsArrayString = JSON.stringify(collections);
         let item_typesArrayString = JSON.stringify(item_types);
         let place_typesArrayString = JSON.stringify(place_types);
+        let brandsArrayString = JSON.stringify(brands);
+
         
         let encodedcollectionsArrayString = encodeURIComponent(collectionsArrayString);
         let encodeditem_typesArrayString = encodeURIComponent(item_typesArrayString);
         let encodedplace_typesArrayString = encodeURIComponent(place_typesArrayString);
+        let encodedbrandsArrayString = encodeURIComponent(brandsArrayString);
+
 
         url.searchParams.set("collections", encodedcollectionsArrayString);
         url.searchParams.set("item_types", encodeditem_typesArrayString);
         url.searchParams.set("place_types", encodedplace_typesArrayString);
+        url.searchParams.set("brands", encodedbrandsArrayString);
         url.searchParams.set("sale", sale);
         window.history.pushState({}, "", url);
         
@@ -114,6 +131,8 @@ $(document).ready(function() {
         collections = [];
         item_types = [];
         place_types = [];
+        brands = [];
+
         
     });
     $('#sort_product a').click( function(){

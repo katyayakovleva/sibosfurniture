@@ -42,6 +42,11 @@ if (isset($_GET['place_types'])) {
 } else {
     $place_types = [];
 }
+if (isset($_GET['brands'])) {
+    $brands = json_decode(urldecode($_GET['brands']), true);
+} else {
+    $brands = [];
+}
 if (isset($_GET['sale'])) {
     $sale = $_GET['sale'];
 } else {
@@ -123,7 +128,28 @@ if (isset($_GET['sort'])) {
                             <?php } 
                         ?>
                     </ol>
-                </li>           
+                </li>  
+                <li>
+                    <a class="link-category ff-ms  fc-blue-2 ta-center">Brand</a>
+                    <ol class="link-category-list">
+                        <?php
+                            $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
+                            $cat_args = array(
+                                        'taxonomy' => 'product_cat',
+                                        'hide_empty' => true,
+                                        'parent'   => $parent_product_cat->term_id
+                                    );
+                            $child_product_cats = get_terms( $cat_args );
+                            foreach ($child_product_cats as $child_product_cat) { ?>
+
+                                <li class="form-filter">
+                                    <label><input type="checkbox" name="brand" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                </li>
+                            
+                            <?php } 
+                        ?>
+                    </ol>
+                </li>                
                 <li class="form-checkbox">
                     <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                 </li>
@@ -202,7 +228,28 @@ if (isset($_GET['sort'])) {
                                         <?php } 
                                     ?>
                                 </ol>
-                            </li>           
+                            </li>    
+                            <li>
+                                <a class="link-category ff-ms  fc-blue-2 ta-center">Brand</a>
+                                <ol class="link-category-list">
+                                    <?php
+                                        $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
+                                        $cat_args = array(
+                                                    'taxonomy' => 'product_cat',
+                                                    'hide_empty' => true,
+                                                    'parent'   => $parent_product_cat->term_id
+                                                );
+                                        $child_product_cats = get_terms( $cat_args );
+                                        foreach ($child_product_cats as $child_product_cat) { ?>
+
+                                            <li class="form-filter">
+                                                <label><input type="checkbox" name="brand" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                            </li>
+                                        
+                                        <?php } 
+                                    ?>
+                                </ol>
+                            </li>         
                             <li class="form-checkbox">
                                 <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                             </li>
@@ -245,6 +292,9 @@ if (isset($_GET['sort'])) {
                     );
                     if(!empty($item_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
+                    }
+                    if(!empty($brands)){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $brands);
                     }
                     $place_types_and_collections = array_merge($collections, $place_types);
                     if(!empty($place_types_and_collections)){
