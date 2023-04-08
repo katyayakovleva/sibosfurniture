@@ -347,6 +347,9 @@ if (isset($_GET['sort'])) {
             $total= [$products -> max_num_pages];
             $previous_posts_link = previous_posts(false);
             $next_posts_link = next_posts( $total, false);
+            if($total[0] == 0){
+                $total[0] = 1;
+            }
             ?>
             <div></div>
             <div class="arrows">
