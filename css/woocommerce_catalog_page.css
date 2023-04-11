@@ -142,6 +142,13 @@ a p.product_name:hover{
     background-position: center;
     background-repeat: no-repeat
 }
+.quantity{
+    display: none;
+}
+.single_add_to_cart_button{
+    padding: 0!important;
+    background-color: transparent!important;
+}
 @media screen and (max-width: 430px){
     .dropdown {
         width: 8em;
