@@ -4623,4 +4623,10 @@ fieldset{
         padding-bottom: 5em;
     }
 }
+#yith-wcwl-popup-message {
+    border: 2px solid #0049af;
+}
 
+#yith-wcwl-popup-message {
+    font-family: 'Merriweather Sans', serif !important;
+}
