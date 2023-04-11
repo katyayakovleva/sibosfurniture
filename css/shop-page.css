@@ -214,7 +214,8 @@
     margin-block:.5em}
 
 .dropdown__content .link {
-    color: rgba(0,73,175,.3019607843)
+    color: rgba(0,73,175,.3019607843);
+    font-size: 1em;
 }
 
 .dropdown__content .link:hover {

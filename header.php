@@ -66,7 +66,7 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         <a href="tel:<?php echo esc_attr($phone);?>" class="link xs"><?php echo esc_attr($phone);?></a> 
                         <a href="mailto:<?php echo esc_attr($email);?>" class="link xs"><?php echo esc_attr($email);?></a>
                     </div>
-                    <a href="my-cart.html" class="link" type="button">
+                    <a href="<?php echo wc_get_cart_url(); ?>" class="link" type="button">
                         <i class="icon-cart-icon fa-2xl"></i>
                     </a>
                 </div>
@@ -78,13 +78,15 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         
                         <div>
                             <?php  get_search_form(); ?>
-                            <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true"> 
-                            <?php if ( is_user_logged_in() ) { ?>
-                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-blue xs">My Account</a>
-                            <?php }
-                            else { ?>
-                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-blue xs">Sign in</a>
-                            <?php } ?>
+                            <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">
+                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart</a>
+
+<!--                            --><?php //if ( is_user_logged_in() ) { ?>
+<!--                                <a href="--><?php //echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?><!--" title="My Account" class="link link-blue xs">My Account</a>-->
+<!--                            --><?php //}
+//                            else { ?>
+<!--                                <a href="--><?php //echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?><!--" title="Sign in" class="link link-blue xs">Sign in</a>-->
+<!--                            --><?php //} ?>
                         </div>
                     </div>
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
@@ -153,15 +155,14 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         )
                     );
                     ?>
+                    <?php if ( is_user_logged_in() ) { ?>
+                        <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-navbar my_account">My Account</a>
+                    <?php }
+                    else { ?>
+                        <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-navbar my_account">Sign in</a>
+                    <?php } ?>
                     <div class="navbar-search">
-
                         <div>
-                            <?php if ( is_user_logged_in() ) { ?>
-                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="My Account" class="link link-navbar">My Account</a>
-                            <?php }
-                            else { ?>
-                                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="Sign in" class="link link-navbar">Sign in</a>
-                            <?php } ?>
                             <?php  get_search_form(); ?>
 
                         </div>

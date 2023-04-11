@@ -213,7 +213,7 @@
 }
 
 .advantages-post p:last-of-type {
-    display: none
+    display: block;
 }
 
 .grid-container {

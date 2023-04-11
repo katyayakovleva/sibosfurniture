@@ -349,7 +349,11 @@ if (isset($_GET['sort'])) {
                         $product_thumbnail = $product->get_image();
                         $product_rating = $product->get_average_rating();
                         $product_price = $product->get_price_html();
-                        $terms = get_the_terms( $product_id, 'product_cat' );?>
+                        $terms = get_the_terms( $product_id, 'product_cat' );
+                        $product_cart_id = WC()->cart->generate_cart_id( $product_id );
+                        $in_cart = WC()->cart->find_product_in_cart( $product_cart_id );
+                        ?>
+
                         <div class="grid-item-shop">
                             <?php
                             //  foreach($terms as $term){
@@ -381,7 +385,26 @@ if (isset($_GET['sort'])) {
                             </div>
                             <div class="d-flex ai-center jc-between mt-2">
                                 <p class="grid-item-shop__price ff-ms m-0"><?php echo $product_price ?></p>
-                                <div class="grid-item-shop__buttons"><a href="<?php echo $product_url ?>" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                                <?php
+                                if ( $product->is_type( 'variable' ) ) {
+                                    if ( $in_cart ) {?>
+                                        <div class="grid-item-shop__buttons colorful_add_to_cart"><a href="<?php echo $product_url ?>" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                                    <?php }else{?>
+                                        <div class="grid-item-shop__buttons"><a href="<?php echo $product_url ?>" class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                                    <?php }
+                                }else{
+                                    if ( $in_cart ) {?>
+                                        <div class="grid-item-shop__buttons colorful_add_to_cart add_to_cart_simple" data-action="<?php echo  $product_id;?>"><a  class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                                    <?php }else{?>
+                                        <div class="grid-item-shop__buttons add_to_cart_simple" data-action="<?php echo  $product_id;?>"><a  class="link fs-3"><i class="icon-cart-icon"></i></a></div>
+                                    <?php }
+                                }
+                                ?>
+<!--                                --><?php
+//                                function add_to_cart($product_id){
+//                                    WC()->cart->add_to_cart( $product_id );
+//                                }
+//                                ?>
                             </div>
                         </div>
                     <?php endwhile;
