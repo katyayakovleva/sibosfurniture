@@ -349,7 +349,8 @@
 
 @media screen and (min-width: 35.5em) {
     .catalog {
-        grid-template-columns:1fr 5fr
+        grid-template-columns:1fr 5fr;
+        min-height: 70vh;
     }
 
     .catalog aside {
