@@ -250,7 +250,7 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
         wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array(), rand(111,9999), true );
-    
+
 
     }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){
         wp_enqueue_style( 'wishlist', get_template_directory_uri(). '/css/wishlist.css', array(), rand(111,9999));
@@ -1109,12 +1109,14 @@ function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
             $allKeys = array_keys($measurementList[0]);
             $allValues = array_values($measurementList[0]);
             for ($i = 1; $i < count($measurementList[0]); $i++) {
-                $attribute = new WC_Product_Attribute();
-                $attribute->set_name($allKeys[$i]);
-                $attribute->set_options(array($allValues[$i]));
-                $attribute->set_visible(true);
-                $attribute->set_variation(false);
-                $raw_attributes[] = $attribute;
+                if ($allValues[$i] > 0) {
+                    $attribute = new WC_Product_Attribute();
+                    $attribute->set_name($allKeys[$i]);
+                    $attribute->set_options(array($allValues[$i]));
+                    $attribute->set_visible(true);
+                    $attribute->set_variation(false);
+                    $raw_attributes[] = $attribute;
+                }
             }
         } else {
             for ($i = 0; $i < count($measurementList); $i++) {
@@ -1192,7 +1194,9 @@ function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
         }
     }
 
-    $new_product->set_attributes($raw_attributes);
+    if (sizeof($raw_attributes) > 0){
+        $new_product->set_attributes($raw_attributes);
+    }
 //    $img_urls_array = explode(',', $product['PictureFullURLs']);
 //    $img_ids = [];
 //    foreach ($img_urls_array as $url){
@@ -1325,4 +1329,4 @@ function woocommerce_category_redirect() {
     }
 }
 add_action('template_redirect', 'woocommerce_category_redirect');
-  
+
