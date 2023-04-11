@@ -149,3 +149,8 @@
 .article-block h2,h3, h4, h5, h6 {
     color: #0049af!important;
 }
+@media screen and (min-width: 64em) {
+    .swiper-per-view .swiper-slide {
+        --swiper-slide-number: 3;
+    }
+}

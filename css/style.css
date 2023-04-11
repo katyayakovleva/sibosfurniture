@@ -4474,7 +4474,7 @@ footer {
 
 @media screen and (min-width: 64em) {
     .swiper-per-view .swiper-slide {
-        --swiper-slide-number: 3
+        --swiper-slide-number: 4;
     }
 }
 .woocommerce{

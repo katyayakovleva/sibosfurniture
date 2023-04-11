@@ -147,3 +147,8 @@ a p.product_name:hover{
         width: 8em;
     }
 }
+@media screen and (min-width: 64em) {
+    .swiper-per-view .swiper-slide {
+        --swiper-slide-number: 3;
+    }
+}
