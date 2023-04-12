@@ -1113,7 +1113,11 @@ function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
             for ($i = 1; $i < count($measurementList[0]); $i++) {
                 if ($allValues[$i] > 0) {
                     $attribute = new WC_Product_Attribute();
-                    $attribute->set_name($allKeys[$i]);
+                    if (strtolower($allKeys[$i]) == strtolower("Weight")){
+                        $attribute->set_name("Product " . strtolower($allKeys[$i]));
+                    }else{
+                        $attribute->set_name($allKeys[$i]);
+                    }
                     $attribute->set_options(array($allValues[$i]));
                     $attribute->set_visible(true);
                     $attribute->set_variation(false);
@@ -1195,21 +1199,9 @@ function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
             $raw_attributes[] = $attribute;
         }
     }
-
     if (sizeof($raw_attributes) > 0){
         $new_product->set_attributes($raw_attributes);
     }
-//    $img_urls_array = explode(',', $product['PictureFullURLs']);
-//    $img_ids = [];
-//    foreach ($img_urls_array as $url){
-//        array_push($img_ids, rs_upload_from_url($url));
-//    }
-//    $main_img_id = $img_ids[0];
-//    unset($img_ids[0]); // remove item at index 0
-//    $img_ids = array_values($img_ids); // 'reindex' array
-//    $new_product->set_image_id($main_img_id);
-//    $new_product->set_gallery_image_ids($img_ids);
-//    $new_product->save();
 }
 
 add_action('remove_discontinued_product_coaster_furniture_cron_hook', 'remove_discontinued_product_coaster_furniture_cron_exec');
