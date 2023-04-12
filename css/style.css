@@ -4633,3 +4633,7 @@ fieldset{
 .my_account{
     margin-top: 0.8em;
 }
+
+.cky-btn-revisit-wrappe{
+    display: none !important;
+}
