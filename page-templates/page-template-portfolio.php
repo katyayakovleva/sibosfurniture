@@ -20,7 +20,7 @@ get_header();
             if ( $gallery = get_post_gallery( get_the_ID(), false ) ) :
                 foreach ( $gallery['src'] as $src ) {
                             ?>                
-                           <a href="#" class="grid-item"> <img src="<?php echo $src; ?>"alt="portfolio"  /></a>
+                           <a href="#" class="grid-item portfolio_img_link"> <img class="portfolio_img" src="<?php echo $src; ?>"alt="portfolio"  /></a>
                     <?php
                 }
             endif;

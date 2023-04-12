@@ -69,7 +69,7 @@
 .stars span {
     display: flex;
     gap: 0.125em;
-    
+
 }
 .comment-form-comment{
     display: grid;
