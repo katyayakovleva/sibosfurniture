@@ -13,7 +13,7 @@
 
 <?php
 set_time_limit(0);
-$cache_file_path = ABSPATH . "/wp-content/themes/sibosfurniture/cache.json";
+$cache_file_path = ABSPATH . "/wp-content/themes/playground/cache.json";
 $cache_json = fopen($cache_file_path, "a+");
 if (filesize($cache_file_path) > 0) {
     $cache = fread($cache_json, filesize($cache_file_path));
