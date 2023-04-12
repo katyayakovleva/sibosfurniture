@@ -89,6 +89,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
         scaleY: 5
     }),
     $(document).ready(function() {
+        $('.catalog_page').append('<ul></ul>');
         $('#contact-us form').addClass('d-flex fd-col g-1');
         $('#contact-us form .form-control').addClass('form-control-without-value');
         $(".wpcf7-form input").focus(function() {
