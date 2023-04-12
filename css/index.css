@@ -150,10 +150,12 @@
 }
 
 .swiper-full-height .swiper-slide div {
-    margin-top: calc(var(--navbar-height) + 2em);
+    /*margin-top: calc(var(--navbar-height) + 2em);*/
     margin-inline: 2em
 }
-
+.swiper-full-height .swiper-slide div {
+    margin-top: 4em;
+}
 .swiper-full-height .swiper-slide .swiper-slide__number {
     display: none
 }
