@@ -4316,7 +4316,8 @@ footer {
     .navbar-main>.navbar-group>.navbar-search div {
         display: flex;
         align-items: flex-end;
-        gap: 1em
+        gap: 1em;
+        margin-bottom: 0.5em;
     }
     .navbar-collapse {
         padding-top: 0;
