@@ -2908,16 +2908,21 @@ template {
     -moz-osx-font-smoothing: grayscale
 }
 
-.icon-cart-icon:before {
+.icon-cart-icon::before {
+    content: "\e901"
+}
+.icon-cart-icon.active::before,
+.icon-cart-icon:active::before{
     content: "\e900"
 }
 
+
 .icon-heart-full-icon:before {
-    content: "\e901"
+    content: "\e902"
 }
 
 .icon-heart-empty-icon:before {
-    content: "\e902"
+    content: "\e903"
 }
 
 @keyframes heart-anim {
@@ -2941,15 +2946,15 @@ template {
     }
 }
 
-.icon-heart-icon::before {
-    content: "\e902"
-}
+/*.icon-heart-icon::before {*/
+/*    content: "\e902"*/
+/*}*/
 
-.icon-heart-icon.active::before,
-.icon-heart-icon:active::before {
-    animation: heart-anim .2s ease-in-out;
-    content: "\e901"
-}
+/*.icon-heart-icon.active::before,*/
+/*.icon-heart-icon:active::before {*/
+/*    animation: heart-anim .2s ease-in-out;*/
+/*    content: "\e901"*/
+/*}*/
 
 @media screen and (min-width: 35.5em) and (max-width:1112px) {
     html {

@@ -18,7 +18,10 @@
 defined( 'ABSPATH' ) || exit;
 
 global $product;
-
+$product_id = $product->get_id();
+$product_url = get_permalink( $product_id );
+$product_cart_id = WC()->cart->generate_cart_id( $product_id );
+$in_cart = WC()->cart->find_product_in_cart( $product_cart_id );
 // Ensure visibility.
 if ( empty( $product ) || ! $product->is_visible() ) {
     return;
@@ -67,6 +70,37 @@ if ( empty( $product ) || ! $product->is_visible() ) {
     ?>
     <div class="grid-item-shop__buttons">
         <p class="grid-item-shop__price ff-ms m-0"><?php echo $product->get_price_html(); ?></p>
-        <a href="" class="link fs-3 cart-link"><i class="icon-cart-icon"></i></a>
+<!--        <a href="" class="link fs-3 cart-link"><i class="icon-cart-icon"></i></a>-->
+        <?php
+        if ( $product->is_type( 'variable' ) ) {
+            if( in_array( $product_id, array_column( WC()->cart->get_cart(), 'product_id' ) ) ) {?>
+                <a href="<?php echo $product_url ?>" class="link fs-3 cart-link"><i class="icon-cart-icon active"></i></a>
+            <?php }else{?>
+                <a href="<?php echo $product_url ?>" class="link fs-3 cart-link"><i class="icon-cart-icon"></i></a>
+            <?php }
+        }else{?>
+            <form class="cart without-variation-cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+
+                <?php
+                do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                woocommerce_quantity_input(
+                    array(
+                        'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                        'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                        'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                    )
+                );
+
+                do_action( 'woocommerce_after_add_to_cart_quantity' );
+                if ( $in_cart ) {?>
+                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="related_add_to_cart_button button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>"><a  class="link fs-3 cart-link"><i class="icon-cart-icon active"></i></a></button>
+                <?php }else{?>
+                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="related_add_to_cart_button button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>"><a  class="link fs-3 cart-link"><i class="icon-cart-icon"></i></a></button>
+                <?php }?>
+                <?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+            </form>
+        <?php }?>
     </div>
 </li>

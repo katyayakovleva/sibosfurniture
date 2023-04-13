@@ -145,7 +145,7 @@ a p.product_name:hover{
 .quantity{
     display: none;
 }
-.single_add_to_cart_button{
+.related_add_to_cart_button{
     padding: 0!important;
     background-color: transparent!important;
 }

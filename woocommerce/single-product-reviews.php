@@ -156,7 +156,7 @@ if ( ! comments_open() ) {
                comment_form( apply_filters( 'woocommerce_product_review_comment_form_args', $comment_form ) );
 //                ?>
            </section>
-            </arctivle>
+       </article>
   <?php else : ?>
   <?php endif; ?>
 <!---->

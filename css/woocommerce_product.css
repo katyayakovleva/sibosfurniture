@@ -139,6 +139,14 @@ h2.woocommerce-loop-product__title:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
+.related.products .quantity{
+    display: none;
+}
+.related.products .related_add_to_cart_button{
+    padding: 0!important;
+    background-color: transparent!important;
+    border: none!important;
+}
 @media screen and (min-width: 35.5em){
     .related.products li.product .woocommerce-loop-product__title{
         font-size: 1.25em!important;
