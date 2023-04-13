@@ -140,7 +140,7 @@
 
 .swiper-full-height .swiper-slide img {
     position: relative !important;
-    width: 100%;
+    width: inherit;
     height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
