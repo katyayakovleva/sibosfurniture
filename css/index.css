@@ -80,7 +80,14 @@
         --fs-7: 0.63em
     }
 }
-
+.swiper_h2{
+    font-size: 2.3em!important;
+}
+@media screen and (min-width: 35.5em) {
+    .swiper_h2{
+        font-size: 3.13em!important;
+    }
+}
 .swiper-full-height {
     position: relative;
     overflow: hidden;
@@ -154,7 +161,7 @@
     margin-inline: 2em
 }
 .swiper-full-height .swiper-slide div {
-    margin-top: 4em;
+    margin-top: 5em;
 }
 .swiper-full-height .swiper-slide .swiper-slide__number {
     display: none

@@ -52,7 +52,7 @@ get_header();
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img src="<?php echo esc_url($slider_1['image']); ?>" alt="slide 1 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_1['title']); ?></h2>
+                    <h2 class="ff-ms fw-7 fc-blue-2 m-0 swiper_h2"><?php echo esc_attr($slider_1['title']); ?></h2>
                     <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_1['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
@@ -61,7 +61,7 @@ get_header();
             </div>
             <div class="swiper-slide"><img src="<?php echo esc_url($slider_2['image']); ?>" alt="slide 2 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_2['title']); ?></h2>
+                    <h2 class="ff-ms fw-7 fc-blue-2 m-0 swiper_h2"><?php echo esc_attr($slider_2['title']); ?></h2>
                     <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_2['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
@@ -70,7 +70,7 @@ get_header();
             </div>
             <div class="swiper-slide"><img src="<?php echo esc_url($slider_3['image']); ?>" alt="slide 3 background">
                 <div>
-                    <h2 class="ff-ms fs-2 fw-7 fc-blue-2 m-0"><?php echo esc_attr($slider_3['title']); ?></h2>
+                    <h2 class="ff-ms fw-7 fc-blue-2 m-0 swiper_h2"><?php echo esc_attr($slider_3['title']); ?></h2>
                     <p class="ff-ms fs-5 fc-dark"><?php echo esc_attr($slider_3['text']); ?></p>
                 </div>
                 <div class="swiper-slide__number">
