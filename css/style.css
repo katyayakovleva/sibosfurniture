@@ -4643,3 +4643,7 @@ fieldset{
 .cky-btn-revisit-wrapper{
     display: none !important;
 }
+.woocommerce-placeholder{
+    margin-top: 2em;
+    height: auto !important;
+}
