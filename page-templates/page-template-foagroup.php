@@ -20,7 +20,8 @@ $apiKey = '5ab3e1ed-5f50-4120-87db-6a547450c672';
 
 $rename_categories = array("youth" => "kids room",
     "dining" => "dining room",
-    "living" => "living room");
+    "living" => "living room",
+    "accent" => "accent furniture");
 
 $rename_subcategories = array("bed" => "beds",
     "night stand" => "nightstands",
@@ -57,7 +58,7 @@ $categories_response_full = $proxy->catalogCategoryTree($sessionId);
 $categories_response = $categories_response_full->children[0]->children;
 $parent_categories_id_to_category_name = array();
 $subcategory_id_to_subcategory_name = array();
-$acme_parent_id_to_subcategorie = array();
+$foagroup_parent_id_to_subcategories = array();
 for ($i = 0; $i < sizeof($categories_response) - 3; $i++) {
     if(strtolower($categories_response[$i]->name) == "youth"){
         $parent_categories_id_to_category_name[$categories_response[$i]->category_id] = "kids room";
@@ -72,7 +73,7 @@ for ($i = 0; $i < sizeof($categories_response) - 3; $i++) {
                 $subcategories[] = $subcategory;
             }
         }
-        $acme_parent_id_to_subcategorie[$categories_response[$i]->category_id] = $subcategories;
+        $foagroup_parent_id_to_subcategories[$categories_response[$i]->category_id] = $subcategories;
     }else{
         if(array_key_exists(strtolower($categories_response[$i]->name), $rename_categories)){
             $parent_categories_id_to_category_name[$categories_response[$i]->category_id] = $rename_categories[strtolower($categories_response[$i]->name)];
@@ -92,12 +93,12 @@ for ($i = 0; $i < sizeof($categories_response) - 3; $i++) {
                 }
             }
         }
-        $acme_parent_id_to_subcategorie[$categories_response[$i]->category_id] = $subcategories;
+        $foagroup_parent_id_to_subcategories[$categories_response[$i]->category_id] = $subcategories;
     }
 }
 //var_dump($parent_categories_id_to_category_name);
 //var_dump($subcategory_id_to_subcategory_name);
-//var_dump($foagroup_parent_name_to_subcategory_name);
+//var_dump($foagroup_parent_id_to_subcategories);
 
 $category_parent_term = get_term_by('slug', 'place-type', 'product_cat');
 
@@ -128,7 +129,7 @@ foreach ($parent_categories_id_to_category_name as $foagroup_term_key => $foagro
     }
 }
 // Subcategories
-foreach ($acme_parent_id_to_subcategorie as $category_id => $subcategories) {
+foreach ($foagroup_parent_id_to_subcategories as $category_id => $subcategories) {
     // Creating subcategories
     $parent_category = get_term_by('name', $parent_categories_id_to_category_name[$category_id], 'product_cat');
     $parent_id = $parent_category->term_id;
