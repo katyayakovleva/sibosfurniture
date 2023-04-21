@@ -146,7 +146,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 var item_type_param = [];
                                 item_type_param.push(value[0]);
                                 let itemTypesJson = JSON.stringify(item_type_param);
-                                var item_url = url + '&item_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+                                var item_url = url + '&place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
 
                                 var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
@@ -162,8 +162,8 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 var place_type_param = [];
                 place_type_param.push(id);
                 let placeTypesJson = JSON.stringify(place_type_param);
-                url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
-                $(this).find('a').attr("href", url); 
+                url1 = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
+                $(this).find('a').attr("href", url1); 
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
                 $.ajax({
@@ -178,7 +178,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 var item_type_param = [];
                                 item_type_param.push(value[0]);
                                 let itemTypesJson = JSON.stringify(item_type_param);
-                                var item_url = url + '&item_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+                                var item_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
                                 
                                 var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
