@@ -444,7 +444,7 @@ add_filter ('yith_wcan_use_wp_the_query_object', '__return_true');
 function get_ajax_menu_popular_item_category(){
     $main_category_slug = (!empty($_POST['slug']))? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
     $out = '';
-    $category = get_term_by('slug', 'item-type', 'product_cat');
+    $category = get_term_by('slug', $main_category_slug, 'product_cat');
     $category_id = $category->term_id; // Replace with the ID of your desired category
     $subcategories = get_terms(array(
         'taxonomy' => 'product_cat',
@@ -529,18 +529,39 @@ add_action('wp_ajax_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular
 
 function get_ajax_menu_popular_item_sales_category(){
     $out = '';
-    $category = get_term_by('slug', 'item-type', 'product_cat');
-    $category_id = $category->term_id; // Replace with the ID of your desired category
-    $subcategories = get_terms(array(
+    $main_parent_category = get_term_by('slug', 'place-type', 'product_cat');
+    $main_parent_category_id = $main_parent_category->term_id;
+    $parent_categories =get_terms(array(
         'taxonomy' => 'product_cat',
-        'parent' => $category_id,
+        'parent' => $main_parent_category_id,
     ));
-    $category_slugs = array();
-    if (!empty($subcategories) && !is_wp_error($subcategories)) {
-        foreach ($subcategories as $subcategory) {
-            array_push($category_slugs, $subcategory->slug);
+    $subcategory_slugs = array();
+    if (!empty($parent_categories) && !is_wp_error($parent_categories)) {
+        foreach ($parent_categories as $parent_category) {
+            $subcategories =get_terms(array(
+                'taxonomy' => 'product_cat',
+                'parent' => $parent_category->term_id,
+            ));
+            if (!empty($subcategories) && !is_wp_error($subcategories)) {
+                foreach ($subcategories as $subcategory) {
+                    $subcategory_slugs[] = $subcategory->slug;
+                }
+            }
+//            array_push($category_slugs, $subcategory->slug);
         }
     }
+//    $category = get_term_by('slug', 'item-type', 'product_cat');
+//    $category_id = $category->term_id; // Replace with the ID of your desired category
+//    $subcategories = get_terms(array(
+//        'taxonomy' => 'product_cat',
+//        'parent' => $category_id,
+//    ));
+//    $category_slugs = array();
+//    if (!empty($subcategories) && !is_wp_error($subcategories)) {
+//        foreach ($subcategories as $subcategory) {
+//            array_push($category_slugs, $subcategory->slug);
+//        }
+//    }
 
     $on_sale_product_ids = wc_get_product_ids_on_sale();
     $on_sale_category_slugs = array();
@@ -549,7 +570,7 @@ function get_ajax_menu_popular_item_sales_category(){
         $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'slugs'));
 
         foreach ($product_categories as $category_slug) {
-            if (in_array($category_slug, $category_slugs)) {
+            if (in_array($category_slug, $subcategory_slugs)) {
                 $on_sale_category_slugs[] = $category_slug;
             }
         }
@@ -1005,11 +1026,11 @@ function get_place_types(){
     return $place_types_arr;
 }
 
-remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-
-add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
-add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
+//remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+//remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+//
+//add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
+//add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
 
 add_action('delete_coaster_furniture_cron_hook', 'delete_coaster_furniture_cron_exec');
 
@@ -1088,7 +1109,7 @@ function set_or_update_product_coaster_furniture_cron_exec()
         }
     }
 }
-function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
+function set_product_coaster_furniture($SKU, $product, $new_product)
 {
     $name = $product['Name'];
     if (isset($product['Description'])){
@@ -1203,7 +1224,13 @@ function set_or_update_product_coaster_furniture($SKU, $product, $new_product)
         $new_product->set_attributes($raw_attributes);
     }
 }
-
+function flip_array($arr) {
+    $flipped = array();
+    foreach($arr as $key => $value) {
+        $flipped[$value] = $key;
+    }
+    return $flipped;
+}
 add_action('remove_discontinued_product_coaster_furniture_cron_hook', 'remove_discontinued_product_coaster_furniture_cron_exec');
 
 function remove_discontinued_product_coaster_furniture_cron_exec()
@@ -1239,7 +1266,7 @@ function remove_discontinued_product_coaster_furniture_cron_exec()
         }
     }
 }
-function rs_upload_from_url($url, $title = null)
+function rs_upload_from_url($url, $SKU, $title = null)
 {
     require_once(ABSPATH . "/wp-load.php");
     require_once(ABSPATH . "/wp-admin/includes/image.php");
@@ -1250,6 +1277,7 @@ function rs_upload_from_url($url, $title = null)
     $tmp = download_url($url, 300);
     if (is_wp_error($tmp)){
         var_dump($tmp);
+        var_dump($SKU);
         var_dump("Download url to a temp file error");
         return false;
     }
@@ -1283,6 +1311,7 @@ function rs_upload_from_url($url, $title = null)
         } else {
             // Could not identify extension
             @unlink($tmp);
+            var_dump($SKU);
             var_dump("Could not identify extension error");
             return false;
         }
@@ -1303,6 +1332,7 @@ function rs_upload_from_url($url, $title = null)
 
     // Error uploading
     if (is_wp_error($attachment_id)){
+        var_dump($SKU);
         var_dump("Error uploading");
         var_dump($attachment_id);
         return false;
