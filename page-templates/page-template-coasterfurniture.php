@@ -61,9 +61,9 @@ foreach ($json_categories_full_response as $full_category) {
     }
     $coaster_category_code_to_subcategories[$full_category['CategoryCode']] = $subcategory_objects;
 }
-//var_dump($coaster_categories);
+var_dump($coaster_categories);
 //var_dump($coaster_category_code_to_subcategories);
-//var_dump($coaster_subcategories);
+var_dump($coaster_subcategories);
 //Getting the root parent of categories
 $category_parent_term = get_term_by('slug', 'place-type', 'product_cat');
 
@@ -122,7 +122,7 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
     }
 }
 
-//$cache_file_path = ABSPATH . "/wp-content/themes/sibosfurniture/cache.json";
+//$cache_file_path = WP_CONTENT_DIR . "/themes/sibosfurniture/cache.json";
 //$cache_json = fopen($cache_file_path, "a+");
 //if (filesize($cache_file_path) > 0) {
 //    $cache = fread($cache_json, filesize($cache_file_path));
@@ -130,13 +130,17 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
 //    echo "read successfully";
 //    $json = json_decode($cache, true);
 //    $counter = 0;
-//    for ($k = 0; $k <= 15; $k++) {
+//    for ($k = 0; $k <= 5; $k++) {
 //        $is_error = false;
 //        $product = $json[$k];
 //        $SKU = $product['ProductNumber'];
 //        $existing_product_id = wc_get_product_id_by_sku($SKU);
 //        if ($existing_product_id != null) {
 //            //Updating product
+//            $existing_product = new WC_Product_Simple($existing_product_id);
+//            update_product_price($existing_product, $SKU, $coaster_headers);
+//            update_product_categories($product, $coaster_subcategories, $existing_product);
+//            $existing_product->save();
 //        } else {
 ////            Creating product
 //            $new_product = new WC_Product_Simple();
@@ -183,26 +187,32 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
 //
 //
 //            $category_ids = array();
-//            if (isset($product['CategoryCode'])) {
-//                $category_code = $product['CategoryCode'];
-////                if (isset($cat_arr[$category_code])) {
-//                $category_name = ucfirst($coaster_categories[$category_code]);
-//                $full_category = get_term_by('name', $category_name, 'product_cat');
-//                $category_id = $full_category->term_id;
-//                $category_ids[] = $category_id;
-////                }
-//
-//            }
+////            if (isset($product['CategoryCode'])) {
+////                $category_code = $product['CategoryCode'];
+//////                if (isset($cat_arr[$category_code])) {
+////                $category_name = ucfirst($coaster_categories[$category_code]);
+////                $full_category = get_term_by('name', $category_name, 'product_cat');
+////                $category_id = $full_category->term_id;
+////                $category_ids[] = $category_id;
+//////                }
+////
+////            }
 //            if (isset($product['SubCategoryCode'])) {
 //                $subcategory_code = $product['SubCategoryCode'];
-////                if (isset($cat_arr[$category_code])) {
-//                $subcategory_name = ucfirst($coaster_subcategories[$subcategory_code]);
-//                $full_subcategory = get_term_by('name', $subcategory_name, 'product_cat');
-//                $subcategory_id = $full_subcategory->term_id;
-//                $category_ids[] = $subcategory_id;
-////                }
-//
+//                $subcategory_name = ucwords($coaster_subcategories[$subcategory_code]);
+//                $full_subcategories = get_terms( array(
+//                    'taxonomy' => 'product_cat', // set your taxonomy here
+//                    'hide_empty' => false,
+//                    'name' => $subcategory_name,
+//                ) );
+//                foreach ($full_subcategories as $full_subcategory){
+//                    $subcategory_id = $full_subcategory->term_id;
+//                    $category_ids[] = $full_subcategory->parent;
+//                    $category_ids[] = $subcategory_id;
+//                }
 //            }
+//            $category_ids = array_unique($category_ids);
+//
 //            if (sizeof($category_ids) > 0) {
 //                $new_product->set_category_ids($category_ids);
 //            }
@@ -238,7 +248,7 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
 //            }
 //
 //            $new_product->save();
-//            sleep(30);
+//            sleep(10);
 //            $counter++;
 //            if ($counter == 50) {
 //                sleep(60);
@@ -269,6 +279,63 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
 //    fclose($cache_json);
 //    echo "cache created, reload page to parse it";
 //}
+
+
+function update_product_price($product, $SKU, $coaster_headers){
+    $price_filter_api = "http://api.coasteramer.com/api/product/GetFilter?productNumber=" . $SKU;
+
+    $price_filter_response = wp_remote_get($price_filter_api, array(
+        'headers' => $coaster_headers
+    ));
+    if (is_wp_error($price_filter_response)) {
+        var_dump($price_filter_response);
+        var_dump("price_filter_response");
+    } else {
+        $price_filter_response_json = json_decode($price_filter_response['body'], true);
+        $price_api = "http://api.coasteramer.com/api/product/GetPriceList?filterCode=" . $price_filter_response_json;
+        $price_response = wp_remote_get($price_api, array(
+            'headers' => $coaster_headers
+        ));
+    }
+
+    if (is_wp_error($price_response)) {
+        var_dump($price_response);
+        var_dump("price_response");
+    } else {
+        $price_response_json = json_decode($price_response['body'], true);
+
+        $MAP_price = floatval($price_response_json[0]['PriceList'][0]['MAP']);
+        var_dump($MAP_price);
+        $MAP_price_x2 = $MAP_price * 2;
+        var_dump($MAP_price_x2);
+        if ($MAP_price_x2 > 0) {
+            $product->set_regular_price(floatval($MAP_price_x2));
+        }
+    }
+}
+
+function update_product_categories($product, $coaster_subcategories, $existing_product)
+{
+    if (isset($product['SubCategoryCode'])) {
+        $subcategory_code = $product['SubCategoryCode'];
+        $subcategory_name = ucwords($coaster_subcategories[$subcategory_code]);
+        $full_subcategories = get_terms( array(
+            'taxonomy' => 'product_cat', // set your taxonomy here
+            'hide_empty' => false,
+            'name' => $subcategory_name,
+        ) );
+        foreach ($full_subcategories as $full_subcategory){
+            $subcategory_id = $full_subcategory->term_id;
+            $category_ids[] = $subcategory_id;
+            $category_ids[] = $full_subcategory->parent;
+        }
+    }
+    $category_ids =  array_unique($category_ids);
+
+    if (sizeof($category_ids) > 0) {
+        $existing_product->set_category_ids($category_ids);
+    }
+}
 
 ?>
 

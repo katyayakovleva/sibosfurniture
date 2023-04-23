@@ -116,7 +116,7 @@ foreach ($local_categories_temp as $term) {
 }
 // Create categories that are absent locally
 foreach ($parent_categories_id_to_category_name as $foagroup_term_key => $foagroup_term_value) {
-    if (!isset($local_categories[$foagroup_term_value])) {
+    if (strtolower($foagroup_term_value) != "mattress" && !isset($local_categories[$foagroup_term_value])) {
         $parent_category = get_term_by('slug', 'place-type', 'product_cat');
         $parent_id = $parent_category->term_id;
         $result = wp_insert_term(

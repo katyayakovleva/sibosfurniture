@@ -12,9 +12,9 @@
 <body>
 
 <?php
-//ini_set('xdebug.var_display_max_depth', 10);
-//ini_set('xdebug.var_display_max_children', 256);
-//ini_set('xdebug.var_display_max_data', 1024);
+ini_set('xdebug.var_display_max_depth', 10);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
 //$product_by_sku_url = 'https://acmecorp.com/rest/V1/products/72145';
 //$response = json_decode(wp_remote_get($product_by_sku_url)['body']);
 //var_dump($response);
@@ -136,13 +136,13 @@ $rename_youth_subcategories = array("bunk bed" => "bunk & loft beds",
     "accessiores" => "youth chests & accessories");
 
 
-$cache_file_path = ABSPATH . "/wp-content/themes/sibosfurniture/cache_acme.json";
+$cache_file_path = WP_CONTENT_DIR . "/themes/sibosfurniture/cache_acme.json";
 $cache_json_file = fopen($cache_file_path, "a+");
 
 $categories_url = 'http://acmecorp.com/rest/V1/categories/';
 $product_by_category_id_url = 'http://acmecorp.com/rest/V1/categories/%s/products';
 $product_by_sku_url = 'https://acmecorp.com/rest/V1/products/';
-
+$full_res_pictures_url = 'https://static.acmecorp.com/pub/media/catalog/product/cache/ccdf461ec786272b80f0911286646ebc';
 
 // TODO Categories
 $categories_response = wp_remote_get($categories_url);
@@ -259,7 +259,7 @@ foreach ($acme_parent_id_to_subcategories as $category_id => $subcategories) {
 //    echo "read successfully";
 //    $json = json_decode($cache, true);
 ////    for ($i = 0; $i < sizeof($cache_json); $i++) {
-//    for ($i = 0; $i < 5; $i++) {
+//    for ($i = 11; $i < 16; $i++) {
 //        $SKU = $json[$i];
 //        $existing_product_id = wc_get_product_id_by_sku($SKU);
 //        if ($existing_product_id != null) {
@@ -268,6 +268,171 @@ foreach ($acme_parent_id_to_subcategories as $category_id => $subcategories) {
 //            // Getting product one by one at a time by SKU from cache
 //            $product_response = wp_remote_get($product_by_sku_url . $SKU);
 ////            var_dump(json_decode($product_response['body']));
+//            $response = json_decode($product_response['body']);
+//            var_dump($response);
+//            $new_product = new WC_Product_Simple();
+//            $new_product->set_featured(FALSE);
+//            //Set catalog visibility. | string $visibility Options: 'hidden', 'visible', 'search' and 'catalog'.
+//            $new_product->set_catalog_visibility('visible');
+//            $new_product->set_reviews_allowed(TRUE);
+//            $name = $response->name;
+//            $new_product->set_name($name);
+//            //Set SKU
+//            $new_product->set_sku($response->sku);
+////            $multiple_price = doubleval($response->price) * 2;
+//            $new_product->set_regular_price(doubleval($response->price));
+//            $new_product->set_status('publish');
+//            $api_categories = $response->extension_attributes->category_links;
+//            $category_ids = array();
+//            foreach ($api_categories as $api_category){
+//                $api_category_id = $api_category->category_id;
+//                if (array_key_exists($api_category_id, $acme_id_to_subcategories)){
+//                    $subcategory_name = ucwords($acme_id_to_subcategories[intval($api_category_id)]);
+//                    if(!str_contains(strtolower($subcategory_name), "all")){
+//                        $full_subcategories = get_terms( array(
+//                            'taxonomy' => 'product_cat', // set your taxonomy here
+//                            'hide_empty' => false,
+//                            'name' => $subcategory_name,
+//                        ) );
+//                        foreach ($full_subcategories as $full_subcategory){
+//                            $subcategory_id = $full_subcategory->term_id;
+//                            $category_ids[] = $full_subcategory->parent;
+//                            $category_ids[] = $subcategory_id;
+//                        }
+//                    }
+//                }
+//            }
+//            $category_ids = array_unique($category_ids);
+//
+//            if (sizeof($category_ids) > 0) {
+//                $new_product->set_category_ids($category_ids);
+//            }
+//
+//            $api_attributes_arr = $response->custom_attributes;
+//            $attributes = array();
+//            $description = "";
+//            $short_description = "";
+//            $height = 0;
+//            $width = 0;
+//            $length = 0;
+//            foreach ($api_attributes_arr as $api_attribute){
+//                if($api_attribute->attribute_code == 'description' && strlen($api_attribute->value)>0){
+//                    $description = $api_attribute->value;
+//                    $new_product->set_short_description($api_attribute->value);
+//                }elseif($api_attribute->attribute_code == 'short_description' && strlen($api_attribute->value)>0){
+//                    $short_description = $api_attribute->value;
+//                }elseif($api_attribute->attribute_code == 'pack' && strlen($api_attribute->value)>0){
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name("Pack");
+//                    $attribute->set_options(array($api_attribute->value));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }elseif($api_attribute->attribute_code == 'product_height' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $height = $api_attribute->value;
+//                }elseif($api_attribute->attribute_code == 'product_length' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $length = $api_attribute-> value;
+//                }elseif($api_attribute->attribute_code == 'product_width' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $width = $api_attribute->value;
+//                }elseif($api_attribute->attribute_code == 'package_height' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $new_product->set_height(intval($api_attribute->value));
+//                }elseif($api_attribute->attribute_code == 'package_length' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $new_product->set_length(intval($api_attribute->value));
+//                }elseif($api_attribute->attribute_code == 'package_width' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $new_product->set_width(intval($api_attribute->value));
+//                }elseif($api_attribute->attribute_code == 'package_weight' && strlen($api_attribute->value)>0 && intval($api_attribute->value)>0){
+//                    $new_product->set_weight(intval($api_attribute->value));
+//                }elseif($api_attribute->attribute_code == 'catalog_finish' && strlen($api_attribute->value)>0){
+//                    //Set product description.
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name('Finish');
+//                    $attribute->set_options(array($api_attribute->value));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }elseif($api_attribute->attribute_code == 'material_detail' && strlen($api_attribute->value)>0){
+//                    //Set product description.
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name('Material');
+//                    $attribute->set_options(array($api_attribute->value));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }
+//            }
+//            if($short_description != "" && $short_description != "<span>"){
+//                $new_product->set_description($short_description);
+//            }elseif($description != ""){
+//                $new_product->set_description($description);
+//            }else{
+//                $new_product->set_description($name);
+//            }
+//            if(intval($width) > 0 && intval($height) > 0 && intval($length) > 0){
+//                $attribute = new WC_Product_Attribute();
+//                $attribute->set_name('Product Dimensions');
+//                $attribute->set_options(array($length . '"L X ' . $width .'"W X ' . $height . '"H'));
+//                $attribute->set_visible(1);
+//                $attribute->set_variation(0);
+//                $attributes[] = $attribute;
+//            }else{
+//                if (intval($width) > 0){
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name('Width');
+//                    $attribute->set_options(array($width));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }
+//                if(intval($height) > 0){
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name('Height');
+//                    $attribute->set_options(array($height));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }
+//                if(intval($length) > 0){
+//                    $attribute = new WC_Product_Attribute();
+//                    $attribute->set_name('Length');
+//                    $attribute->set_options(array($length));
+//                    $attribute->set_visible(1);
+//                    $attribute->set_variation(0);
+//                    $attributes[] = $attribute;
+//                }
+//            }
+//            $attribute = new WC_Product_Attribute();
+//            $attribute->set_name('Net Weight');
+//            $attribute->set_options(array($response->weight));
+//            $attribute->set_visible(1);
+//            $attribute->set_variation(0);
+//            $attributes[] = $attribute;
+//
+//            $attribute = new WC_Product_Attribute();
+//            $attribute->set_name("Manufacture");
+//            $attribute->set_options(array("ACME"));
+//            $attribute->set_visible(1);
+//            $attribute->set_variation(0);
+//            $attributes[] = $attribute;
+//            if (sizeof($attributes) > 0){
+//                $new_product->set_attributes($attributes);
+//            }
+//            $img_ids = [];
+//            foreach ($response->media_gallery_entries as $entry) {
+//                if(sizeof($response->media_gallery_entries) < 1){
+//                    $is_error = true;
+//                    var_dump("No images");
+//                }
+//                $img_ids[] = rs_upload_from_url($full_res_pictures_url . $entry->file, $SKU);
+//            }
+//
+//            $main_img_id = $img_ids[0];
+//            $new_product->set_image_id($main_img_id);
+//            if (sizeof($img_ids) > 1) {
+//                unset($img_ids[0]); // remove item at index 0
+//                $img_ids = array_values($img_ids); // 'reindex' array
+//                $new_product->set_gallery_image_ids($img_ids);
+//            }
+//            $new_product->save();
 //        }
 //    }
 //} else {
@@ -296,16 +461,6 @@ foreach ($acme_parent_id_to_subcategories as $category_id => $subcategories) {
 //    $product_skus = array_values(array_unique($product_skus));
 //    fwrite($cache_json_file, json_encode($product_skus));
 //    fclose($cache_json_file);
-//}
-//$terms = get_terms([
-//    'taxonomy' => 'product_cat',
-//    'name' => 'Beds',
-//    'hide_empty' => false,
-//]);
-//
-//foreach ($terms as $term_id){
-//    var_dump($term_id->name);
-//    var_dump($term_id->slug);
 //}
 ?>
 

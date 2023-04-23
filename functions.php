@@ -1220,6 +1220,12 @@ function set_product_coaster_furniture($SKU, $product, $new_product)
             $raw_attributes[] = $attribute;
         }
     }
+    $attribute = new WC_Product_Attribute();
+    $attribute->set_name("Manufacture");
+    $attribute->set_options(array("Coaster"));
+    $attribute->set_visible(1);
+    $attribute->set_variation(0);
+    $raw_attributes[] = $attribute;
     if (sizeof($raw_attributes) > 0){
         $new_product->set_attributes($raw_attributes);
     }
@@ -1353,4 +1359,3 @@ function woocommerce_category_redirect() {
     }
 }
 add_action('template_redirect', 'woocommerce_category_redirect');
-
