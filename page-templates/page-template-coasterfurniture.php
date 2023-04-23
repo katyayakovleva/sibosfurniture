@@ -282,6 +282,7 @@ foreach ($coaster_category_code_to_subcategories as $category_code => $subcatego
 
 
 function update_product_price($product, $SKU, $coaster_headers){
+    $is_error = false;
     $price_filter_api = "http://api.coasteramer.com/api/product/GetFilter?productNumber=" . $SKU;
 
     $price_filter_response = wp_remote_get($price_filter_api, array(
@@ -289,6 +290,7 @@ function update_product_price($product, $SKU, $coaster_headers){
     ));
     if (is_wp_error($price_filter_response)) {
         var_dump($price_filter_response);
+        $is_error = true;
         var_dump("price_filter_response");
     } else {
         $price_filter_response_json = json_decode($price_filter_response['body'], true);
@@ -300,6 +302,7 @@ function update_product_price($product, $SKU, $coaster_headers){
 
     if (is_wp_error($price_response)) {
         var_dump($price_response);
+        $is_error = true;
         var_dump("price_response");
     } else {
         $price_response_json = json_decode($price_response['body'], true);
@@ -312,7 +315,25 @@ function update_product_price($product, $SKU, $coaster_headers){
             $product->set_regular_price(floatval($MAP_price_x2));
         }
     }
+    if (isset($product['PictureFullURLs'])) {
+        $img_urls_array = explode(',', $product['PictureFullURLs']);
+        if(sizeof($img_urls_array) < 1){
+            $is_error = true;
+            var_dump("No images");
+        }
+    } else {
+        $is_error = true;
+        var_dump("image");
+    }
+    if ($is_error) {
+        $product->set_status('draft');
+    } else {
+        $product->set_status('publish');
+
+    }
+
 }
+
 
 function update_product_categories($product, $coaster_subcategories, $existing_product)
 {
