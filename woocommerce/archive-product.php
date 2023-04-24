@@ -55,7 +55,7 @@ if (isset($_GET['sale'])) {
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
-    $sort = '';
+    $sort = 'popularity';
 }
 
 ?>
@@ -257,6 +257,19 @@ if (isset($_GET['sort'])) {
                     <div class="dropdown">
                         <div class="dropdown__trigger sort">Sort by</div>
                         <div class="dropdown__content">
+                            <p class="link"><?php 
+                            if($sort=='rating'){
+                                echo "rating";
+                            }elseif($sort=='date'){
+                                echo "date";
+                            }elseif($sort=='price'){
+                                echo "price: low to high";
+                            }if($sort=='price-desc'){
+                                echo "price: high to low";
+                            }else{
+                                echo "popularity";
+                            }
+                                ?></p>
                             <ul id="sort_product">
                                 <li><a value="popularity" class="link">popularity</a></li>
                                 <li><a value="rating" class="link">rating</a></li>

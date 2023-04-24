@@ -92,6 +92,9 @@ if ( !is_user_logged_in() ) :
 				<header class="header-primary">
 					<h1 class="ff-ms fs-2 fc-blue-2 fw-7">Sign in</h1>
 				</header>
+				<div>
+					<p>Only authorized users who have bought the product can leave a product review.</p>
+				</div>
 				<section class="container g-2 g-lg-4 mb-2">
 					<article class="header-block mt-3">
 					<header>

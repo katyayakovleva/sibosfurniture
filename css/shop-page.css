@@ -214,6 +214,7 @@
     margin-block:.5em}
 
 .dropdown__content .link {
+    margin-top: 0;
     color: rgba(0,73,175,.3019607843);
     font-size: 1em;
 }
