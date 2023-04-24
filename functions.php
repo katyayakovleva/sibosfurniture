@@ -1358,4 +1358,4 @@ function woocommerce_category_redirect() {
         exit();
     }
 }
-add_action('template_redirect', 'woocommerce_category_redirect');
+
