@@ -149,6 +149,11 @@ a p.product_name:hover{
     padding: 0!important;
     background-color: transparent!important;
 }
+@media screen and (min-width: 35.5em) and (max-width: 1840px){
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(0, 17em));
+    }
+}
 @media screen and (max-width: 430px){
     .dropdown {
         width: 8em;
