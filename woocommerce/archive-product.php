@@ -315,7 +315,13 @@ if (isset($_GET['sort'])) {
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
                     }
                     if($sale == 'true'){
-                        $args['post__in'] =  wc_get_product_ids_on_sale();
+                        $on_sale_products = wc_get_product_ids_on_sale();
+                        if(count($on_sale_products) == 0){
+                            $args['post__in'] =  ['-1'];
+                        }else{
+                            $args['post__in'] =  wc_get_product_ids_on_sale();
+                        }
+                        
                     }
                     if($sort == 'rating'){
                         
