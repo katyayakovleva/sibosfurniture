@@ -111,12 +111,14 @@ get_header();
     <article>
         <h2 class="w-sm-75 ta-sm-center ff-ms fs-2 fc-blue-2 fw-7 px-1 mx-auto mt-1 mb-0">Customize & Decorate Your Home With Our Furniture!</h2>
         <section class="grid-container" id="place_type_categories">
-            <?php $parent_term = get_term_by( 'slug', 'place-type', 'product_cat' );
-
+            <?php
+            $category = get_term_by( 'slug', 'waiting', 'product_cat' );
+            $id_to_exclude = $category->term_id;
             $args = array(
                 'taxonomy' => 'product_cat',
                 'hide_empty' => false,
-                'parent' => $parent_term->term_id,
+                'exclude'  => $id_to_exclude,
+                'parent' => 0,
             );
 
             $subcategories = get_terms( $args );
