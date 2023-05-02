@@ -4482,6 +4482,12 @@ footer {
     .swiper-per-view .swiper-slide {
         --swiper-slide-number: 4;
     }
+    
+}
+@media screen and (min-width: 1500px){
+    .ratio-1x1 {
+        height: 100%;
+    }
 }
 .woocommerce{
     width: 100%;
