@@ -1359,28 +1359,28 @@ function woocommerce_category_redirect() {
     }
 }
 
-add_action( 'woocommerce_before_calculate_totals', 'apply_first_order_discount', 10, 1 );
+// add_action( 'woocommerce_before_calculate_totals', 'apply_first_order_discount', 10, 1 );
 
-function apply_first_order_discount( $cart ) {
-    if ( is_admin() && !defined('DOING_AJAX') ) {
-        return;
-    }
+// function apply_first_order_discount( $cart ) {
+//     if ( is_admin() && !defined('DOING_AJAX') ) {
+//         return;
+//     }
 
-    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
-        return;
-    }
+//     if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
+//         return;
+//     }
 
-    if ( is_user_logged_in() ) {
-        $user_id = get_current_user_id();
-        $orders = wc_get_orders( array(
-            'customer' => $user_id,
-            'status' => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
-        ) );
-        if ( empty( $orders ) ) {
-            $coupon_code = 'FIRSTORDER';
-            $coupon = new WC_Coupon( $coupon_code );
-            $coupon->apply_discount_amount( 0 );
-            $cart->add_discount( $coupon_code );
-        }
-    }
-}
+//     if ( is_user_logged_in() ) {
+//         $user_id = get_current_user_id();
+//         $orders = wc_get_orders( array(
+//             'customer' => $user_id,
+//             'status' => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
+//         ) );
+//         if ( empty( $orders ) ) {
+//             $coupon_code = 'FIRSTORDER';
+//             $coupon = new WC_Coupon( $coupon_code );
+//             $coupon->apply_discount_amount( 0 );
+//             $cart->add_discount( $coupon_code );
+//         }
+//     }
+// }
