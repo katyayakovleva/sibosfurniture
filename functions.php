@@ -1026,11 +1026,11 @@ function get_place_types(){
     return $place_types_arr;
 }
 
-//remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-//remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-//
-//add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
-//add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+
+add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
+add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
 
 add_action('delete_coaster_furniture_cron_hook', 'delete_coaster_furniture_cron_exec');
 
