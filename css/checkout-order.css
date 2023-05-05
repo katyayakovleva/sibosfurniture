@@ -302,7 +302,7 @@
     padding: 1.5em !important;
     border: 2px solid #0049af !important; 
 }
-.checkout-form-coupon div{
+.checkout-form-coupon .checkout-form-coupon{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -315,7 +315,7 @@
     .checkout-form-coupon form{
         padding: 2.5em !important;
     }
-    .checkout-form-coupon div{
+    .checkout-form-coupon .checkout-form-coupon{
         display: flex;
         flex-direction: unset;
         align-items: flex-end;
@@ -544,3 +544,27 @@ fieldset{
     display: flex;
     flex-direction: column-reverse;
 }
+.checkout_login_footer{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+}
+.checkout_login_footer .link, .checkout_login_footer .btn{
+    align-self: center;
+}
+.form-checkbox.big label {
+    padding-block: 1em;
+    font-size: 1.25em;
+}
+@media screen and (min-width: 35.5em){
+    .checkout_login_footer .link,  .checkout_login_footer .btn{
+        align-self: flex-start;
+    }
+    .form-checkbox label, .form-checkbox.big label {
+    padding-block: 0.5em;
+    font-size: var(--fs-5);
+}
+}
+

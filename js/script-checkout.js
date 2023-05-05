@@ -21,4 +21,12 @@ $(function () {
         // Change the html of each element to style it
         $(this).html(elText);
       });
+
+    $(document).on("click","#toggle_pwd",function(){
+        $(this).toggleClass("fa-eye fa-eye-slash");
+       var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+        $("#password").attr("type", type);
+        $("#password_current").attr("type", type);
+        $("#reg_password").attr("type", type);
+    });
 });
