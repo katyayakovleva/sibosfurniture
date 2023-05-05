@@ -95,12 +95,10 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 
 			<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
-
 			<div class="order-total row">
 				<p>Total</p>
 				<p><?php wc_cart_totals_order_total_html(); ?></p>
 			</div>
-
 			<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
 			<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
 				<div class="order-detail-shipping row">
@@ -113,4 +111,6 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 
 		</div>
+		<div id="first_order_discount"></div>
 </section>
+

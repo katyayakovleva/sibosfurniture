@@ -1,3 +1,30 @@
+function firstOrderDiscount(email){
+    $.ajax({
+        type: "POST",
+        dataType: "html",
+        url: ajax_posts.ajaxurl,
+        data: {
+            action: 'first_order_dicount',
+            email: email,
+        },
+        success: function(data){
+            var $data = $(data);
+            if($data.length){     
+                $("#first_order_discount").html($data);  
+                // location.reload(); 
+            } else{
+                console.log('error');
+            }
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+        }
+
+    });
+    
+}
+
+
 $(function () {
 
     $(".order-detail-shipping p").each(function() {
@@ -28,5 +55,17 @@ $(function () {
         $("#password").attr("type", type);
         $("#password_current").attr("type", type);
         $("#reg_password").attr("type", type);
+    });
+
+    $( '#billing_email' ).on( 'change', function() {
+        var billing_email = $( this ).val();
+        if( billing_email ) {
+            console.log(billing_email);
+            // location.reload(); 
+            // firstOrderDiscount(billing_email)
+            // $( '.billing-email-value' ).html( billing_email );
+        } else {
+            // $( '.billing-email-value' ).html( '' );
+        }
     });
 });

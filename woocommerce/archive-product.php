@@ -65,11 +65,15 @@ if (isset($_GET['sort'])) {
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
             <ul class="link-category-list" id="filter-products-desktop"> 
                 <?php
-                $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+                // $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+                $category = get_term_by( 'slug', 'waiting', 'product_cat' );
+                $id_to_exclude = $category->term_id;
                 $cat_args = array(
                             'taxonomy' => 'product_cat',
                             'hide_empty' => true,
-                            'parent'   => $parent_product_cat->term_id
+                            'exclude'  => $id_to_exclude,
+                            'parent' => 0,
+                            // 'parent'   => $parent_product_cat->term_id
                         );
                 $child_product_cats = get_terms( $cat_args );
                 foreach ($child_product_cats as $child_product_cat) { ?>
@@ -165,13 +169,15 @@ if (isset($_GET['sort'])) {
                         <div class="dropdown__content filter__content">
                         <ul class="link-category-list" id="filter-products-mobile">
                             <?php
-                            $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
-                            $cat_args = array(
-                                        'taxonomy' => 'product_cat',
-                                        'hide_empty' => true,
-                                        'parent'   => $parent_product_cat->term_id
-                                    );
-                            $child_product_cats = get_terms( $cat_args );
+                          $category = get_term_by( 'slug', 'waiting', 'product_cat' );
+                          $id_to_exclude = $category->term_id;
+                          $cat_args = array(
+                                      'taxonomy' => 'product_cat',
+                                      'hide_empty' => true,
+                                      'exclude'  => $id_to_exclude,
+                                      'parent' => 0,
+                                      // 'parent'   => $parent_product_cat->term_id
+                                  );
                             foreach ($child_product_cats as $child_product_cat) { ?>
 
                                 <li>
