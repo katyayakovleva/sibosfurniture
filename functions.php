@@ -1446,7 +1446,7 @@ function woo_add_cart_fee( $cart ){
     $order_query  = new WP_Query( $args );
     $order_count  = $order_query->found_posts;
     $discount_key = 'first_order_discount';
-    $fee_label    = 'First Order Discount';
+    $fee_label    = 'Discount';
     $discount     = 0.15;
 
     if ( $order_count === 0 ) {
