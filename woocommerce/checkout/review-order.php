@@ -113,11 +113,12 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 		<?php $orders= false;
 		if(is_user_logged_in()){
-			if(wc_get_customer_order_count( get_current_user_id() )){
+
+			if(get_current_user_id() != 0 && (wc_get_customer_order_count( get_current_user_id() ) > 0)){
 				$orders = true;
 			}
 		}
-		if(!($orders) || !(WC()->cart->has_discount( 'firstorder' ))):?>
+		if(!($orders) && !(WC()->cart->has_discount( 'firstorder' ))):?>
 			<div id="first_order_discount"><a>Applay first order discount</a></div>
 		<?php endif; ?>
 </section>
