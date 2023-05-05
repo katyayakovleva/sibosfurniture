@@ -294,6 +294,7 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
 	}
 }
+add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
 /* AVATAR */
 /**
  * Change default gravatar.
@@ -447,87 +448,39 @@ function woocommerce_archive_template( $template ) {
 add_filter ('yith_wcan_use_wp_the_query_object', '__return_true');
 
 function get_ajax_menu_popular_item_category(){
-    $main_category_slug = (!empty($_POST['slug']))? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
-    $out = '';
-    $category = get_term_by('slug', $main_category_slug, 'product_cat');
-    $category_id = $category->term_id; // Replace with the ID of your desired category
-    $subcategories = get_terms(array(
+//    require_once('wp-config.php');
+    global $wpdb;
+    $slug = (!empty($_POST['slug']))? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
+    $sql = "SELECT t.term_id, t.name, t.slug, COUNT(p.ID) as post_count 
+    FROM {$wpdb->terms} t
+    INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id
+    INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+    INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id
+    INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+    INNER JOIN {$wpdb->prefix}wc_product_meta_lookup pml ON p.ID = pml.product_id
+    WHERE tt.taxonomy = 'product_cat'
+    AND pm.meta_key = 'total_sales'
+    AND p.post_type = 'product'
+    AND p.post_status = 'publish'
+    AND tt.parent = (SELECT term_id FROM {$wpdb->terms} WHERE slug = '{$slug}')
+    GROUP BY t.term_id
+    ORDER BY post_count DESC
+    LIMIT 8";
+    $results = $wpdb->get_results( $sql );
+    $category = get_term_by( 'slug', $slug, 'product_cat' );
+    $subcategories = (get_categories([
         'taxonomy' => 'product_cat',
-        'parent' => $category_id,
-    ));
-    $category_slugs = array();
-    if (!empty($subcategories) && !is_wp_error($subcategories)) {
-        foreach ($subcategories as $subcategory) {
-            array_push($category_slugs, $subcategory->slug);
-        }
+        'parent' => $category->term_id,
+        'hide_empty' => false,
+    ]));
+
+    $count_subcategories = count( $subcategories );
+    $data = array();
+    $data["count"] = $count_subcategories;
+    foreach ( $results as $result ) {
+        $data["subcategories"][] = array($result->term_id, $result->name);
     }
-
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => 15,
-        'product_cat' => $main_category_slug,
-        'meta_key' => 'total_sales',
-        'orderby' => 'meta_value_num',
-    );
-
-    $products_query = new WP_Query($args);
-
-    if ($products_query->have_posts()) {
-        $categories = array();
-        while ($products_query->have_posts()) {
-            $products_query->the_post();
-            global $product;
-            $product_categories = wp_get_post_terms($product->get_id(), 'product_cat');
-            foreach ($product_categories as $product_category) {
-                if (in_array($product_category->slug, $category_slugs)) {
-                    array_push($categories, $product_category->slug);
-                }
-            }
-        }
-        wp_reset_postdata();
-        $counted_values = array_count_values($categories);
-        arsort($counted_values);
-        $unique_values = array_keys($counted_values);
-        if (count($unique_values) >= 2) {
-            $arr = array_slice($unique_values, 0, 2, true);
-            $out_arr = array();
-            for ($i = 0; $i < count($arr); $i++) {
-                $category = get_term_by('slug', $arr[$i], 'product_cat');
-                // $a_href = get_term_link( $category );
-                $id = $category->term_id;
-                $name = $category->name;
-                $out_arr[$arr[$i]] = array($id, $name);
-            }
-        } elseif (count($unique_values) == 1) {
-            $unique_values_2 = get_more_categories($main_category_slug,$category_slugs);
-//            print_r(array_slice($unique_values_2, 0, 2, true));
-            $out_arr = array();
-            if(count($unique_values_2) == 1){
-                $category = get_term_by('slug', $unique_values_2[0], 'product_cat');
-                // $a_href = get_term_link( $category );
-                $id = $category->term_id;
-                $name = $category->name;
-                $out_arr[$unique_values_2[0]] = array($id, $name);
-            }elseif(count($unique_values_2) > 1){
-                $arr = array_slice($unique_values_2, 0, 2, true);
-                for ($i = 0; $i < count($arr); $i++) {
-                    $category = get_term_by('slug', $arr[$i], 'product_cat');
-                    // $a_href = get_term_link( $category );
-                    $id = $category->term_id;
-                    $name = $category->name;
-                    $out_arr[$arr[$i]] = array($id, $name);
-                }
-            }else{
-                $out_arr = [];
-            }
-
-        } else {
-            $out_arr = [];
-        }
-        $out = $out_arr;
-//        print_r($unique_values);
-    }
-    die(json_encode($out));
+    wp_send_json( $data );
 }
 add_action('wp_ajax_nopriv_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
 add_action('wp_ajax_get_ajax_menu_popular_item_category', 'get_ajax_menu_popular_item_category');
@@ -626,17 +579,13 @@ function get_more_categories($main_category_slug, $category_slugs){
         return $unique_values;
     }
 }
+
+
 add_filter( 'woocommerce_default_catalog_orderby', 'change_default_sorting' );
 function change_default_sorting( $default_sorting ) {
     $default_sorting = 'popularity';
     return $default_sorting;
 }
-
-
-
-
-add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
-
 function sibosfurniture_add_woocommerce_support() {
     add_theme_support( 'woocommerce' );
 }
@@ -1031,7 +980,7 @@ function get_place_types(){
     return $place_types_arr;
 }
 
-remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+Aremove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
 remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
 add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );

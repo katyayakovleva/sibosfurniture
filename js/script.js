@@ -166,25 +166,33 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 $(this).find('a').attr("href", url1); 
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
+                console.log(slug)
                 $.ajax({
                     type: "POST",
                     dataType: "html",
                     url: ajax_menu_popular_items.ajaxurl,
                     data: str,
-                    success: function(data){
+                    success: (data) => {
                         var data_parse = JSON.parse(data)
-                        if (Object.keys(data_parse).length >= 1) {
-                            Object.entries(data_parse).forEach(function([key, value]) {
+                        if (Object.keys(data_parse).length > 1) {
+                            for (const [key, value] of Object.entries(data_parse["subcategories"])) {
                                 var item_type_param = [];
                                 item_type_param.push(value[0]);
                                 let itemTypesJson = JSON.stringify(item_type_param);
-                                var item_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
-                                
+                                var item_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson));
+
                                 var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
-                            }.bind(this));
+                            }
+                            console.log(data_parse["count"])
+                            if(data_parse["count"] > 8){
+                                var place_url = url1;
+                                var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
+                                $(this).find('ul').append(newListItem);
+                            }
                         }
-                    }.bind(this),
+                        console.log(data_parse)
+                    },
                     error : function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
                     }
