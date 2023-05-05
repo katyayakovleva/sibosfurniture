@@ -111,17 +111,13 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 
 		</div>
-		<?php 
-		$args = array(
-			'numberposts' => 1,
-			'meta_key'    => '_customer_user',
-			'meta_value'  => get_current_user_id(),
-			'post_type'   => 'shop_order',
-			'post_status' => 'wc-completed'
-		);
-		$orders = get_posts( $args );
-		
-		if(!(WC()->cart->has_discount( 'firstorder' ))):?>
+		<?php $orders= false;
+		if(is_user_logged_in()){
+			if(wc_get_customer_order_count( get_current_user_id() )){
+				$orders = true;
+			}
+		}
+		if(!($orders) || !(WC()->cart->has_discount( 'firstorder' ))):?>
 			<div id="first_order_discount"><a>Applay first order discount</a></div>
 		<?php endif; ?>
 </section>
