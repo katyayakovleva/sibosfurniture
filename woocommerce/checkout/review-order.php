@@ -111,6 +111,18 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 
 		</div>
-		<div id="first_order_discount"></div>
+		<?php 
+		$args = array(
+			'numberposts' => 1,
+			'meta_key'    => '_customer_user',
+			'meta_value'  => get_current_user_id(),
+			'post_type'   => 'shop_order',
+			'post_status' => 'wc-completed'
+		);
+		$orders = get_posts( $args );
+		
+		if(!(WC()->cart->has_discount( 'firstorder' ))):?>
+			<div id="first_order_discount"><a>Applay first order discount</a></div>
+		<?php endif; ?>
 </section>
 

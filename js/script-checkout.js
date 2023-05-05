@@ -7,17 +7,13 @@ function firstOrderDiscount(email){
             action: 'first_order_dicount',
             email: email,
         },
-        success: function(data){
-            var $data = $(data);
-            if($data.length){     
-                $("#first_order_discount").html($data);  
-                // location.reload(); 
-            } else{
-                console.log('error');
-            }
+        success: function(response) {
+            // Reload the page to update the cart
+            location.reload();
         },
-        error : function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Handle errors
+            console.log(errorThrown);
         }
 
     });
@@ -26,7 +22,12 @@ function firstOrderDiscount(email){
 
 
 $(function () {
-
+    // if ($(".cart-discount ").length){ 
+    //     $("#first_order_discount a").hide();
+    // }
+    // else{
+    //     $("#first_order_discount a").hide();
+    // }
     $(".order-detail-shipping p").each(function() {
         // Some Vars
         var elText,
@@ -61,11 +62,18 @@ $(function () {
         var billing_email = $( this ).val();
         if( billing_email ) {
             console.log(billing_email);
+            $( this ).attr("value", billing_email);
+            // jQuery('body').trigger('update_checkout');
             // location.reload(); 
             // firstOrderDiscount(billing_email)
             // $( '.billing-email-value' ).html( billing_email );
         } else {
             // $( '.billing-email-value' ).html( '' );
         }
+    });
+    $(document).on("click","#first_order_discount a",function(){
+        var billing_email = $( '#billing_email' ).val();
+        firstOrderDiscount(billing_email);
+
     });
 });
