@@ -166,7 +166,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 $(this).find('a').attr("href", url1); 
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
-                console.log(url1)
+                // console.log(url1)
                 $.ajax({
                     type: "POST",
                     dataType: "html",
@@ -192,8 +192,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 place_type_param.push(id);
                                 let placeTypesJson = JSON.stringify(place_type_param);
                                 var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
-                                // var place_url = $(this).find('a').get(0).href;
-                                console.log(place_url);
+                                // console.log(place_url);
                                 var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }
