@@ -166,7 +166,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 $(this).find('a').attr("href", url1); 
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
-                // console.log(url1)
+                console.log(url1)
                 $.ajax({
                     type: "POST",
                     dataType: "html",
@@ -187,6 +187,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                             console.log(data_parse["count"])
                             if(data_parse["count"] > 8){
                                 var place_url = url1;
+                                console.log(place_url);
                                 var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }
