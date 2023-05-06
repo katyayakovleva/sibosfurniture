@@ -184,9 +184,15 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }
+
                             console.log(data_parse["count"])
                             if(data_parse["count"] > 8){
-                                var place_url = url1;
+                                var id = $('#'+slug).val();
+                                var place_type_param = [];
+                                place_type_param.push(id);
+                                let placeTypesJson = JSON.stringify(place_type_param);
+                                var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
+                                // var place_url = $(this).find('a').get(0).href;
                                 console.log(place_url);
                                 var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
                                 $(this).find('ul').append(newListItem);
