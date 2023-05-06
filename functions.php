@@ -964,13 +964,23 @@ function get_var($name = false, $default = false) {
 }
 
 function get_place_types(){
-    $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+    // $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+    $category = get_term_by( 'slug', 'waiting', 'product_cat' );
+    $id_to_exclude = $category->term_id;
     $cat_args = array(
                 'taxonomy' => 'product_cat',
                 'hide_empty' => true,
-                'parent'   => $parent_product_cat->term_id
+                'exclude'  => $id_to_exclude,
+                'parent' => 0,
+                // 'parent'   => $parent_product_cat->term_id
             );
     $child_product_cats = get_terms( $cat_args );
+    // $cat_args = array(
+    //             'taxonomy' => 'product_cat',
+    //             'hide_empty' => true,
+    //             'parent'   => $parent_product_cat->term_id
+    //         );
+    // $child_product_cats = get_terms( $cat_args );
     $place_types_arr = [[]];
     $n = 0;
     foreach($child_product_cats as $child_product_cat){

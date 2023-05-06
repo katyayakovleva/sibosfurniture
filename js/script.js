@@ -166,7 +166,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 $(this).find('a').attr("href", url1); 
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
-                console.log(slug)
+                // console.log(url1)
                 $.ajax({
                     type: "POST",
                     dataType: "html",
@@ -191,7 +191,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 $(this).find('ul').append(newListItem);
                             }
                         }
-                        console.log(data_parse)
+                        // console.log(data_parse)
                     },
                     error : function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
