@@ -192,7 +192,7 @@
     overflow: hidden
 }
 
-.advantages header h1.offset {
+.advantages header h2.offset {
     position: relative;
     top: .23em;
     margin: 0
@@ -467,7 +467,7 @@
         -o-object-position: center bottom;
         object-position: center bottom
     }
-    .advantages header h1.offset {
+    .advantages header h2.offset {
         position: relative;
         top: .23em;
         left: 8%

@@ -7,6 +7,7 @@
 
 get_header();
 ?>
+<h1 style="display:none;" ><?php the_field('seo_text');?></h1>
 <main>
     <article class="swiper-full-height">
         <!-- <menu class="swiper-menu">
@@ -90,7 +91,7 @@ get_header();
     ?>
     <article class="advantages"><img src="<?php echo esc_url($our_advantages['our_advantages_background']); ?>" alt="advantages background">
         <header class="bg-blue-2 pt-2">
-            <h1 class="offset ff-ms fs-1 fc-white">Our<br>advantages</h1>
+            <h2 class="offset ff-ms fs-1 fc-white">Our<br>advantages</h2>
         </header>
 
         <section>
