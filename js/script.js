@@ -162,8 +162,8 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                 var place_type_param = [];
                 place_type_param.push(id);
                 let placeTypesJson = JSON.stringify(place_type_param);
-                url1 = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
-                $(this).find('a').attr("href", url1); 
+                url1 = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
+                $(this).find('a').attr("href", url1);
 
                 var str = '&slug=' + slug + '&action=get_ajax_menu_popular_item_category';
                 // console.log(url1)
@@ -175,25 +175,28 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     success: (data) => {
                         var data_parse = JSON.parse(data)
                         if (Object.keys(data_parse).length > 1) {
-                            for (const [key, value] of Object.entries(data_parse["subcategories"])) {
+                            var count = 0;
+                            for (const [key, value] of Object.entries(data_parse)) {
                                 var item_type_param = [];
-                                item_type_param.push(value[0]);
+                                item_type_param.push(key);
                                 let itemTypesJson = JSON.stringify(item_type_param);
                                 var item_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson));
 
-                                var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                                var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value + "</a></li>");
                                 $(this).find('ul').append(newListItem);
+                                count++;
+                                if(count >= 8){
+                                    break
+                                }
                             }
-
-                            console.log(data_parse["count"])
-                            if(data_parse["count"] > 8){
+                            if(count >= 8){
                                 var id = $('#'+slug).val();
                                 var place_type_param = [];
                                 place_type_param.push(id);
                                 let placeTypesJson = JSON.stringify(place_type_param);
-                                var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson)); 
+                                var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
                                 // console.log(place_url);
-                                var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
+                                var newListItem = $("<li><a href='" + url1 + "' class='link link-navbar'>More</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }
                         }

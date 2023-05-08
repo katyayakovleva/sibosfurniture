@@ -448,37 +448,18 @@ function woocommerce_archive_template( $template ) {
 add_filter ('yith_wcan_use_wp_the_query_object', '__return_true');
 
 function get_ajax_menu_popular_item_category(){
-//    require_once('wp-config.php');
-    global $wpdb;
     $slug = (!empty($_POST['slug']))? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
-    $sql = "SELECT t.term_id, t.name, t.slug, COUNT(p.ID) as post_count 
-    FROM {$wpdb->terms} t
-    INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id
-    INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
-    INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id
-    INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-    INNER JOIN {$wpdb->prefix}wc_product_meta_lookup pml ON p.ID = pml.product_id
-    WHERE tt.taxonomy = 'product_cat'
-    AND pm.meta_key = 'total_sales'
-    AND p.post_type = 'product'
-    AND p.post_status = 'publish'
-    AND tt.parent = (SELECT term_id FROM {$wpdb->terms} WHERE slug = '{$slug}')
-    GROUP BY t.term_id
-    ORDER BY post_count DESC
-    LIMIT 8";
-    $results = $wpdb->get_results( $sql );
     $category = get_term_by( 'slug', $slug, 'product_cat' );
     $subcategories = (get_categories([
         'taxonomy' => 'product_cat',
         'parent' => $category->term_id,
         'hide_empty' => false,
+        'orderby'    => 'count',
+        'order'      => 'DESC',
     ]));
-
-    $count_subcategories = count( $subcategories );
     $data = array();
-    $data["count"] = $count_subcategories;
-    foreach ( $results as $result ) {
-        $data["subcategories"][] = array($result->term_id, $result->name);
+    foreach ( $subcategories as $subcategory) {
+        $data[$subcategory->term_id] = $subcategory->name;
     }
     wp_send_json( $data );
 }
