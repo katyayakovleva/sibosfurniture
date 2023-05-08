@@ -189,6 +189,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                     break
                                 }
                             }
+                            var id = $('#'+slug).val();
+                            var place_type_param = [];
+                            place_type_param.push(id);
+                            let placeTypesJson = JSON.stringify(place_type_param);
+                            var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
+                            console.log(place_url);
                             if(count >= 8){
                                 var id = $('#'+slug).val();
                                 var place_type_param = [];
@@ -196,7 +202,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                                 let placeTypesJson = JSON.stringify(place_type_param);
                                 var place_url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
                                 // console.log(place_url);
-                                var newListItem = $("<li><a href='" + url1 + "' class='link link-navbar'>More</a></li>");
+                                var newListItem = $("<li><a href='" + place_url + "' class='link link-navbar'>More</a></li>");
                                 $(this).find('ul').append(newListItem);
                             }
                         }
