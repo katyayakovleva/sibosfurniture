@@ -168,92 +168,94 @@ if (isset($_GET['sort'])) {
                         <div class="dropdown__trigger filter">Filter</div>
                         <div class="dropdown__content filter__content">
                         <ul class="link-category-list" id="filter-products-mobile">
+                        <?php
+                // $parent_product_cat = get_term_by( 'slug', 'place-type', 'product_cat' );
+                $category = get_term_by( 'slug', 'waiting', 'product_cat' );
+                $id_to_exclude = $category->term_id;
+                $cat_args = array(
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => true,
+                            'exclude'  => $id_to_exclude,
+                            'parent' => 0,
+                            // 'parent'   => $parent_product_cat->term_id
+                        );
+                $child_product_cats = get_terms( $cat_args );
+                foreach ($child_product_cats as $child_product_cat) { ?>
+
+                    <li>
+                        <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
+                        <ol class="link-category-list">
                             <?php
-                          $category = get_term_by( 'slug', 'waiting', 'product_cat' );
-                          $id_to_exclude = $category->term_id;
-                          $cat_args = array(
-                                      'taxonomy' => 'product_cat',
-                                      'hide_empty' => true,
-                                      'exclude'  => $id_to_exclude,
-                                      'parent' => 0,
-                                      // 'parent'   => $parent_product_cat->term_id
-                                  );
-                            foreach ($child_product_cats as $child_product_cat) { ?>
+                                $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
+                                $cat_args = array(
+                                            'taxonomy' => 'product_cat',
+                                            'hide_empty' => true,
+                                            'parent'   => $parent_product_cat->term_id
+                                        );
+                                $child_product_cats = get_terms( $cat_args );
+                                ?>
+                                <li class="form-filter">
+                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
+                                </li>
+                                <?php
+                                foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                <li>
-                                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
-                                    <ol class="link-category-list">
-                                        <?php
-                                            $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
-                                            $cat_args = array(
-                                                        'taxonomy' => 'product_cat',
-                                                        'hide_empty' => true,
-                                                        'parent'   => $parent_product_cat->term_id
-                                                    );
-                                            $child_product_cats = get_terms( $cat_args );
-                                            ?>
-                                            <li class="form-filter">
-                                                <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
-                                            </li>
-                                            <?php
-                                            foreach ($child_product_cats as $child_product_cat) { ?>
+                                    <li class="form-filter">
+                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                    </li>
+                                
+                                <?php } 
+                            ?>
+                        </ol>
+                    </li>
+                
+                <?php } ?>
+                <!-- <li>    
+                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
+                        <ol class="link-category-list">
+                            <?php
+                                // $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
+                                // $cat_args = array(
+                                //             'taxonomy' => 'product_cat',
+                                //             'hide_empty' => true,
+                                //             'parent'   => $parent_product_cat->term_id
+                                //         );
+                                // $child_product_cats = get_terms( $cat_args );
+                                // foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                                <li class="form-filter">
-                                                    <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
-                                                </li>
-                                            
-                                            <?php } 
-                                        ?>
-                                    </ol>
+                                    <li class="form-filter">
+                                        
+                                            <label><input type="checkbox" name="<?php //echo $parent_product_cat->slug; ?>" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
+                                        
+                                    </li>
+                                
+                                <?php //} 
+                            ?>
+                        </ol>
+                </li>
+           
+           
+                <li>
+                    <a class="link-category ff-ms  fc-blue-2 ta-center">Brand</a>
+                    <ol class="link-category-list">
+                        <?php
+                            // $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
+                            // $cat_args = array(
+                            //             'taxonomy' => 'product_cat',
+                            //             'hide_empty' => true,
+                            //             'parent'   => $parent_product_cat->term_id
+                            //         );
+                            // $child_product_cats = get_terms( $cat_args );
+                            // foreach ($child_product_cats as $child_product_cat) { ?>
+
+                                <li class="form-filter">
+                                    <label><input type="checkbox" name="brand" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
                                 </li>
                             
-                                <?php } ?>
-                                <!-- <li>    
-                                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
-                                        <ol class="link-category-list">
-                                            <?php
-                                                // $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
-                                                // $cat_args = array(
-                                                //             'taxonomy' => 'product_cat',
-                                                //             'hide_empty' => true,
-                                                //             'parent'   => $parent_product_cat->term_id
-                                                //         );
-                                                // $child_product_cats = get_terms( $cat_args );
-                                                // foreach ($child_product_cats as $child_product_cat) { ?>
-
-                                                    <li class="form-filter">
-                                                        
-                                                            <label><input type="checkbox" name="<?php //echo $parent_product_cat->slug; ?>" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                                        
-                                                    </li>
-                                                
-                                                <?php //} 
-                                            ?>
-                                        </ol>
-                                </li>
-                                 -->
-                            
-                                <!-- <li>
-                                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Brand</a>
-                                    <ol class="link-category-list">
-                                        <?php
-                                            // $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
-                                            // $cat_args = array(
-                                            //             'taxonomy' => 'product_cat',
-                                            //             'hide_empty' => true,
-                                            //             'parent'   => $parent_product_cat->term_id
-                                            //         );
-                                            // $child_product_cats = get_terms( $cat_args );
-                                            // foreach ($child_product_cats as $child_product_cat) { ?>
-
-                                                <li class="form-filter">
-                                                    <label><input type="checkbox" name="brand" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                                </li>
-                                            
-                                            <?php //} 
-                                        ?>
-                                    </ol>
-                                </li>                 -->
+                            <?php //} 
+                        ?>
+                    </ol>
+                </li>                 -->
                                 <li class="form-checkbox">
                                     <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                                 </li>
