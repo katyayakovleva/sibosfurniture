@@ -119,7 +119,7 @@ defined( 'ABSPATH' ) || exit;
 			}
 		}
 		if(!($orders) && !(WC()->cart->has_discount( 'firstorder' ))):?>
-			<div id="first_order_discount"><a>Applay first order discount</a></div>
+			<div id="first_order_discount"><a>Apply first order discount</a></div>
 		<?php endif; ?>
 </section>
 
