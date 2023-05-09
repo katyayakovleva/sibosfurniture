@@ -1425,3 +1425,84 @@ add_action('wp_ajax_first_order_dicount', 'first_order_dicount');
 //     // }
 // }
 // add_action( 'woocommerce_checkout_update_order_review', 'apply_dynamic_email_discount' );
+
+
+
+// add_action( 'woocommerce_applied_coupon', 'my_function_on_coupon_applied', 10, 1 );
+
+// function my_function_on_coupon_applied( $coupon_code ) {
+//     if ( $coupon_code === 'firstorder' ) {
+//         $user_id = get_current_user_id();
+//         $billing_email = '';
+//         if ( $user_id ) {
+//             $billing_email = get_user_meta( $user_id, 'billing_email', true );
+//         } elseif ( WC()->customer->get_billing_email() ) {
+//             $billing_email = isset($_POST['billing_email']) ? sanitize_email($_POST['billing_email']) : '';
+//         }
+//         if($billing_email != ''){
+//             $args = array(
+//             'posts_per_page' => 1,
+//             'post_type'      => 'shop_order',
+//             'post_status'    => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
+//             'meta_query'     => array(
+//                 array(
+//                     'key'     => '_billing_email',
+//                     'value'   => $billing_email,
+//                     'compare' => '=',
+//                 ),
+//             ),
+//             );
+
+//             $order_query  = new WP_Query( $args );
+//             $order_count  = $order_query->found_posts;
+//             $discount_key = 'first_order_discount';
+//             $fee_label    = 'Discount';
+//             $discount     = 0.15;
+
+//             if ( $order_count > 0 ) {
+//                 // Throw an error
+//                 // wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
+//                 WC()->cart->remove_coupon( $coupon_code );
+
+//             }
+//         }else{
+//             WC()->cart->remove_coupon( $coupon_code ); 
+//         }
+    
+//     }
+// }
+
+function wc_display_item_meta( $item, $args = array() ) {
+    $strings = array();
+    $html    = '';
+    $args    = wp_parse_args(
+        $args,
+        array(
+            'before'       => '<ul class="wc-item-meta"><li>',
+            'after'        => '</li></ul>',
+            'separator'    => '</li><li>',
+            'echo'         => false,
+            'autop'        => false,
+            'label_before' => '<strong class="wc-item-meta-label">',
+            'label_after'  => ':</strong> ',
+        )
+    );
+
+    foreach ( $item->get_formatted_meta_data() as $meta_id => $meta ) {
+        $value     = $args['autop'] ? wp_kses_post( $meta->display_value ) : wp_kses_post( make_clickable( trim( $meta->display_value ) ) );
+        $strings[] = $args['label_before'] . wp_kses_post( $meta->display_key ) . $args['label_after'] . $value;
+    }
+
+    if ( $strings ) {
+        $html = $args['before'] . implode( $args['separator'], $strings ) . $args['after'];
+    }
+
+    $html = apply_filters( 'woocommerce_display_item_meta', $html, $item, $args );
+
+    if ( $args['echo'] ) {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $html;
+    } else {
+        return $html;
+    }
+}
