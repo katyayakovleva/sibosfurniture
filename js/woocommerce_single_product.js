@@ -46,21 +46,12 @@ $(document).ready(function() {
     function showText() {
         var overlay = $("#overlay");
         var text = $("#text");
-
-        // Отримати текст зі сторінки (замініть на свій спосіб отримання тексту)
         var pageText = $(".woocommerce-message").text();
         if(pageText.indexOf( "been added to your cart" ) != -1){
             var inserText = pageText.replace("View cart", "");
-            // Встановити текст у блок
             text.text(inserText);
-
-            // Показати блок
             overlay.css("display", "flex");
-
-            // Додати клас "fade-in" для анімації зникнення
             overlay.addClass("fade-in");
-
-            // Після 2 секунд приховати блок
             setTimeout(function() {
                 overlay.css("display", "none");
                 overlay.removeClass("fade-in");
