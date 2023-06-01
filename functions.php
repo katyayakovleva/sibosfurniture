@@ -1478,8 +1478,8 @@ function check_first_order_coupon() {
 add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
 add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
 
-add_action('init', 'custom_taxonomy_flush_rewrite');
-function custom_taxonomy_flush_rewrite() {
-    global $wp_rewrite;
-    $wp_rewrite->flush_rules();
-}
+// add_action('init', 'custom_taxonomy_flush_rewrite');
+// function custom_taxonomy_flush_rewrite() {
+//     global $wp_rewrite;
+//     $wp_rewrite->flush_rules();
+// }
