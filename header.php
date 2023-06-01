@@ -172,3 +172,8 @@ $email = get_field('menu_email','menu_' . $menu_id);
             </div>
         </nav>
     </header>
+<div id="overlay">
+    <div id="textContainer">
+        <p id="text"></p>
+    </div>
+</div>
