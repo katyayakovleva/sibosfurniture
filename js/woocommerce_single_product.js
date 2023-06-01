@@ -49,7 +49,7 @@ $(document).ready(function() {
 
         // Отримати текст зі сторінки (замініть на свій спосіб отримання тексту)
         var pageText = $(".woocommerce-message").text();
-        if(pageText.indexOf( "has been added to your cart" ) != -1){
+        if(pageText.indexOf( "been added to your cart" ) != -1){
             var inserText = pageText.replace("View cart", "");
             // Встановити текст у блок
             text.text(inserText);
