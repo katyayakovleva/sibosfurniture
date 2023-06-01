@@ -48,16 +48,18 @@ $(document).ready(function() {
         var url = words.slice(0, 3).join('/');
         if(slug === "sale"){
             url = url + '/catalog?sale=true';  
-        }else{
-            var id = $('#'+slug).val();
-            var place_type_param = [];
-            place_type_param.push(id);
-            
-            let placeTypesJson = JSON.stringify(place_type_param);
-            url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+            $(this).attr("href", url);
         }
+        // else{
+        //     var id = $('#'+slug).val();
+        //     var place_type_param = [];
+        //     place_type_param.push(id);
             
-        $(this).attr("href", url);
+        //     let placeTypesJson = JSON.stringify(place_type_param);
+        //     url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+        // }
+            
+        
    });
    $('#place_type_categories a').each(function () {
     let href = $(this).attr('href');
@@ -67,16 +69,18 @@ $(document).ready(function() {
     var url = words.slice(0, 3).join('/');
     if(slug === "sale"){
         url = url + '/catalog?sale=true';  
-    }else{
-        var id = $('#'+slug).val();
-        var place_type_param = [];
-        place_type_param.push(id);
-        
-        let placeTypesJson = JSON.stringify(place_type_param);
-        url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+        $(this).attr("href", url);
     }
+    // else{
+    //     var id = $('#'+slug).val();
+    //     var place_type_param = [];
+    //     place_type_param.push(id);
         
-    $(this).attr("href", url);
+    //     let placeTypesJson = JSON.stringify(place_type_param);
+    //     url = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));   
+    // }
+        
+    
 });
     swiperMenuLink(),
         camCarousel(),

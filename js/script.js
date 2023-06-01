@@ -144,12 +144,12 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                             $count = 0;
                             for (const [key, value] of Object.entries(data_parse)) {
 
-                                var item_type_param = [];
-                                item_type_param.push(value[0]);
-                                let itemTypesJson = JSON.stringify(item_type_param);
-                                var item_url = url + '&place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+                                // var item_type_param = [];
+                                // item_type_param.push(value[0]);
+                                // let itemTypesJson = JSON.stringify(item_type_param);
+                                // var item_url = url + '&place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
 
-                                var newListItem = $("<li><a href='" + item_url + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
                                 $(this).find('ul').append(newListItem);
                                 $count++;
                                 if($count >= 8){
@@ -167,28 +167,28 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
                     }
                 });
             }else{
-                var id = $('#'+slug).val();
-                var place_type_param = [];
-                place_type_param.push(id);
-                let placeTypesJson = JSON.stringify(place_type_param);
-                url1 = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
-                $(this).find('>a').attr("href", url1);
-                $(this).find('ul li:not(.more_cat)').each(function () {
-                    let sub_href = $(this).find('>a').get(0).href;
-                    let sub_words= sub_href.split("/");
-                    let sub_a = sub_words.pop();
-                    let sub_slug = sub_words.pop();
-                    var sub_url = sub_words.slice(0, 3).join('/');
-                    var sub_id = $('#'+sub_slug).val();
-                    var sub_category_param = [];
-                    sub_category_param.push(sub_id);
-                    let subCategoryJson = JSON.stringify(sub_category_param);
-                    url2 = sub_url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(subCategoryJson));
-                    $(this).find('>a').attr("href", url2);
-                });
-                $(this).find('ul li.more_cat').each(function () {
-                    $(this).find('>a').attr("href", url1);
-                });
+                // var id = $('#'+slug).val();
+                // var place_type_param = [];
+                // place_type_param.push(id);
+                // let placeTypesJson = JSON.stringify(place_type_param);
+                // url1 = url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(placeTypesJson));
+                // $(this).find('>a').attr("href", url1);
+                // $(this).find('ul li:not(.more_cat)').each(function () {
+                //     let sub_href = $(this).find('>a').get(0).href;
+                //     let sub_words= sub_href.split("/");
+                //     let sub_a = sub_words.pop();
+                //     let sub_slug = sub_words.pop();
+                //     var sub_url = sub_words.slice(0, 3).join('/');
+                //     var sub_id = $('#'+sub_slug).val();
+                //     var sub_category_param = [];
+                //     sub_category_param.push(sub_id);
+                //     let subCategoryJson = JSON.stringify(sub_category_param);
+                //     url2 = sub_url + '/catalog?place_types=' + encodeURIComponent(encodeURIComponent(subCategoryJson));
+                //     $(this).find('>a').attr("href", url2);
+                // });
+                // $(this).find('ul li.more_cat').each(function () {
+                //     $(this).find('>a').attr("href", url1);
+                // });
             }
                
         });

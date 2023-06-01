@@ -429,7 +429,7 @@ function bbloomer_add_cart_quantity_plus_minus() {
         
    " );
 }
-add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+// add_filter( 'wc_add_to_cart_message_html', '__return_false' );
 
 add_filter( 'template_include', 'woocommerce_archive_template', 99 );
 
@@ -508,10 +508,10 @@ function get_ajax_menu_popular_item_sales_category(){
     $out_arr = array();
     for ($i = 0; $i < count($arr); $i++) {
         $category = get_term_by('slug', $arr[$i], 'product_cat');
-        $id = $category->term_id;
-        // $a_href = get_term_link( $category );
+        // $id = $category->term_id;
+        $a_href = get_term_link( $category );
         $name = $category->name;
-        $out_arr[$arr[$i]] = array($id, $name);
+        $out_arr[$arr[$i]] = array($a_href, $name);
     }
     $out = $out_arr;
     die(json_encode($out));
@@ -1464,3 +1464,22 @@ function wc_display_item_meta( $item, $args = array() ) {
         return $html;
     }
 }
+
+function check_first_order_coupon() {
+
+    wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
+    // if(!(WC()->cart->has_discount( 'firstorder' ))){
+       WC()->cart->remove_coupon('firstorder'); 
+    // }
+    
+    wp_die();
+}
+  
+add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
+add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
+
+// add_action('init', 'custom_taxonomy_flush_rewrite');
+// function custom_taxonomy_flush_rewrite() {
+//     global $wp_rewrite;
+//     $wp_rewrite->flush_rules();
+// }

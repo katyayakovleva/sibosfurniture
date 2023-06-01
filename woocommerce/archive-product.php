@@ -57,8 +57,10 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'popularity';
 }
-
+$term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
+// echo $term->name;
 ?>
+
 <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
         <aside  >
@@ -79,8 +81,15 @@ if (isset($_GET['sort'])) {
                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                     <li>
-                        <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
-                        <ol class="link-category-list">
+                    <div class="link-category-div">
+                        <a class="link-category <?php if($term && ($term->term_id == $child_product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $child_product_cat->term_id)) : echo 'active'; endif;?>" value="desktop_<?php echo $child_product_cat->term_id; ?>"></a>
+                        <a class="ff-ms fs-5 ta-center category-label" href = "<?php echo get_term_link( $child_product_cat );?>" ><? echo $child_product_cat->name; ?></a>
+                    
+                    </div>
+
+                        <!-- <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a> -->
+
+                        <ol class="link-category-list <?php if($term && ($term->term_id == $child_product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $child_product_cat->term_id)) : echo 'active'; endif;?>" id="desktop_<?php echo $child_product_cat->term_id; ?>">
                             <?php
                                 $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
                                 $cat_args = array(
@@ -91,13 +100,13 @@ if (isset($_GET['sort'])) {
                                 $child_product_cats = get_terms( $cat_args );
                                 ?>
                                 <li class="form-filter">
-                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
+                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>
                                 </li>
                                 <?php
                                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                                     <li class="form-filter">
-                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                     </li>
                                 
                                 <?php } 
@@ -183,8 +192,12 @@ if (isset($_GET['sort'])) {
                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                     <li>
-                        <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
-                        <ol class="link-category-list">
+                    <div class="link-category-div ff-ms fs-5 ta-center">
+                        <a class="link-category  <?php if($term && ($term->term_id == $child_product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $child_product_cat->term_id)) : echo 'active'; endif;?>" value="mobile_<?php echo $child_product_cat->term_id; ?>"></a>
+                        <a class=" category-label" href = "<?php echo get_term_link( $child_product_cat );?>" ><? echo $child_product_cat->name; ?></a>
+                    </div>
+                        <!-- <a class="link-category ff-ms fs-5 fc-blue-2 ta-center" href = "<?php echo get_term_link( $child_product_cat );?>" ><? echo $child_product_cat->name; ?></a> -->
+                        <ol class="link-category-list  <?php if($term && ($term->term_id == $child_product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $child_product_cat->term_id)) : echo 'active'; endif;?>" id="mobile_<?php echo $child_product_cat->term_id; ?>">
                             <?php
                                 $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
                                 $cat_args = array(
@@ -195,13 +208,12 @@ if (isset($_GET['sort'])) {
                                 $child_product_cats = get_terms( $cat_args );
                                 ?>
                                 <li class="form-filter">
-                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
-                                </li>
+                                <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>                                </li>
                                 <?php
                                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                                     <li class="form-filter">
-                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                    <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                     </li>
                                 
                                 <?php } 
@@ -321,6 +333,9 @@ if (isset($_GET['sort'])) {
                     // }
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
+                    }
+                    if($term){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $term->term_id);
                     }
                     if($sale == 'true'){
                         $on_sale_products = wc_get_product_ids_on_sale();

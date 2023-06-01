@@ -19,7 +19,26 @@ function firstOrderDiscount(email){
     });
     
 }
+function checkFirstOrderCoupon(){
+    $.ajax({
+        type: "POST",
+        dataType: "html",
+        url: ajax_posts.ajaxurl,
+        data: {
+            action: 'check_first_order_coupon',
+        },
+        success: function(response) {
+            // Reload the page to update the cart
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Handle errors
+            console.log(errorThrown);
+        }
 
+    });
+    
+}
 
 $(function () {
     // if ($(".cart-discount ").length){ 
@@ -75,5 +94,11 @@ $(function () {
         var billing_email = $( '#billing_email' ).val();
         firstOrderDiscount(billing_email);
 
+    });
+    $('.woocommerce-form-coupon form').on('submit', function(){
+        var code = $('.woocommerce-form-coupon form :input[name=coupon_code]').val()
+        if(code == 'firstorder'){
+            checkFirstOrderCoupon();
+        }
     });
 });

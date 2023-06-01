@@ -1,9 +1,11 @@
 $(document).ready(function() {
     var $window = $(window);
+    var hostname = window.location.origin;
     var windowsize = $window.width();
 
-    const url = new URL(window.location);
-
+    const url = new URL(hostname+'/catalog/');
+    // const url = hostname + '/catalog/';
+    // console.log(url);
     // var sortProducts = $('#sort-products a');
     //var collections = [];
     // var item_types = [];
