@@ -88,13 +88,16 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
                     </div>
                     <?php
                         $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
-                        $cat_args1 = array(
+                        if(!empty($place_types)){
+                            $cat_args1 = array(
                                     'taxonomy' => 'product_cat',
                                     'hide_empty' => true,
                                     'parent'   => $parent_product_cat->term_id,
                                     'include'  => $place_types
                                 );
-                        $child_product_cats1 = get_terms( $cat_args1 );
+                            $child_product_cats1 = get_terms( $cat_args1 );
+                        }
+                        
                         ?>
                         <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="desktop_<?php echo $product_cat->term_id; ?>">
                             <?php
@@ -205,13 +208,15 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
                     </div>
                     <?php
                         $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
-                        $cat_args1 = array(
+                        if(!empty($place_types)){
+                            $cat_args1 = array(
                                     'taxonomy' => 'product_cat',
                                     'hide_empty' => true,
                                     'parent'   => $parent_product_cat->term_id,
                                     'include'  => $place_types
                                 );
-                        $child_product_cats1 = get_terms( $cat_args1 );
+                            $child_product_cats1 = get_terms( $cat_args1 );
+                        }
                         ?>
                         <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>"  id="mobile_<?php echo $product_cat->term_id; ?>">
                              <?php
