@@ -226,9 +226,9 @@ function sibosfurniture_scripts() {
 		wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
 		wp_enqueue_script( 'script-checkout', get_template_directory_uri() . '/js/script-checkout.js', array(), rand(111,9999), true );
 
-        wp_localize_script( 'script-checkout', 'ajax_posts', array(
+        wp_localize_script( 'script-checkout', 'custom_fees_params', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'noposts' => __('No older posts found', 'greenglobe'),
+            'nonce'    => wp_create_nonce('custom_fees_nonce'),
         ));
 	}elseif(is_product()){
         wp_enqueue_style( 'item-page-in', get_template_directory_uri(). '/css/item-page.css', array(), rand(111,9999));
@@ -1263,59 +1263,145 @@ function woocommerce_category_redirect() {
 }
 add_filter( 'big_image_size_threshold', '__return_false' );
 
+//   function first_order_dicount() {
 
-  /**
-  * show more posts with ajax
-  */
-  function first_order_dicount() {
-
-    $email = (! empty( $_POST['email'] )) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
-    $out="";
-    if($email != ''){
+//     $email = (! empty( $_POST['email'] )) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
+//     $out="";
+//     if($email != ''){
 
 
-        $billing_email = $email;
-        $args = array(
-            'posts_per_page' => 1,
-            'post_type'      => 'shop_order',
-            'post_status'    => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
-            'meta_query'     => array(
-                array(
-                    'key'     => '_billing_email',
-                    'value'   => $billing_email,
-                    'compare' => '=',
-                ),
-            ),
-        );
+//         $billing_email = $email;
+//         $args = array(
+//             'posts_per_page' => 1,
+//             'post_type'      => 'shop_order',
+//             'post_status'    => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
+//             'meta_query'     => array(
+//                 array(
+//                     'key'     => '_billing_email',
+//                     'value'   => $billing_email,
+//                     'compare' => '=',
+//                 ),
+//             ),
+//         );
     
-        $order_query  = new WP_Query( $args );
-        $order_count  = $order_query->found_posts;
-        $discount_key = 'first_order_discount';
-        $fee_label    = 'First Order Discount';
-        $discount     = 0.15;
-        if ( $order_count == 0 ) {
-            $cart = WC()->cart;
+//         $order_query  = new WP_Query( $args );
+//         $order_count  = $order_query->found_posts;
+//         $discount_key = 'first_order_discount';
+//         $fee_label    = 'First Order Discount';
+//         $discount     = 0.15;
+//         if ( $order_count == 0 ) {
+//             $cart = WC()->cart;
 
     
-            $coupon = new WC_Coupon( 'FIRSTORDER' );
+//             $coupon = new WC_Coupon( 'FIRSTORDER' );
     
-            // Check if the coupon is valid
-            if ( $coupon->is_valid() ) {
-                // Apply the coupon
-                $cart->apply_coupon( 'FIRSTORDER');
-                //echo 'Coupon applied successfully';
+//             // Check if the coupon is valid
+//             if ( $coupon->is_valid() ) {
+//                 // Apply the coupon
+//                 $cart->apply_coupon( 'FIRSTORDER');
+//                 //echo 'Coupon applied successfully';
+//             }
+
+//         }
+//     }
+//     wp_die();
+//     // die($out);
+// }
+  
+// add_action('wp_ajax_nopriv_first_order_dicount', 'first_order_dicount');
+// add_action('wp_ajax_first_order_dicount', 'first_order_dicount');
+function update_custom_fees_callback() {
+    if (!check_ajax_referer('custom_fees_nonce', 'nonce', false)) {
+        wp_send_json_error('Invalid nonce');
+    }
+
+    WC()->session->set('apply_custom_fee', true);
+    WC()->session->set('email_for_fee', isset($_POST['email_for_fee']) ? sanitize_email($_POST['email_for_fee']) : '');
+    wp_send_json_success('Custom fee update successful');
+}
+add_action('wp_ajax_update_custom_fees', 'update_custom_fees_callback');
+add_action('wp_ajax_nopriv_update_custom_fees', 'update_custom_fees_callback');
+
+
+
+function add_custom_fee($cart) {
+    if (is_checkout() && WC()->session->get('apply_custom_fee')) {
+        $billing_email = WC()->session->get('email_for_fee');
+        // $user_id = get_current_user_id();
+        // if ( $user_id ) {
+        //     $billing_email = get_user_meta( $user_id, 'billing_email', true );
+        // } else{
+        //     // $billing_email = isset($_POST['billing_email']) ? sanitize_email(trim($_POST['billing_email'])) : '';
+    
+        //     $billing_email = WC()->customer->get_billing_email();
+        // }
+        if ( ! empty($billing_email) ) {
+            // error_log('$billing_email: ' . $billing_email);
+            $discount_key = 'first_order_discount';
+            $fee_label    = 'First Order Discount';
+            $discount     = 0.15;
+            $orders = wc_get_orders(array(
+                'limit' => 1,
+                'status' => array('completed', 'processing', 'on-hold'),
+                'meta_key' => '_billing_email',
+                'meta_value' => $billing_email,
+                'return' => 'ids',
+            ));
+            if ( empty($orders) ) {
+                    WC()->cart->add_fee( $fee_label,  -$cart->subtotal * 0.15, false);
+            }else{
+                // WC()->cart->remove_all_fees();
+    
+                // Get the fees in the cart
+                $fees = WC()->cart->get_fees();
+    
+                // Loop through the fees
+                foreach ($fees as $fee_key => $fee) {
+                    // Check if the fee name matches
+                    if ($fee->name === $fee_label) {
+                        // Remove the fee
+                        WC()->cart->remove_fee($fee_key);
+                        break; // Stop looping once the fee is found and removed
+                    }
+                }
+                // WC()->cart->add_fee( $billing_email,  -$cart->subtotal * 0.0, false);
             }
-
+        }else{
+            // WC()->cart->add_fee( 'No email',  -$cart->subtotal * 0.0, false);
         }
     }
-    wp_die();
-    // die($out);
+    
+
 }
-  
-add_action('wp_ajax_nopriv_first_order_dicount', 'first_order_dicount');
-add_action('wp_ajax_first_order_dicount', 'first_order_dicount');
+add_action( 'woocommerce_cart_calculate_fees', 'add_custom_fee', 10 );
 
+// function has_orders_for_email($email) {
+//     $orders = get_posts(array(
+//         'post_type'      => 'shop_order',
+//         'post_status'    => array('wc-completed', 'wc-processing', 'wc-on-hold'), // Include desired order statuses
+//         'posts_per_page' => 1,
+//         'meta_query'     => array(
+//             array(
+//                 'key'     => '_billing_email',
+//                 'value'   => sanitize_email($email),
+//                 'compare' => '='
+//             )
+//         )
+//     ));
 
+//     return empty($orders);
+// }
+function has_orders_for_email($email) {
+    $orders = wc_get_orders(array(
+        'limit' => 1,
+        'status' => array('completed', 'processing', 'on-hold'),
+        'meta_key' => '_billing_email',
+        'meta_value' => $email,
+        'return' => 'ids',
+    ));
+
+    return empty($orders);
+}
 // add_action( 'woocommerce_cart_calculate_fees', 'woo_add_cart_fee',20,3);
 // function woo_add_cart_fee( $cart ){
 //     //global $woocommerce;
@@ -1369,21 +1455,6 @@ add_action('wp_ajax_first_order_dicount', 'first_order_dicount');
 //         // }
 //     }
 // }
-// function apply_dynamic_email_discount( $posted_data ) {
-//     // Get the new customer's billing email
-//     $billing_email = isset($_POST['billing_email']) ? sanitize_email($_POST['billing_email']) : '';
-//     // Check if the email matches the one you want to apply the discount for
-//     // if ( $billing_email === 'example@email.com' ) {
-//         // Calculate the discount amount
-//         $discount = WC()->cart->get_subtotal() * 0.1; // 10% discount
-
-//         // Apply the discount as a negative fee
-//         WC()->cart->add_fee( 'Email Discount', -$discount );
-//         WC()->cart->calculate_totals();
-//     // }
-// }
-// add_action( 'woocommerce_checkout_update_order_review', 'apply_dynamic_email_discount' );
-
 
 
 // add_action( 'woocommerce_applied_coupon', 'my_function_on_coupon_applied', 10, 1 );
@@ -1465,21 +1536,21 @@ function wc_display_item_meta( $item, $args = array() ) {
     }
 }
 
-function check_first_order_coupon() {
+// function check_first_order_coupon() {
 
-    wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
-    // if(!(WC()->cart->has_discount( 'firstorder' ))){
-       WC()->cart->remove_coupon('firstorder'); 
-    // }
+//     wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
+//     // if(!(WC()->cart->has_discount( 'firstorder' ))){
+//        WC()->cart->remove_coupon('firstorder'); 
+//     // }
     
-    wp_die();
-}
+//     wp_die();
+// }
   
-add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
-add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
+// add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
+// add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
 
-add_action('init', 'custom_taxonomy_flush_rewrite');
-function custom_taxonomy_flush_rewrite() {
-    global $wp_rewrite;
-    $wp_rewrite->flush_rules();
-}
+// add_action('init', 'custom_taxonomy_flush_rewrite');
+// function custom_taxonomy_flush_rewrite() {
+//     global $wp_rewrite;
+//     $wp_rewrite->flush_rules();
+// }

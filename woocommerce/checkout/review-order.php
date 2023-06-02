@@ -111,6 +111,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 
 		</div>
+		
 		<?php $orders= false;
 		if(is_user_logged_in()){
 
@@ -118,7 +119,8 @@ defined( 'ABSPATH' ) || exit;
 				$orders = true;
 			}
 		}
-		if(!($orders) && !(WC()->cart->has_discount( 'firstorder' ))):?>
+		$fees = WC()->cart->get_fees();
+		if(!($orders) && empty($fees)):?>
 			<div id="first_order_discount"><a>Apply first order discount</a></div>
 		<?php endif; ?>
 </section>
