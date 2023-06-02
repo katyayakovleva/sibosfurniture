@@ -107,6 +107,32 @@ $(function () {
         if($('.fee').length){
             $('#first_order_discount').html("");
         }
+        $( '#billing_email' ).on( 'change', function(e) {
+            e.preventDefault();
+            var billing_email = $( '#billing_email' ).val();
+            console.log(billing_email);
+            // Set the flag to apply the custom fee
+            custom_fees_params.apply_custom_fee = true;
+            custom_fees_params.email_for_fee = billing_email;
+            // Trigger the AJAX request to update the fees
+            $.ajax({
+                type: 'POST',
+                url: custom_fees_params.ajaxurl,
+                data: {
+                    email_for_fee: billing_email,
+                    action: 'update_custom_fees',
+                    nonce: custom_fees_params.nonce,
+                },
+                success: function(response) {
+                    // Handle the response if needed
+                    console.log(response);
+                    // Trigger the update_checkout event to recalculate totals
+                    
+                    $(document.body).trigger('update_checkout');
+                    // $('#first_order_discount').html("");
+                },
+            });
+        });
         $(document).on("click","#first_order_discount a", function(e) {
             e.preventDefault();
             var billing_email = $( '#billing_email' ).val();
