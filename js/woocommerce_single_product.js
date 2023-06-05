@@ -53,9 +53,12 @@ $(document).ready(function() {
             overlay.css("display", "flex");
             overlay.addClass("fade-in");
             setTimeout(function() {
-                overlay.css("display", "none");
-                overlay.removeClass("fade-in");
-            }, 2000);
+                overlay.addClass("fade-out");
+                setTimeout(function() {
+                    overlay.css("display", "none");
+                    overlay.removeClass("fade-in fade-out");
+                }, 500);
+            }, 5000);
         }
     }
 })
