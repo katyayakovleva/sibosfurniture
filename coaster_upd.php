@@ -20,12 +20,12 @@ const COASTER_HEADERS = array(
     "keycode" => "45FDCB85CF2F440E9750F1E96A"
 );
 
-const CACHE_COASTER_FILE = "/themes/sibosfurniture/cache_coaster.json";
-const CACHE_COASTER_TO_CREATE = "/themes/sibosfurniture/cache_coaster_to_create.json";
-const CACHE_COASTER_PRICES_FILE = "/themes/sibosfurniture/cache_coaster_prices.json";
-const CACHE_COASTER_CATEGORIES_FILE = "/themes/sibosfurniture/cache_coaster_categories.json";
-const CACHE_COASTER_PROGRESS = "/themes/sibosfurniture/cache_coaster_progress.json";
-const LOGGER_FILE = "/themes/sibosfurniture/logs.txt";
+const CACHE_COASTER_FILE = "/themes/sibosfurniture-master/cache_coaster.json";
+const CACHE_COASTER_TO_CREATE = "/themes/sibosfurniture-master/cache_coaster_to_create.json";
+const CACHE_COASTER_PRICES_FILE = "/themes/sibosfurniture-master/cache_coaster_prices.json";
+const CACHE_COASTER_CATEGORIES_FILE = "/themes/sibosfurniture-master/cache_coaster_categories.json";
+const CACHE_COASTER_PROGRESS = "/themes/sibosfurniture-master/cache_coaster_progress.json";
+const LOGGER_FILE = "/themes/sibosfurniture-master/logs.txt";
 
 const CACHE_FILE_PATH = WP_CONTENT_DIR . CACHE_COASTER_FILE;
 const CACHE_TO_CREATE_FILE_PATH = WP_CONTENT_DIR . CACHE_COASTER_TO_CREATE;
