@@ -12,6 +12,7 @@ if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
 }
+include_once('coaster_upd.php');
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -1283,7 +1284,7 @@ add_filter( 'big_image_size_threshold', '__return_false' );
 //                 ),
 //             ),
 //         );
-    
+
 //         $order_query  = new WP_Query( $args );
 //         $order_count  = $order_query->found_posts;
 //         $discount_key = 'first_order_discount';
@@ -1294,7 +1295,7 @@ add_filter( 'big_image_size_threshold', '__return_false' );
 
     
 //             $coupon = new WC_Coupon( 'FIRSTORDER' );
-    
+
 //             // Check if the coupon is valid
 //             if ( $coupon->is_valid() ) {
 //                 // Apply the coupon
@@ -1307,7 +1308,7 @@ add_filter( 'big_image_size_threshold', '__return_false' );
 //     wp_die();
 //     // die($out);
 // }
-  
+
 // add_action('wp_ajax_nopriv_first_order_dicount', 'first_order_dicount');
 // add_action('wp_ajax_first_order_dicount', 'first_order_dicount');
 function update_custom_fees_callback() {
@@ -1332,7 +1333,7 @@ function add_custom_fee($cart) {
         //     $billing_email = get_user_meta( $user_id, 'billing_email', true );
         // } else{
         //     // $billing_email = isset($_POST['billing_email']) ? sanitize_email(trim($_POST['billing_email'])) : '';
-    
+
         //     $billing_email = WC()->customer->get_billing_email();
         // }
         if ( ! empty($billing_email) ) {
@@ -1370,7 +1371,7 @@ function add_custom_fee($cart) {
             // WC()->cart->add_fee( 'No email',  -$cart->subtotal * 0.0, false);
         }
     }
-    
+
 
 }
 add_action( 'woocommerce_cart_calculate_fees', 'add_custom_fee', 10 );
@@ -1540,12 +1541,12 @@ function wc_display_item_meta( $item, $args = array() ) {
 
 //     wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
 //     // if(!(WC()->cart->has_discount( 'firstorder' ))){
-//        WC()->cart->remove_coupon('firstorder'); 
+//        WC()->cart->remove_coupon('firstorder');
 //     // }
-    
+
 //     wp_die();
 // }
-  
+
 // add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
 // add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
 
