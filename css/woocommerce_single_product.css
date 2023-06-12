@@ -481,5 +481,5 @@ form.cart.without-variation-cart{
 }
 /*Delete view cart button from single product page*/
 .added_to_cart.wc-forward{
-    display: none;
+    display: none!important;
 }
