@@ -129,43 +129,43 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             var url = words.slice(0, 3).join('/');
 
             if(slug === "sale"){
-                $(this).append('<ul></ul>')
+                // $(this).append('<ul></ul>')
                 url = url + '/catalog?sale=true';
                 $(this).find('a').attr("href", url); 
-                var str1 = '&action=get_ajax_menu_popular_item_sales_category';
-                $.ajax({
-                    type: "POST",
-                    dataType: "html",
-                    url: ajax_menu_popular_items.ajaxurl,
-                    data: str1,
-                    success: (data) => {
-                        var data_parse = JSON.parse(data)
-                        if (Object.keys(data_parse).length >= 1) {
-                            $count = 0;
-                            for (const [key, value] of Object.entries(data_parse)) {
+                // var str1 = '&action=get_ajax_menu_popular_item_sales_category';
+                // $.ajax({
+                //     type: "POST",
+                //     dataType: "html",
+                //     url: ajax_menu_popular_items.ajaxurl,
+                //     data: str1,
+                //     success: (data) => {
+                //         var data_parse = JSON.parse(data)
+                //         if (Object.keys(data_parse).length >= 1) {
+                //             $count = 0;
+                //             for (const [key, value] of Object.entries(data_parse)) {
 
-                                // var item_type_param = [];
-                                // item_type_param.push(value[0]);
-                                // let itemTypesJson = JSON.stringify(item_type_param);
-                                // var item_url = url + '&place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
+                //                 // var item_type_param = [];
+                //                 // item_type_param.push(value[0]);
+                //                 // let itemTypesJson = JSON.stringify(item_type_param);
+                //                 // var item_url = url + '&place_types=' + encodeURIComponent(encodeURIComponent(itemTypesJson)); 
 
-                                var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
-                                $(this).find('ul').append(newListItem);
-                                $count++;
-                                if($count >= 8){
-                                   break
-                                }
-                            }
-                        }
-                        if(Object.keys(data_parse).length > 8){
-                            var newListItem = $("<li><a href='" + url + "' class='link link-navbar'>More</a></li>");
-                            $(this).find('ul').append(newListItem);
-                        }
-                    },
-                    error : function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
-                    }
-                });
+                //                 var newListItem = $("<li><a href='" + value[0] + "' class='link link-navbar'>" + value[1] + "</a></li>");
+                //                 $(this).find('ul').append(newListItem);
+                //                 $count++;
+                //                 if($count >= 8){
+                //                    break
+                //                 }
+                //             }
+                //         }
+                //         if(Object.keys(data_parse).length > 8){
+                //             var newListItem = $("<li><a href='" + url + "' class='link link-navbar'>More</a></li>");
+                //             $(this).find('ul').append(newListItem);
+                //         }
+                //     },
+                //     error : function(jqXHR, textStatus, errorThrown) {
+                //         console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+                //     }
+                // });
             }else{
                 // var id = $('#'+slug).val();
                 // var place_type_param = [];
