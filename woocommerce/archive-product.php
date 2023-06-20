@@ -303,14 +303,14 @@ $posts_per_page_veriants = [12, 24, 48];
                     <div class="dropdown">
                         <div class="dropdown__trigger sort">Sort by</div>
                         <div class="dropdown__content">
-                            <p class="link"><?php 
+                            <p id="current_sort" class="link"><?php 
                             if($sort=='rating'){
                                 echo "rating";
                             }elseif($sort=='date'){
                                 echo "date";
                             }elseif($sort=='price'){
                                 echo "price: low to high";
-                            }if($sort=='price-desc'){
+                            }elseif($sort=='price-desc'){
                                 echo "price: high to low";
                             }else{
                                 echo "popularity";

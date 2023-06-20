@@ -1,9 +1,7 @@
 $(document).ready(function() {
-    var $window = $(window);
-    var hostname = window.location.origin;
-    var windowsize = $window.width();
+    // var hostname = window.location.origin;
 
-    const url = new URL(hostname+'/catalog/');
+    const url = new URL(window.location.href);
     // const url = hostname + '/catalog/';
     // console.log(url);
     // var sortProducts = $('#sort-products a');
