@@ -129,7 +129,7 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             var url = words.slice(0, 3).join('/');
 
             if(slug === "sale"){
-                // $(this).append('<ul></ul>')
+                $(this).append('<ul></ul>')
                 url = url + '/catalog?sale=true';
                 $(this).find('a').attr("href", url); 
                 // var str1 = '&action=get_ajax_menu_popular_item_sales_category';
