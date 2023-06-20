@@ -164,3 +164,48 @@ a p.product_name:hover{
         --swiper-slide-number: 3;
     }
 }
+.posts_per_page_select{
+    display: flex;
+}
+.posts_per_page_select p{
+   margin: 0;
+   color: #0049af;
+   font-family: 'Merriweather Sans', sans-serif;
+   font-style: var(--fs-5)
+}
+@media screen and (max-width: 35.5em) {
+    .control{
+        grid-template-columns: unset;
+        gap: 1em;
+    }
+    .page-number-desktop{
+        display: none !important;
+    }
+    .posts_per_page_select-desktop{
+        display: none;
+    }
+    .control .page-number-mobile{
+        display: flex !important;
+    }
+    .posts_per_page_select-mobile{
+        display: flex !important;
+    }
+}
+
+.posts_per_page_select a{
+    margin: 0 0 0 0.5em;
+
+ }
+ .posts_per_page_select-mobile{
+    justify-content: center;
+    display: none;
+ }
+ .posts_per_page_select .current{
+    color: #789bce;
+ }
+ .page-number .current {
+    color: #789bce;
+ }
+ .control .page-number-mobile{
+    display: none;
+ }

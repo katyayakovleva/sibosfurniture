@@ -57,8 +57,13 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'popularity';
 }
+if (isset($_GET['posts_per_page'])) {
+    $posts_per_page = $_GET['posts_per_page'];
+} else {
+    $posts_per_page = 12;
+}
 $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
-// echo $term->name;
+$posts_per_page_veriants = [12, 24, 48];
 ?>
 
 <main class="header-padding">
@@ -325,7 +330,7 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
                     <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
-                        'posts_per_page' => 12,
+                        'posts_per_page' => $posts_per_page,
                         'post_type'      => 'product',
                         'paged'          => $paged,
 //                        'meta_key' => 'views_total',
@@ -419,11 +424,6 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
                         ?>
 
                         <div class="grid-item-shop">
-                            <?php
-                            //  foreach($terms as $term){
-                            //     echo '<p>'.$term->name.'</p>';
-                            // }
-                            ?>
                             <div class="grid-item-shop__header changing-color-item">
                                 <figure>
                                     <a href="<?php echo $product_url?>">
@@ -491,15 +491,22 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
         </section>
     </article>
         <div class="control pb-1">
+            <!-- <div></div> -->
+            <div id="posts_per_page_select" class="posts_per_page_select posts_per_page_select-desktop">
+                <p>Per page:</p>
+                <?php foreach($posts_per_page_veriants as $variant):?>
+                    <a value="<?php echo $variant; ?>" <?php if($variant == $posts_per_page): echo 'class="current"'; endif; ?>><?php echo $variant; ?></a>
+                <?php endforeach; ?> 
+            </div>
             <?php
-            $total= [$products -> max_num_pages];
+            $total= [$products -> max_num_pages][0];
             $previous_posts_link = previous_posts(false);
             $next_posts_link = next_posts( $total, false);
-            if($total[0] == 0){
-                $total[0] = 1;
+            if($total == 0){
+                $total = 1;
             }
             ?>
-            <div></div>
+            
             <div class="arrows">
                 <?php if($previous_posts_link && $paged > 1):?>
                     <a href="<?php echo $previous_posts_link; ?>" class="link fs-3" aria-label="back">
@@ -510,20 +517,57 @@ $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php endif;?>
-                <?php if($next_posts_link && $paged!=$total[0]):?>
+                <?php 
+                $big = 999999999;
+                if( $total> 1  )  {
+                    $paginate_links = paginate_links(array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => 'page/%#%/',
+                        'current'    => max( 1, get_query_var('paged') ),
+                        'total'     => $total,
+                        'mid_size'    => 3,
+                        'type'       => 'plain',
+                        'prev_next' => false,
+                    ) );
+                
+            ?>   
+            <div class="page-number page-number-mobile">
+                <div><?php  echo $paginate_links; ?></div>
+            </div>
+            <?php } ?>
+                <?php if($next_posts_link && $paged!=$total):?>
                     <a href="<?php echo $next_posts_link; ?>" class="link fs-3" aria-label="back">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 <?php else :?>
-                    <a href="" class="link fs-3 disabled" aria-label="back">
+                    <a class="link fs-3 disabled" aria-label="back">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 <?php endif;?>
             </div>
-            <div class="page-number">
-                <p><?php echo $paged; ?></p>
-                <p>/</p>
-                <p><?php echo $total[0]; ?></p>
+            <?php 
+                $big = 999999999;
+                if( $total> 1  )  {
+                    $paginate_links = paginate_links(array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => 'page/%#%/',
+                        'current'    => max( 1, get_query_var('paged') ),
+                        'total'     => $total,
+                        'mid_size'    => 3,
+                        'type'       => 'plain',
+                        'prev_next' => false,
+                    ) );
+                
+            ?>   
+            <div class="page-number page-number-desktop">
+                <div><?php  echo $paginate_links; ?></div>
+            </div>
+            <?php } ?>
+            <div id="posts_per_page_select" class="posts_per_page_select posts_per_page_select-mobile">
+                <p>Per page:</p>
+                <?php foreach($posts_per_page_veriants as $variant):?>
+                    <a value="<?php echo $variant; ?>" <?php if($variant == $posts_per_page): echo 'class="current"'; endif; ?>><?php echo $variant; ?></a>
+                <?php endforeach; ?> 
             </div>
         </div>
         <?php

@@ -13,7 +13,7 @@ $(document).ready(function() {
     //var brands = [];
     var sale = 'false';
     var sort = 'popularity';
-    
+    var posts_per_page = '12';
     $('#filter-products-mobile input[type="checkbox"]').on('change', function(){
         // $("#filter-products-mobile input:checkbox[name=collection]:checked").each(function(){
         //     collections.push($(this).val());
@@ -108,6 +108,12 @@ $(document).ready(function() {
     $('#sort_product a').click( function(){
         sort = $(this).attr('value');
         url.searchParams.set("sort", sort);
+        window.history.pushState({}, "", url);
+        window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
+    });
+    $('#posts_per_page_select a').click( function(){
+        posts_per_page = $(this).attr('value');
+        url.searchParams.set("posts_per_page", posts_per_page);
         window.history.pushState({}, "", url);
         window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
     });
