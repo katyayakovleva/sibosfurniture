@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 $(document).ready(function() {
     $('<div class="stepper-input__control d-flex fd-col"><button type="button" aria-label="increase quantity" class="stepper-input__button stepper-input__button--left"><i class="fa-solid fa-chevron-up fc-blue-4"></i></button> <button type="button" aria-label="decrease quantity" class="stepper-input__button stepper-input__button--right"><i class="fa-solid fa-chevron-down fc-blue-4"></i></button></div>').insertAfter('.quantity input');
     $('.quantity').each(function() {

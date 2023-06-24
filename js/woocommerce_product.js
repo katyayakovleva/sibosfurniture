@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 $(document).ready(function() {
     $('.related.products .grid-item-shop__buttons >a:first-of-type').addClass('disabled-link');
     // $('section.related.products ul.products li.product .woocommerce-LoopProduct-link').removeClass('disabled-link');

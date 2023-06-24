@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 function categoryLink() {
     $(".link-category-list").each(function() {
         const t = $(this).find(".link-category");

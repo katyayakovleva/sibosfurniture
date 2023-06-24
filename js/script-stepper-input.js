@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 function stepperInput() {
     $(".stepper-input").each(function() {
         let n = $(this).find(".stepper-input__input"),

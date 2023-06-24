@@ -1,4 +1,4 @@
-
+var $ = jQuery.noConflict();
 function collapseCross() {
     const a = $("body"),
         e = $('.navbar-burger[data-toggle="collapse"]');

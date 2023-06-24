@@ -147,12 +147,12 @@ function sibosfurniture_scripts() {
     wp_enqueue_style( 'sibosfurniture-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_enqueue_style( 'style', get_template_directory_uri(). '/css/style.css', array(), rand(111,9999));
 	wp_enqueue_style( 'swiper-bundle', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css', array(), rand(111,9999));
-	wp_enqueue_script( 'script', get_template_directory_uri() . '/js/script.js', array(), rand(111,9999), true );
-    wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.3.min.js', array(), _S_VERSION, true );
+    // wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.3.min.js');
+	wp_enqueue_script( 'script', get_template_directory_uri() . '/js/script.js', array( 'jquery'), rand(111,9999), true );
 	//wp_enqueue_script( 'TweenMax', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'jquery-throttle-debounce', 'https://cdn.jsdelivr.net/gh/cowboy/jquery-throttle-debounce@v1.1/jquery.ba-throttle-debounce.min.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'fontawesome', 'https://kit.fontawesome.com/13247fe767.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'swiper-bundle', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'jquery-throttle-debounce', 'https://cdn.jsdelivr.net/gh/cowboy/jquery-throttle-debounce@v1.1/jquery.ba-throttle-debounce.min.js',array( 'jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'fontawesome', 'https://kit.fontawesome.com/13247fe767.js',array( ), _S_VERSION, true );
+	wp_enqueue_script( 'swiper-bundle', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js', array( 'jquery'), _S_VERSION, true );
     wp_localize_script( 'script', 'ajax_menu_popular_items', array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
         'noposts' => __('No older posts found', 'greenglobe'),
@@ -163,45 +163,44 @@ function sibosfurniture_scripts() {
 	}
 	if(is_front_page() || is_home()){
         wp_enqueue_style( 'index', get_template_directory_uri(). '/css/index.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-index', get_template_directory_uri() . '/js/script-index.js', array(), rand(111,9999), true );
-		wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
-		wp_enqueue_script( 'swiper-full_height', get_template_directory_uri() . '/js/swiper-full_height.js', array('swiper-bundle'), rand(111,9999), true );
+		wp_enqueue_script( 'script-index', get_template_directory_uri() . '/js/script-index.js', array( 'jquery'), rand(111,9999), true );
+		wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array( 'swiper-bundle'), rand(111,9999), true );
+		wp_enqueue_script( 'swiper-full_height', get_template_directory_uri() . '/js/swiper-full_height.js', array( 'swiper-bundle'), rand(111,9999), true );
 //
-
     }elseif (is_page_template( 'page-templates/page-template-about-us.php' )){
         wp_enqueue_style( 'about-us', get_template_directory_uri(). '/css/about-us.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array('jquery'), rand(111,9999), true );
 		wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array( 'jquery'), rand(111,9999), true );
     }elseif (is_page_template( 'page-templates/page-template-blog.php' ) || is_category()){
         wp_enqueue_style( 'blog', get_template_directory_uri(). '/css/blog.css', array(), rand(111,9999));
 
 	}elseif (is_page_template( 'page-templates/page-template-colors-and-materials.php' )){
         wp_enqueue_style( 'colors-and-materials', get_template_directory_uri(). '/css/colors-and-materials.css', array(), rand(111,9999));
-        wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'script-colors-and-materials', get_template_directory_uri() . '/js/script-colors-and-materials.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'script-colors-and-materials', get_template_directory_uri() . '/js/script-colors-and-materials.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array( 'swiper-bundle'), rand(111,9999), true );
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array('jquery'), rand(111,9999), true );
     }elseif (is_page_template( 'page-templates/page-template-portfolio.php' )){
         wp_enqueue_style( 'portfolio', get_template_directory_uri(). '/css/portfolio.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array( 'jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array( 'swiper-bundle'), rand(111,9999), true );
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'portfolio', get_template_directory_uri() . '/js/portfolio.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array( 'jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'portfolio', get_template_directory_uri() . '/js/portfolio.js', array( 'jquery'), rand(111,9999), true );
 
     }elseif(is_single() && 'post' == get_post_type()){
         wp_enqueue_style( 'news-page', get_template_directory_uri(). '/css/news-page.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array( 'jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array( 'swiper-bundle'), rand(111,9999), true );
 
 	}elseif(is_account_page()){
 		if(is_user_logged_in() && !is_wc_endpoint_url()){
 			wp_enqueue_style( 'dashboards', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
-			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
-			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
+			wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array( 'jquery'), rand(111,9999), true );
+			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array( 'jquery'), rand(111,9999), true );
 			wp_localize_script( 'script-dashboard', 'ajax_posts', array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'noposts' => __('No older posts found', 'greenglobe'),
@@ -209,23 +208,23 @@ function sibosfurniture_scripts() {
 		}else{
            // wp_enqueue_style( 'checkout-order', get_template_directory_uri(). '/css/checkout-order.css', array(), rand(111,9999));
 			wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
-			wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
-			wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
-			wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array(), rand(111,9999), true );
+			wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array('jquery'), rand(111,9999), true );
+			wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array( 'jquery'), rand(111,9999), true );
+			wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
+			wp_enqueue_script( 'password-visibility', get_template_directory_uri() . '/js/script-password-visibility.js', array( 'jquery'), rand(111,9999), true );
             wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-            wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
+            wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array( 'jquery'), rand(111,9999), true );
 
         }
        
 	}elseif(is_checkout()){
 		wp_enqueue_style( 'dashboards', get_template_directory_uri(). '/css/dashboard.css', array(), rand(111,9999));
 		// wp_enqueue_style( 'sign-in', get_template_directory_uri(). '/css/sign-in.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-dashboard', get_template_directory_uri() . '/js/script-dashboard.js', array('jquery'), rand(111,9999), true );
 
 		wp_enqueue_style( 'checkout-order', get_template_directory_uri(). '/css/checkout-order.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
-		wp_enqueue_script( 'script-checkout', get_template_directory_uri() . '/js/script-checkout.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array('jquery'), rand(111,9999), true );
+		wp_enqueue_script( 'script-checkout', get_template_directory_uri() . '/js/script-checkout.js', array('jquery'), rand(111,9999), true );
 
         wp_localize_script( 'script-checkout', 'custom_fees_params', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -235,37 +234,37 @@ function sibosfurniture_scripts() {
         wp_enqueue_style( 'item-page-in', get_template_directory_uri(). '/css/item-page.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_single_product', get_template_directory_uri(). '/css/woocommerce_single_product.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-		wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'script-item-page', get_template_directory_uri() . '/js/script-item-page.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
+        wp_enqueue_script( 'script-item-page', get_template_directory_uri() . '/js/script-item-page.js', array( 'jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'script-changing-color-item', get_template_directory_uri() . '/js/script-changing-color-item.js', array( 'jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'script-stepper-input', get_template_directory_uri() . '/js/script-stepper-input.js', array( 'jquery'), rand(111,9999), true );
 //        wp_enqueue_script( 'swiper-item-gallery', get_template_directory_uri() . '/js/swiper-item-gallery.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'woocommerce-single-product', get_template_directory_uri() . '/js/woocommerce_single_product.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-single-product', get_template_directory_uri() . '/js/woocommerce_single_product.js', array( 'jquery'), rand(111,9999), true );
         wp_enqueue_style( 'review-form', get_template_directory_uri(). '/css/review-form.css', array(), rand(111,9999));
 
 	} elseif(is_cart()){
         wp_enqueue_style( 'my-cart', get_template_directory_uri(). '/css/my-cart.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_my-cart', get_template_directory_uri(). '/css/woocommerce_my-cart.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce_cart', get_template_directory_uri() . '/js/woocommerce_cart.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce_cart', get_template_directory_uri() . '/js/woocommerce_cart.js', array('jquery'), rand(111,9999), true );
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
     }elseif( is_archive()){
         wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_catalog', get_template_directory_uri(). '/css/woocommerce_catalog_page.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
+        wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
 
 
     }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){
         wp_enqueue_style( 'wishlist', get_template_directory_uri(). '/css/wishlist.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
-        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'wishlist', get_template_directory_uri() . '/js/wishlist.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+        wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'wishlist', get_template_directory_uri() . '/js/wishlist.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
     }
     
     elseif (is_search()){
@@ -275,10 +274,10 @@ function sibosfurniture_scripts() {
                 wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
                 wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
                 wp_enqueue_style( 'woocommerce_catalog', get_template_directory_uri(). '/css/woocommerce_catalog_page.css', array(), rand(111,9999));
-                wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array(), rand(111,9999), true );
-                wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
-                wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
-                wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array(), rand(111,9999), true );
+                wp_enqueue_script( 'woocommerce-product', get_template_directory_uri() . '/js/woocommerce_product.js', array('jquery'), rand(111,9999), true );
+                wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array('jquery'), rand(111,9999), true );
+                wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
+                wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
             
             }elseif ($type == 'blog'){
                 wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
@@ -291,8 +290,8 @@ function sibosfurniture_scripts() {
     }
     else{
         wp_enqueue_style( 'news-page', get_template_directory_uri(). '/css/news-page.css', array(), rand(111,9999));
-		wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array(), rand(111,9999), true );
-        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array(), rand(111,9999), true );
+		wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'sibosfurniture_scripts' );
@@ -930,11 +929,11 @@ function get_place_types(){
     return $place_types_arr;
 }
 
-remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+// remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+// remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
-add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
-add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
+// add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
+// add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
 
 add_action('delete_coaster_furniture_cron_hook', 'delete_coaster_furniture_cron_exec');
 

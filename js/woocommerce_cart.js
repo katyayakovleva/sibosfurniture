@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 $(document).ready(function() {
     $('.product-quantity .quantity').addClass('quantity_cart');
     // $('form').load(function (){

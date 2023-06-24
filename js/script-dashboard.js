@@ -52,6 +52,9 @@
 //     });
     
 // }
+
+var $ = jQuery.noConflict();
+
 function loadOrderDetails(action, order_id){
     var str = '&order_action='+ action +  '&order_id='+ order_id + '&action=order_details_ajax';
     $.ajax({

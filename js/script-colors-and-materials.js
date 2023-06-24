@@ -1,3 +1,6 @@
+var $ = jQuery.noConflict();
+
+
 function changinColorItem() {
     $(".changing-color-item").each(function() {
         const i = $(this).find("figure").find("img");

@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 function descriptionInfo() {
     $(".description-info").each(function() {
         const n = $(this).find(".description-info__tabs").find(".link"),

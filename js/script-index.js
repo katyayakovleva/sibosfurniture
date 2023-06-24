@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 function swiperMenuLink() {
     var e = $(".swiper-menu").find(".link");
     e.mouseenter(function() {

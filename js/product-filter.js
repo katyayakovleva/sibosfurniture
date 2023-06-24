@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 $(document).ready(function() {
     // var hostname = window.location.origin;
 

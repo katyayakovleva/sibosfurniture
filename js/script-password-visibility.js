@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 $(function () {
     $(document).on("click","#toggle_pwd_1",function(){
         $(this).toggleClass("fa-eye fa-eye-slash");
