@@ -90,6 +90,9 @@ p.first-payment-date {
 .woo-variation-swatches .variable-items-wrapper .variable-item-contents:before{
     background-image: none;
 }
+.woo-variation-swatches .variable-items-wrapper .variable-item-contents .variable-item-span-button:hover{
+    color: #e7e7e7;
+}
 .woo-variation-swatches .wvs-style-squared.variable-items-wrapper .variable-item:not(.radio-variable-item)[aria-checked="true"]{
     border-color: #0049af;
 
