@@ -148,8 +148,15 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'popularity';
 }
-
+if (isset($_GET['posts_per_page'])) {
+    $posts_per_page = $_GET['posts_per_page'];
+} else {
+    $posts_per_page = 12;
+}
+$term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
+$posts_per_page_veriants = [12, 24, 48];
 ?>
+
 <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
         <aside  >
@@ -166,14 +173,31 @@ if (isset($_GET['sort'])) {
                             'parent' => 0,
                             // 'parent'   => $parent_product_cat->term_id
                         );
-                $child_product_cats = get_terms( $cat_args );
-                foreach ($child_product_cats as $child_product_cat) { ?>
+                $product_cats = get_terms( $cat_args );
+                foreach ($product_cats as $product_cat) { ?>
 
                     <li>
-                        <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
-                        <ol class="link-category-list">
+                    <div class="link-category-div">
+                        <a class="link-category <?php if($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="desktop_<?php echo $product_cat->term_id; ?>"></a>
+                        <a class="ff-ms fs-5 ta-center category-label" href = "<?php echo get_term_link( $product_cat );?>" ><? echo $product_cat->name; ?></a>
+                    
+                    </div>
+                    <?php
+                        $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
+                        if(!empty($place_types)){
+                            $cat_args1 = array(
+                                    'taxonomy' => 'product_cat',
+                                    'hide_empty' => true,
+                                    'parent'   => $parent_product_cat->term_id,
+                                    'include'  => $place_types
+                                );
+                            $child_product_cats1 = get_terms( $cat_args1 );
+                        }
+                        
+                        ?>
+                        <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="desktop_<?php echo $product_cat->term_id; ?>">
                             <?php
-                                $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
+                                // $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
                                 $cat_args = array(
                                             'taxonomy' => 'product_cat',
                                             'hide_empty' => true,
@@ -182,13 +206,13 @@ if (isset($_GET['sort'])) {
                                 $child_product_cats = get_terms( $cat_args );
                                 ?>
                                 <li class="form-filter">
-                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
+                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>
                                 </li>
                                 <?php
                                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                                     <li class="form-filter">
-                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                     </li>
                                 
                                 <?php } 
@@ -270,29 +294,43 @@ if (isset($_GET['sort'])) {
                             'parent' => 0,
                             // 'parent'   => $parent_product_cat->term_id
                         );
-                $child_product_cats = get_terms( $cat_args );
-                foreach ($child_product_cats as $child_product_cat) { ?>
+                $product_cats = get_terms( $cat_args );
+                foreach ($product_cats as $product_cat) { ?>
 
                     <li>
-                        <a class="link-category ff-ms fs-5 fc-blue-2 ta-center"><? echo $child_product_cat->name; ?></a>
-                        <ol class="link-category-list">
-                            <?php
-                                $parent_product_cat = get_term_by( 'id', $child_product_cat->term_id, 'product_cat' );
+                    <div class="link-category-div ff-ms fs-5 ta-center">
+                        <a class="link-category  <?php if($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="mobile_<?php echo $product_cat->term_id; ?>"></a>
+                        <a class=" category-label" href = "<?php echo get_term_link( $product_cat );?>" ><? echo $product_cat->name; ?></a>
+                    </div>
+                    <?php
+                        $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
+                        if(!empty($place_types)){
+                            $cat_args1 = array(
+                                    'taxonomy' => 'product_cat',
+                                    'hide_empty' => true,
+                                    'parent'   => $parent_product_cat->term_id,
+                                    'include'  => $place_types
+                                );
+                            $child_product_cats1 = get_terms( $cat_args1 );
+                        }
+                        ?>
+                        <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>"  id="mobile_<?php echo $product_cat->term_id; ?>">
+                             <?php
+                                //  $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
                                 $cat_args = array(
                                             'taxonomy' => 'product_cat',
                                             'hide_empty' => true,
                                             'parent'   => $parent_product_cat->term_id
                                         );
                                 $child_product_cats = get_terms( $cat_args );
-                                ?>
+                            ?>
                                 <li class="form-filter">
-                                    <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types )): echo 'checked';endif; ?>>All types</label>
-                                </li>
+                                <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>                                </li>
                                 <?php
                                 foreach ($child_product_cats as $child_product_cat) { ?>
 
                                     <li class="form-filter">
-                                        <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types )): echo 'checked';endif; ?> ><? echo $child_product_cat->name; ?></label>
+                                    <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                     </li>
                                 
                                 <?php } 
@@ -356,14 +394,14 @@ if (isset($_GET['sort'])) {
                     <div class="dropdown">
                         <div class="dropdown__trigger sort">Sort by</div>
                         <div class="dropdown__content">
-                            <p class="link"><?php 
+                            <p id="current_sort" class="link"><?php 
                             if($sort=='rating'){
                                 echo "rating";
                             }elseif($sort=='date'){
                                 echo "date";
                             }elseif($sort=='price'){
                                 echo "price: low to high";
-                            }if($sort=='price-desc'){
+                            }elseif($sort=='price-desc'){
                                 echo "price: high to low";
                             }else{
                                 echo "popularity";
@@ -383,10 +421,9 @@ if (isset($_GET['sort'])) {
                     <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
-                        'posts_per_page' => 12,
+                        'posts_per_page' => $posts_per_page,
                         'post_type'      => 'product',
                         'paged'          => $paged,
-                        's'             => $_GET['s'],
 //                        'meta_key' => 'views_total',
                         // 'orderby' => 'popularity',
                         // 'order' => 'DESC',
@@ -413,6 +450,9 @@ if (isset($_GET['sort'])) {
                     // }
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
+                    }
+                    if($term){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $term->term_id);
                     }
                     if($sale == 'true'){
                         $on_sale_products = wc_get_product_ids_on_sale();
@@ -475,11 +515,6 @@ if (isset($_GET['sort'])) {
                         ?>
 
                         <div class="grid-item-shop">
-                            <?php
-                            //  foreach($terms as $term){
-                            //     echo '<p>'.$term->name.'</p>';
-                            // }
-                            ?>
                             <div class="grid-item-shop__header changing-color-item">
                                 <figure>
                                     <a href="<?php echo $product_url?>">
@@ -547,15 +582,22 @@ if (isset($_GET['sort'])) {
         </section>
     </article>
         <div class="control pb-1">
+            <!-- <div></div> -->
+            <div id="posts_per_page_select" class="posts_per_page_select posts_per_page_select-desktop">
+                <p>Per page:</p>
+                <?php foreach($posts_per_page_veriants as $variant):?>
+                    <a value="<?php echo $variant; ?>" <?php if($variant == $posts_per_page): echo 'class="current"'; endif; ?>><?php echo $variant; ?></a>
+                <?php endforeach; ?> 
+            </div>
             <?php
-            $total= [$products -> max_num_pages];
+            $total= [$products -> max_num_pages][0];
             $previous_posts_link = previous_posts(false);
             $next_posts_link = next_posts( $total, false);
-            if($total[0] == 0){
-                $total[0] = 1;
+            if($total == 0){
+                $total = 1;
             }
             ?>
-            <div></div>
+            
             <div class="arrows">
                 <?php if($previous_posts_link && $paged > 1):?>
                     <a href="<?php echo $previous_posts_link; ?>" class="link fs-3" aria-label="back">
@@ -566,20 +608,57 @@ if (isset($_GET['sort'])) {
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php endif;?>
-                <?php if($next_posts_link && $paged!=$total[0]):?>
+                <?php 
+                $big = 999999999;
+                if( $total> 1  )  {
+                    $paginate_links = paginate_links(array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => 'page/%#%/',
+                        'current'    => max( 1, get_query_var('paged') ),
+                        'total'     => $total,
+                        'mid_size'    => 3,
+                        'type'       => 'plain',
+                        'prev_next' => false,
+                    ) );
+                
+            ?>   
+            <div class="page-number page-number-mobile">
+                <div><?php  echo $paginate_links; ?></div>
+            </div>
+            <?php } ?>
+                <?php if($next_posts_link && $paged!=$total):?>
                     <a href="<?php echo $next_posts_link; ?>" class="link fs-3" aria-label="back">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 <?php else :?>
-                    <a href="" class="link fs-3 disabled" aria-label="back">
+                    <a class="link fs-3 disabled" aria-label="back">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 <?php endif;?>
             </div>
-            <div class="page-number">
-                <p><?php echo $paged; ?></p>
-                <p>/</p>
-                <p><?php echo $total[0]; ?></p>
+            <?php 
+                $big = 999999999;
+                if( $total> 1  )  {
+                    $paginate_links = paginate_links(array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => 'page/%#%/',
+                        'current'    => max( 1, get_query_var('paged') ),
+                        'total'     => $total,
+                        'mid_size'    => 3,
+                        'type'       => 'plain',
+                        'prev_next' => false,
+                    ) );
+                
+            ?>   
+            <div class="page-number page-number-desktop">
+                <div><?php  echo $paginate_links; ?></div>
+            </div>
+            <?php } ?>
+            <div id="posts_per_page_select" class="posts_per_page_select posts_per_page_select-mobile">
+                <p>Per page:</p>
+                <?php foreach($posts_per_page_veriants as $variant):?>
+                    <a value="<?php echo $variant; ?>" <?php if($variant == $posts_per_page): echo 'class="current"'; endif; ?>><?php echo $variant; ?></a>
+                <?php endforeach; ?> 
             </div>
         </div>
         <?php
@@ -636,7 +715,7 @@ if (isset($_GET['sort'])) {
             </div>
         </article>
     </main>
-    <?php get_footer( 'shop' );
+<?php get_footer( 'shop' );
 
     }
 }
