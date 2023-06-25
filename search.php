@@ -392,9 +392,7 @@ $posts_per_page_veriants = [12, 24, 48];
                         </div>
                     </div>
                     <div class="dropdown">
-                        <div class="dropdown__trigger sort">Sort by</div>
-                        <div class="dropdown__content">
-                            <p id="current_sort" class="link"><?php 
+                        <div class="dropdown__trigger sort">Sort by: <?php 
                             if($sort=='rating'){
                                 echo "rating";
                             }elseif($sort=='date'){
@@ -406,7 +404,9 @@ $posts_per_page_veriants = [12, 24, 48];
                             }else{
                                 echo "popularity";
                             }
-                                ?></p>
+                                ?></div>
+                        <div class="dropdown__content">
+                            <!-- <p id="current_sort" class="link"></p> -->
                             <ul id="sort_product">
                                 <li><a value="popularity" class="link">popularity</a></li>
                                 <li><a value="rating" class="link">rating</a></li>
