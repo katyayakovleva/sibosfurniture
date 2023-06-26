@@ -419,7 +419,8 @@
     }
     .swiper-full-height .swiper-slide img {
         -o-object-position: center;
-        object-position: center
+        object-position: center;
+        overflow: hidden;
     }
     .swiper-full-height .swiper-slide div {
         width: max(30em, 40%);
