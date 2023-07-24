@@ -13,6 +13,8 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 include_once('coaster_upd.php');
+include_once('acme_upd.php');
+include_once('foagroup_upd.php');
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
