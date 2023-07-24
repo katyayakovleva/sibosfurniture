@@ -424,10 +424,15 @@ fieldset div.form-row{
     padding: 3px !important;
 }
 fieldset{
-    border: 2px solid #0049af;
-    border-radius: 4px;
+    border: none !important;
+    padding: 0 !important;
 }
 
+fieldset  p.form-row{
+    border: 2px solid #0049af;
+    border-radius: 4px;
+    padding: 0.35em 0.75em 0.625em !important;
+}
 .checkout-review-body{
     box-sizing: border-box;
     flex-basis: 100%;
