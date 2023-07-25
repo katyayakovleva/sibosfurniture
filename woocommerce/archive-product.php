@@ -18,8 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 $shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 get_header( 'shop' );
-global $wp_query;
-// var_dump( $wp_query->query_vars );
+
 /**
  * Hook: woocommerce_before_main_content.
  *

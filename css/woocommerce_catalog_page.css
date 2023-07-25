@@ -209,3 +209,6 @@ a p.product_name:hover{
  .control .page-number-mobile{
     display: none;
  }
+ .related_add_to_cart_button{
+    border: none !important;
+}

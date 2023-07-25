@@ -107,11 +107,10 @@ if(isset($_GET['search-type'])) {
 	} else  {?>
 <?php
 
+
 defined( 'ABSPATH' ) || exit;
 $shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 get_header( 'shop' );
-// global $wp_query;
-
 /**
  * Hook: woocommerce_before_main_content.
  *
@@ -120,26 +119,13 @@ get_header( 'shop' );
  * @hooked WC_Structured_Data::generate_website_data() - 30
  */
 do_action( 'woocommerce_before_main_content' );
-// if (isset($_GET['collections'])) {
-//     $collections = json_decode(urldecode($_GET['collections']), true);
-// } else {
-//     $collections = [];
-// }
-// if (isset($_GET['item_types'])) {
-//     $item_types = json_decode(urldecode($_GET['item_types']), true);
-// } else {
-//     $item_types = [];
-// }
+
 if (isset($_GET['place_types'])) {
     $place_types = json_decode(urldecode($_GET['place_types']), true);
 } else {
     $place_types = [];
 }
-// if (isset($_GET['brands'])) {
-//     $brands = json_decode(urldecode($_GET['brands']), true);
-// } else {
-//     $brands = [];
-// }
+
 if (isset($_GET['sale'])) {
     $sale = $_GET['sale'];
 } else {
@@ -158,7 +144,7 @@ if (isset($_GET['posts_per_page'])) {
 $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
 $posts_per_page_veriants = [12, 24, 48];
 ?>
-
+<a href = "<? echo get_post_type_archive_link( 'product')?>" id="catalog_link" hidden ></a>
 <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
         <aside  >
@@ -223,52 +209,7 @@ $posts_per_page_veriants = [12, 24, 48];
                     </li>
                 
                 <?php } ?>
-                <!-- <li>    
-                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
-                        <ol class="link-category-list">
-                            <?php
-                                // $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
-                                // $cat_args = array(
-                                //             'taxonomy' => 'product_cat',
-                                //             'hide_empty' => true,
-                                //             'parent'   => $parent_product_cat->term_id
-                                //         );
-                                // $child_product_cats = get_terms( $cat_args );
-                                // foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                    <li class="form-filter">
-                                        
-                                            <label><input type="checkbox" name="<?php //echo $parent_product_cat->slug; ?>" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                        
-                                    </li>
-                                
-                                <?php //} 
-                            ?>
-                        </ol>
-                </li>
-           
-           
-                <li>
-                    <a class="link-category ff-ms  fc-blue-2 ta-center">Brand</a>
-                    <ol class="link-category-list">
-                        <?php
-                            // $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
-                            // $cat_args = array(
-                            //             'taxonomy' => 'product_cat',
-                            //             'hide_empty' => true,
-                            //             'parent'   => $parent_product_cat->term_id
-                            //         );
-                            // $child_product_cats = get_terms( $cat_args );
-                            // foreach ($child_product_cats as $child_product_cat) { ?>
-
-                                <li class="form-filter">
-                                    <label><input type="checkbox" name="brand" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                </li>
-                            
-                            <?php //} 
-                        ?>
-                    </ol>
-                </li>                 -->
                 <li class="form-checkbox">
                     <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                 </li>
@@ -341,52 +282,7 @@ $posts_per_page_veriants = [12, 24, 48];
                     </li>
                 
                 <?php } ?>
-                <!-- <li>    
-                    <a class="link-category ff-ms fs-5 fc-blue-2 ta-center">Collections</a>
-                        <ol class="link-category-list">
-                            <?php
-                                // $parent_product_cat = get_term_by( 'slug', 'collection', 'product_cat' );
-                                // $cat_args = array(
-                                //             'taxonomy' => 'product_cat',
-                                //             'hide_empty' => true,
-                                //             'parent'   => $parent_product_cat->term_id
-                                //         );
-                                // $child_product_cats = get_terms( $cat_args );
-                                // foreach ($child_product_cats as $child_product_cat) { ?>
 
-                                    <li class="form-filter">
-                                        
-                                            <label><input type="checkbox" name="<?php //echo $parent_product_cat->slug; ?>" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$collections )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                        
-                                    </li>
-                                
-                                <?php //} 
-                            ?>
-                        </ol>
-                </li>
-           
-           
-                <li>
-                    <a class="link-category ff-ms  fc-blue-2 ta-center">Brand</a>
-                    <ol class="link-category-list">
-                        <?php
-                            // $parent_product_cat = get_term_by( 'slug', 'brand', 'product_cat' );
-                            // $cat_args = array(
-                            //             'taxonomy' => 'product_cat',
-                            //             'hide_empty' => true,
-                            //             'parent'   => $parent_product_cat->term_id
-                            //         );
-                            // $child_product_cats = get_terms( $cat_args );
-                            // foreach ($child_product_cats as $child_product_cat) { ?>
-
-                                <li class="form-filter">
-                                    <label><input type="checkbox" name="brand" value="<?php //echo $child_product_cat->term_id; ?>" <?php //if(in_array($child_product_cat->term_id ,$brands )): echo 'checked';endif; ?> ><? //echo $child_product_cat->name; ?></label>
-                                </li>
-                            
-                            <?php //} 
-                        ?>
-                    </ol>
-                </li>                 -->
                                 <li class="form-checkbox">
                                     <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
                                 </li>
@@ -408,6 +304,7 @@ $posts_per_page_veriants = [12, 24, 48];
                             }
                                 ?></div>
                         <div class="dropdown__content">
+                            <!-- <p id="current_sort" class="link"></p> -->
                             <ul id="sort_product">
                                 <li><a value="popularity" class="link">popularity</a></li>
                                 <li><a value="rating" class="link">rating</a></li>
@@ -425,9 +322,7 @@ $posts_per_page_veriants = [12, 24, 48];
                         'posts_per_page' => $posts_per_page,
                         'post_type'      => 'product',
                         'paged'          => $paged,
-//                        'meta_key' => 'views_total',
-                        // 'orderby' => 'popularity',
-                        // 'order' => 'DESC',
+                        's'             => $_GET['s'],
                         'tax_query' => array(
                             'relation' => 'AND',
                                 array(
@@ -437,16 +332,6 @@ $posts_per_page_veriants = [12, 24, 48];
                                     'operator' => 'NOT IN',
                                 ),
                         ),
-                        'meta_query' => array(
-                            'relation' => 'AND',
-                            array(
-                                'key' => '_stock_status',
-                                'value' => 'outofstock',
-                                'compare' => '!=',
-                            ),
-                        ),
-                        's'             => $_GET['s'],
-                       
                     );
                     // if(!empty($item_types)){
                     //     $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
@@ -458,6 +343,7 @@ $posts_per_page_veriants = [12, 24, 48];
                     // if(!empty($place_types_and_collections)){
                     //     $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
                     // }
+                    
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
                     }
@@ -470,48 +356,111 @@ $posts_per_page_veriants = [12, 24, 48];
                             $args['post__in'] =  ['-1'];
                         }else{
                             $args['post__in'] =  wc_get_product_ids_on_sale();
-                        }
-                        
+                        } 
                     }
                     if($sort == 'rating'){
+                        // $args['meta_query']= array(
+                        //     'relation' => 'OR',
+                        //     array(
+                        //         'key'     => '_wc_average_rating',
+                        //         'value'   => '',
+                        //         'compare' => 'NOT EXISTS'
+                        //     ),
+                        //     array(
+                        //         'key'     => '_wc_average_rating',
+                        //         'compare' => 'EXISTS'
+                        //     )
+                        // ); 
                         
-                        $args['meta_query'][]= array(
-                            'relation' => 'OR',
-                            array(
-                                'key'     => '_wc_average_rating',
-                                'value'   => '',
-                                'compare' => 'NOT EXISTS'
-                            ),
-                            array(
-                                'key'     => '_wc_average_rating',
-                                'compare' => 'EXISTS'
-                            )
-                        ); 
-                        
-                        $args['orderby'] = 'meta_value_num';
-                        $args['order'] = 'DESC';
-                        $args['meta_key'] = '_wc_average_rating';
+                        // $args['orderby'] = 'meta_value_num';
+                        // $args['order'] = 'DESC';
+                        // $args['meta_key'] = '_wc_average_rating';
 
-                    }elseif($sort == 'date'){
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'desc';
-                    }elseif($sort == 'price'){
-                        $args['orderby'] = 'meta_value_num';
-                        $args['meta_key'] = '_price';
-                        $args['order'] = 'asc';
+                        $args['meta_query'] = array(
+                            'relation' => 'AND',
+                            'raiting' => array(
+                                'key'     => '_wc_average_rating',
+                                'compare' => 'EXISTS', 
+                            ),
+                            'status' => array(
+                                'key' => '_stock_status',
+                                'compare' => 'EXISTS',
+                            ),
+                            
+                        );
+                        $args['orderby'] = array(
+                            'status' => 'ASC',
+                            'raiting' =>'DESC',
+                        );
+                    }
+                    elseif($sort == 'date'){
+                        // $args['orderby'] = 'date';
+                        // $args['order'] = 'desc';
+                        $args['meta_key'] = '_stock_status';
+                        $args['orderby'] = array(
+                            'meta_value' => 'ASC',
+                            'date' => 'DESC',
+                        );
+                    }
+                    elseif($sort == 'price'){
+                        // $args['orderby'] = 'meta_value_num';
+                        // $args['meta_key'] = '_price';
+                        // $args['order'] = 'asc';
+                        $args['meta_query'] = array(
+                            'relation' => 'AND',
+                            'price' => array(
+                                'key'     => '_price',
+                                'compare' => 'EXISTS', 
+                                'type' => 'NUMERIC',
+                            ),
+                            'status' => array(
+                                'key' => '_stock_status',
+                                'compare' => 'EXISTS',
+                            ),
+                            
+                        );
+                        $args['orderby'] = array(
+                            'status' => 'ASC',
+                            'price' =>'ASC',
+                        );
+                        
                     }
                     elseif($sort == 'price-desc'){
-                        $args['orderby'] = 'meta_value_num';
-                        $args['meta_key'] = '_price';
-                        $args['order'] = 'desc';
+                        // $args['orderby'] = 'meta_value_num';
+                        // $args['meta_key'] = '_price';
+                        // $args['order'] = 'desc';
+                        $args['meta_query'] = array(
+                            'relation' => 'AND',
+                            'price' => array(
+                                'key'     => '_price',
+                                'compare' => 'EXISTS', 
+                                'type' => 'NUMERIC',
+                            ),
+                            'status' => array(
+                                'key' => '_stock_status',
+                                'compare' => 'EXISTS',
+                            ),
+                            
+                        );
+                        $args['orderby'] = array(
+                            'status' => 'ASC',
+                            'price' =>'DESC',
+                        );
+                        
                     }
                     else{
-                        $args['orderby'] = 'popularity';
-                        $args['order'] = 'desc';
+                        // $args['orderby'] = 'popularity';
+                        // $args['order'] = 'desc';
+                        $args['meta_key'] = '_stock_status';
+                        $args['orderby'] = array(
+                            'meta_value' => 'ASC',
+                            'popularity' => 'DESC',
+                        );
+                       
                     }
+                    
                     $products = new WP_Query( $args );
-                    // $products = $wp_query;
-                    // echo '<p>'.$products->found_posts.'<p>'; 
+
                     while ( $products->have_posts() ) : $products->the_post();
                         global $product;
                         $product_id = $product->get_id();
@@ -523,9 +472,10 @@ $posts_per_page_veriants = [12, 24, 48];
                         $terms = get_the_terms( $product_id, 'product_cat' );
                         $product_cart_id = WC()->cart->generate_cart_id( $product_id );
                         $in_cart = WC()->cart->find_product_in_cart( $product_cart_id );
+                        $stock_status = $product->get_stock_status();
                         ?>
 
-                        <div class="grid-item-shop">
+                        <div class="grid-item-shop <?php if($stock_status == 'outofstock'): echo 'outofstock_shop_item'; endif;?>">
                             <div class="grid-item-shop__header changing-color-item">
                                 <figure>
                                     <a href="<?php echo $product_url?>">
@@ -539,6 +489,10 @@ $posts_per_page_veriants = [12, 24, 48];
                             <a href="<?php echo $product_url?>">
                                 <p class="ff-ms fs-5 fg-1 product_name"><?php echo $product_name ?></p>
                             </a>
+                            <?php if($stock_status == 'outofstock'):?>
+                                <p class="ff-ms fs-5 fg-1 outofstock_text">Out of stock</p>
+                            <?php endif;?>
+                            
                             <div class="product-rating">
                                 <?php if($product_rating > 0){
                                     for ($i = 1; $i <= $product_rating; $i++){ ?>
@@ -550,7 +504,7 @@ $posts_per_page_veriants = [12, 24, 48];
                                 }?>
                             </div>
                             <div class="d-flex ai-center jc-between mt-2">
-                                <p class="grid-item-shop__price ff-ms m-0"><?php echo $product_price ?></p>
+                                <p class="grid-item-shop__price ff-ms m-0 <?php if($stock_status == 'outofstock'): echo 'outofstock_shop_item_price'; endif;?>" ><?php echo $product_price ?></p>
                                 <?php
                                 if ( $product->is_type( 'variable' ) ) {
                                     if( in_array( $product_id, array_column( WC()->cart->get_cart(), 'product_id' ) ) ) {?>
@@ -593,7 +547,6 @@ $posts_per_page_veriants = [12, 24, 48];
         </section>
     </article>
         <div class="control pb-1">
-            <!-- <div></div> -->
             <div id="posts_per_page_select" class="posts_per_page_select posts_per_page_select-desktop">
                 <p>Per page:</p>
                 <?php foreach($posts_per_page_veriants as $variant):?>
@@ -727,6 +680,7 @@ $posts_per_page_veriants = [12, 24, 48];
         </article>
     </main>
 <?php get_footer( 'shop' );
+
     }
 }
 ?>
