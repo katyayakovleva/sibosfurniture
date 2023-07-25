@@ -20,12 +20,12 @@ const COASTER_HEADERS = array(
     "keycode" => "45FDCB85CF2F440E9750F1E96A"
 );
 
-const CACHE_COASTER_FILE = "/themes/sibosfurniture-master/cache_coaster.json";
-const CACHE_COASTER_TO_CREATE = "/themes/sibosfurniture-master/cache_coaster_to_create.json";
-const CACHE_COASTER_PRICES_FILE = "/themes/sibosfurniture-master/cache_coaster_prices.json";
-const CACHE_COASTER_CATEGORIES_FILE = "/themes/sibosfurniture-master/cache_coaster_categories.json";
-const CACHE_COASTER_PROGRESS = "/themes/sibosfurniture-master/cache_coaster_progress.json";
-const LOGGER_FILE = "/themes/sibosfurniture-master/logs.txt";
+const CACHE_COASTER_FILE = "/themes/sibosfurniture/cache_coaster.json";
+const CACHE_COASTER_TO_CREATE = "/themes/sibosfurniture/cache_coaster_to_create.json";
+const CACHE_COASTER_PRICES_FILE = "/themes/sibosfurniture/cache_coaster_prices.json";
+const CACHE_COASTER_CATEGORIES_FILE = "/themes/sibosfurniture/cache_coaster_categories.json";
+const CACHE_COASTER_PROGRESS = "/themes/sibosfurniture/cache_coaster_progress.json";
+const LOGGER_FILE = "/themes/sibosfurniture/logs.txt";
 
 const CACHE_FILE_PATH = WP_CONTENT_DIR . CACHE_COASTER_FILE;
 const CACHE_TO_CREATE_FILE_PATH = WP_CONTENT_DIR . CACHE_COASTER_TO_CREATE;
@@ -39,9 +39,9 @@ add_action('run_coaster_update', 'coaster_runJob_update');
 
 function coaster_runJob_update(): void
 {
-    $products = readProductCache(); // Or create if is does not exists
-    $prices_map = readProductPricesCache();
-    $inventory_stock = getQuantityMap();
+    $products = coaster_read_product_cache(); // Or create if is does not exists
+    $prices_map = coaster_read_product_price_cache();
+    $inventory_stock = coaster_get_quantity_map();
 
     $to_create_arr = array();
     if (empty($prices_map) || empty($inventory_stock)) {
@@ -54,7 +54,7 @@ function coaster_runJob_update(): void
             $product_id = wc_get_product_id_by_sku($sku);
 
             if ($product_id != null) {
-                update_existing_product($product_id, $products[$i], $prices_map[$sku], $inventory_stock[$sku]);
+                coaster_update_existing_product($product_id, $products[$i], $prices_map[$sku], $inventory_stock[$sku]);
             } else {
                 // Write sku to file for creation
                 $to_create_arr[] = $sku;
@@ -70,13 +70,13 @@ add_action('run_coaster_create', 'coaster_runJob_create');
 
 function coaster_runJob_create(): void
 {
-    $products = prepareSkuToProduct(readProductCache()); // Or create if is does not exists
-    $products_to_create = readProductToCreateCache();
-    $prices_map = readProductPricesCache();
-    $categories_cache = readCategoriesCache();
+    $products = coaster_prepare_sku_to_product(coaster_read_product_cache()); // Or create if is does not exists
+    $products_to_create = coaster_read_product_to_create_cache();
+    $prices_map = coaster_read_product_price_cache();
+    $categories_cache = coaster_read_categories_cache();
     $coaster_categories = $categories_cache['categories'];
     $coaster_subcategories = $categories_cache['subcategories'];
-    $inventory_stock = getQuantityMap();
+    $inventory_stock = coaster_get_quantity_map();
 
     if (empty($prices_map) || empty($categories_cache) || empty($inventory_stock)) {
         return;
@@ -92,7 +92,6 @@ function coaster_runJob_create(): void
     }
     fclose($progress_file);
 
-
     $counter = 0;
     if (!empty($products_to_create) && !empty($products)) {
         for ($i = $progress; $i < sizeof($products_to_create); $i++) {
@@ -105,18 +104,15 @@ function coaster_runJob_create(): void
 
             $sku = $products_to_create[$i];
             $product_id = wc_get_product_id_by_sku($sku);
-            log_info($sku, "Started product");
-            try{
-                if ($product_id != null) {
-                    continue;
-                } else {
-                    if (!check_is_discontinued($products[$sku])) {
-                        create_new_product($products[$sku], $prices_map[$sku], $coaster_categories, $coaster_subcategories, $inventory_stock[$sku]);
-                    }
+            log_info($sku, "[COASTER] Started product");
+            if ($product_id != null) {
+                continue;
+            } else {
+                if (!coaster_check_is_discontinued($products[$sku])) {
+                    coaster_create_new_product($products[$sku], $prices_map[$sku], $coaster_categories, $coaster_subcategories, $inventory_stock[$sku]);
                 }
-            } catch (Exception $e){
-                exit();
             }
+            $counter++;
         }
         $progress_file = fopen(CACHE_COASTER_PROGRESS_FILE_PATH, "w");
         fwrite($progress_file, 0);
@@ -128,7 +124,7 @@ function log_info($sku, $message): void
 {
     $logger = fopen(LOGGER_FILE_PATH, "a+");
     $currentDateTime = date('Y-m-d H:i:s');
-    fwrite($logger, "[COASTER]" . " [" . $currentDateTime . "] " . "[" . $sku . "] " . $message . "\n");
+    fwrite($logger, "[" . $currentDateTime . "] " . "[" . $sku . "] " . $message . "\n");
     fclose($logger);
 }
 
@@ -138,7 +134,7 @@ function clear_log(): void
     fclose($logger);
 }
 
-function getQuantityMap(): array
+function coaster_get_quantity_map(): array
 {
     $qty_url = "http://api.coasteramer.com/api/product/GetInventoryList";
     $qty_response_url = json_decode(wp_remote_get($qty_url, array(
@@ -152,7 +148,7 @@ function getQuantityMap(): array
     return $inventory_array;
 }
 
-function update_existing_product($existing_product_id, array $product, float $price, int $stock_qty)
+function coaster_update_existing_product($existing_product_id, array $product, float $price, int $stock_qty)
 {
     $existing_product = new WC_Product_Simple($existing_product_id);
 
@@ -161,13 +157,13 @@ function update_existing_product($existing_product_id, array $product, float $pr
     $week_ago = strtotime('-1 week', $current_time);
 
     if ($modified_time >= $week_ago) {
-        log_info($product['ProductNumber'], "Skipped, updated less then a week ago");
+        log_info($product['ProductNumber'], "[COASTER] Skipped, updated less then a week ago");
     } else {
-        $is_discontinued = check_is_discontinued($product);
+        $is_discontinued = coaster_check_is_discontinued($product);
         // Managing stock properties
         if ($is_discontinued || $stock_qty <= 0) {
             $existing_product->set_stock_status('outofstock');
-            log_info($product['ProductNumber'], "Went out of stock");
+            log_info($product['ProductNumber'], "[COASTER] Went out of stock");
         } else {
             $existing_product->set_stock_status('instock');
         }
@@ -175,11 +171,11 @@ function update_existing_product($existing_product_id, array $product, float $pr
         $existing_product->set_regular_price($price);
 
         $existing_product->save();
-        log_info($product['ProductNumber'], "Updated");
+        log_info($product['ProductNumber'], "[COASTER] Updated");
     }
 }
 
-function create_new_product(array $product, float $price, array $coaster_categories, array $coaster_subcategories, int $stock_qty)
+function coaster_create_new_product(array $product, float $price, array $coaster_categories, array $coaster_subcategories, int $stock_qty)
 {
     $is_error = false;
     $new_product = new WC_Product_Simple();
@@ -362,7 +358,6 @@ function create_new_product(array $product, float $price, array $coaster_categor
                 array_push($img_ids, rs_upload_from_url($url, $sku));
             }
         } catch (Exception $e) {
-            $is_error = true;
             exit();
         }
         if (sizeof($img_ids) > 0) {
@@ -388,10 +383,10 @@ function create_new_product(array $product, float $price, array $coaster_categor
         $new_product->set_status('publish');
     }
     $new_product->save();
-    log_info($sku, "Created");
+    log_info($sku, "[COASTER] Created");
 }
 
-function check_is_discontinued(array $product): bool
+function coaster_check_is_discontinued(array $product): bool
 {
     $status = boolval($product['IsDiscontinued']);
     if ($status) {
@@ -400,9 +395,9 @@ function check_is_discontinued(array $product): bool
     return $status;
 }
 
-add_action('coaster_create_product_cache', 'createProductCache');
+add_action('coaster_create_product_cache', 'coaster_create_product_cache');
 
-function createProductCache(): void
+function coaster_create_product_cache(): void
 {
     $cache_json = fopen(CACHE_FILE_PATH, "w");
     //Is discontinued filter
@@ -423,7 +418,7 @@ function createProductCache(): void
     fclose($cache_json);
 }
 
-function readProductCache(): array
+function coaster_read_product_cache(): array
 {
     $cache_json = fopen(CACHE_FILE_PATH, "r");
     if (filesize(CACHE_FILE_PATH) > 0) {
@@ -435,9 +430,9 @@ function readProductCache(): array
     }
 }
 
-add_action('coaster_create_prices_cache', 'createPricesCache');
+add_action('coaster_create_prices_cache', 'coaster_create_prices_cache');
 
-function createPricesCache(): void
+function coaster_create_prices_cache(): void
 {
     $cache_json = fopen(CACHE_PRICES_FILE_PATH, "w");
     $product_number_to_price_map = array();
@@ -458,7 +453,7 @@ function createPricesCache(): void
     fclose($cache_json);
 }
 
-function readProductPricesCache(): array
+function coaster_read_product_price_cache(): array
 {
     $cache_json = fopen(CACHE_PRICES_FILE_PATH, "r");
     if (filesize(CACHE_PRICES_FILE_PATH) > 0) {
@@ -470,7 +465,7 @@ function readProductPricesCache(): array
     }
 }
 
-function prepareSkuToProduct($products): array
+function coaster_prepare_sku_to_product($products): array
 {
     $result = array();
     for ($i = 0; $i<sizeof($products); $i++){
@@ -479,7 +474,7 @@ function prepareSkuToProduct($products): array
     return $result;
 }
 
-function readProductToCreateCache(): array
+function coaster_read_product_to_create_cache(): array
 {
     $cache_json = fopen(CACHE_TO_CREATE_FILE_PATH, "r");
     if (filesize(CACHE_TO_CREATE_FILE_PATH) > 0) {
@@ -491,9 +486,9 @@ function readProductToCreateCache(): array
     }
 }
 
-add_action('coaster_create_categories_cache', 'createCategoriesCache');
+add_action('coaster_create_categories_cache', 'coaster_create_categories_cache');
 
-function createCategoriesCache(): void
+function coaster_create_categories_cache(): void
 {
     $categories_url = "http://api.coasteramer.com/api/product/GetCategoryList";
     $categories_response = json_decode(wp_remote_get($categories_url, array(
@@ -532,7 +527,7 @@ function createCategoriesCache(): void
     fclose($categories_file);
 }
 
-function readCategoriesCache(): array
+function coaster_read_categories_cache(): array
 {
     $cache_json = fopen(CACHE_CATEGORIES_FILE_PATH, "r");
     if (filesize(CACHE_CATEGORIES_FILE_PATH) > 0) {
@@ -544,7 +539,7 @@ function readCategoriesCache(): array
     }
 }
 
-function createCoasterCategoriesLocally(): void
+function coaster_create_categories_locally(): void
 {
     $categories_url = "http://api.coasteramer.com/api/product/GetCategoryList";
     $categories_response = json_decode(wp_remote_get($categories_url, array(
