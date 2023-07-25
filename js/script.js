@@ -232,5 +232,8 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             else 
                 $('#note-content').hide();
         });
+        $('.fa-magnifying-glass').click(function () {
+            $('#searchform').submit();
+        });
     });
 

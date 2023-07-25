@@ -457,3 +457,27 @@ a.active::before {
 #filter-products-mobile li{
     padding: 0.1em 0;
 }
+.outofstock_shop_item {
+    border: 2px solid #404c5c !important;
+}
+.outofstock_shop_item a{
+    color: #404c5c !important;
+}
+.outofstock_shop_item a p.product_name{
+    color: #404c5c !important;
+}
+
+.outofstock_shop_item span.onsale{
+    border: 2px solid #404c5c !important;
+    color: #404c5c !important;
+}
+.outofstock_shop_item .product-rating span.checked{
+    background-color: #404c5c !important;
+}
+.outofstock_shop_item_price del, .outofstock_shop_item_price ins, .outofstock_shop_item_price bdi{
+    color: #404c5c !important;
+}
+.outofstock_text{
+    text-decoration: underline;
+    color: #404c5c !important;
+}

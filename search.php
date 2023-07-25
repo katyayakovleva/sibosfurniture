@@ -106,9 +106,11 @@ if(isset($_GET['search-type'])) {
 	<?php
 	} else  {?>
 <?php
+
 defined( 'ABSPATH' ) || exit;
 $shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 get_header( 'shop' );
+// global $wp_query;
 
 /**
  * Hook: woocommerce_before_main_content.
@@ -406,7 +408,6 @@ $posts_per_page_veriants = [12, 24, 48];
                             }
                                 ?></div>
                         <div class="dropdown__content">
-                            <!-- <p id="current_sort" class="link"></p> -->
                             <ul id="sort_product">
                                 <li><a value="popularity" class="link">popularity</a></li>
                                 <li><a value="rating" class="link">rating</a></li>
@@ -436,6 +437,15 @@ $posts_per_page_veriants = [12, 24, 48];
                                     'operator' => 'NOT IN',
                                 ),
                         ),
+                        'meta_query' => array(
+                            'relation' => 'AND',
+                            array(
+                                'key' => '_stock_status',
+                                'value' => 'outofstock',
+                                'compare' => '!=',
+                            ),
+                        ),
+                        's'             => $_GET['s'],
                        
                     );
                     // if(!empty($item_types)){
@@ -465,7 +475,7 @@ $posts_per_page_veriants = [12, 24, 48];
                     }
                     if($sort == 'rating'){
                         
-                        $args['meta_query']= array(
+                        $args['meta_query'][]= array(
                             'relation' => 'OR',
                             array(
                                 'key'     => '_wc_average_rating',
@@ -500,7 +510,8 @@ $posts_per_page_veriants = [12, 24, 48];
                         $args['order'] = 'desc';
                     }
                     $products = new WP_Query( $args );
-//                    $products = $products->get_products();
+                    // $products = $wp_query;
+                    // echo '<p>'.$products->found_posts.'<p>'; 
                     while ( $products->have_posts() ) : $products->the_post();
                         global $product;
                         $product_id = $product->get_id();
@@ -590,7 +601,7 @@ $posts_per_page_veriants = [12, 24, 48];
                 <?php endforeach; ?> 
             </div>
             <?php
-            $total= [$products -> max_num_pages][0];
+            $total= $products -> max_num_pages;
             $previous_posts_link = previous_posts(false);
             $next_posts_link = next_posts( $total, false);
             if($total == 0){
@@ -716,7 +727,6 @@ $posts_per_page_veriants = [12, 24, 48];
         </article>
     </main>
 <?php get_footer( 'shop' );
-
     }
 }
 ?>
