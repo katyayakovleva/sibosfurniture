@@ -44,9 +44,9 @@ $short_description = apply_filters( 'woocommerce_short_description', $post->post
         <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0 price-mobile"><?php echo $product->get_price_html(); ?></p>
         <?php }?>
         <?php if( !$product->is_type( 'variable' ) ){?>
-        <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0 price-mobile simple-prod-mobile-price"><?php echo $product->get_price_html(); ?></p>
+        <p class="ff-ms fs-6 fw-7 fc-blue-3 m-sm-0 price-mobile simple-prod-mobile-price <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
         <?php }?>
-        <hr class="d-sm-none mt-0 mb-1">
+        <hr class="d-sm-none mt-0 mb-1 <?php if( $product->get_type() == 'woosg' ){ echo 'woosg_hr'; }?>">
         <div class="mobile-description woocommerce-product-short-description">
             <?php echo $short_description; ?>
         </div>

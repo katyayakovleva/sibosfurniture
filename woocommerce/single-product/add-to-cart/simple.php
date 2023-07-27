@@ -54,7 +54,7 @@ if ( $product->is_in_stock() ) : ?>
         <?php echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
         <div class="price-and-button-block">
             <div class="ff-ms fw-7 fc-blue-3 m-sm-0 simple-product-price">
-                <!-- <span class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"> -->
+                <span class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>">
                   <?php echo $product->get_price_html(); ?>
                 </span>
             </div>
