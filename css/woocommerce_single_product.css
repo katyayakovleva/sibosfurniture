@@ -95,8 +95,10 @@ p.first-payment-date {
 }
 .woo-variation-swatches .wvs-style-squared.variable-items-wrapper .variable-item:not(.radio-variable-item)[aria-checked="true"]{
     border-color: #0049af;
-
+    background-color: #0049af !important;
+    color: white !important;
 }
+
 .woo-variation-swatches .wvs-style-squared.variable-items-wrapper .variable-item:not(.radio-variable-item) {
     border-radius: 0;
     width: 40px;
@@ -109,6 +111,7 @@ p.first-payment-date {
     border: 2px solid transparent;
     transition: border ease-in-out .12s;
     margin: 0;
+    border-color: #0049af;
 }
 .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).selected,
 .woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-variable-item).selected:hover {
@@ -117,6 +120,7 @@ p.first-payment-date {
     /*box-shadow: var(--wvs-selected-item-box-shadow,0 0 0 2px transparent);*/
     color: transparent;
 }
+
 .quantity {
     position: relative;
 }

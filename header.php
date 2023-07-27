@@ -79,14 +79,16 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         <div>
                             <?php  get_search_form(); ?>
                             <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">
-                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart</a>
+                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart</a>
 
-<!--                            --><?php //if ( is_user_logged_in() ) { ?>
-<!--                                <a href="--><?php //echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?><!--" title="My Account" class="link link-blue xs">My Account</a>-->
-<!--                            --><?php //}
-//                            else { ?>
-<!--                                <a href="--><?php //echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?><!--" title="Sign in" class="link link-blue xs">Sign in</a>-->
-<!--                            --><?php //} ?>
+                            <!-- <?php if(WC()->cart->is_empty()){?>
+                                <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart</a>
+
+                            <?php } else{?>    
+                                <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart (<?php echo count( WC()->cart->get_cart() ); ?>)</a>
+
+                            <?php } ?>     -->
+
                         </div>
                     </div>
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>

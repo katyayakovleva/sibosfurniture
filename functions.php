@@ -1538,21 +1538,18 @@ function wc_display_item_meta( $item, $args = array() ) {
     }
 }
 
-// function check_first_order_coupon() {
 
-//     wc_add_notice( 'Sorry, the "firstorder" coupon is only valid for first-time customers.', 'error' );
-//     // if(!(WC()->cart->has_discount( 'firstorder' ))){
-//        WC()->cart->remove_coupon('firstorder');
-//     // }
+// add_filter( 'woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1 );
 
-//     wp_die();
-// }
+// function iconic_cart_count_fragments( $fragments ) {
+//     if(WC()->cart->is_empty()){
+//         $fragments['#header-cart-count'] = '<a href="'.wc_get_cart_url().'" title="Cart" id="header-cart-count " class="link link-blue sm">Cart</a>';
 
-// add_action('wp_ajax_nopriv_check_first_order_coupon', 'check_first_order_coupon');
-// add_action('wp_ajax_check_first_order_coupon', 'check_first_order_coupon');
+//     }
+//     else{
+//         $fragments['#header-cart-count'] = '<a href="'.wc_get_cart_url().'" title="Cart" id="header-cart-count " class=" link link-blue sm">Cart ('.count( WC()->cart->get_cart() ).')</a>';
 
-// add_action('init', 'custom_taxonomy_flush_rewrite');
-// function custom_taxonomy_flush_rewrite() {
-//     global $wp_rewrite;
-//     $wp_rewrite->flush_rules();
+//     }
+//     return $fragments;
+    
 // }
