@@ -4653,3 +4653,7 @@ fieldset{
     margin-top: 2em;
     height: auto !important;
 }
+
+.mobile_cart_link span{
+    font-size: larger;
+}

@@ -74,5 +74,25 @@ $(document).ready(function() {
         window.history.pushState({}, "", url);
         window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
     });
+    $('#price_filter_button_desktop').click( function(){
+        min_price = $('#min_price_desktop').val();
+        max_price = $('#max_price_desktop').val();
+        // console.log(min_price);
+        // console.log(max_price);
+        url.searchParams.set("min", min_price);
+        url.searchParams.set("max", max_price);
+        window.history.pushState({}, "", url);
+        window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
+    });
+    $('#price_filter_button_mobile').click( function(){
+        min_price = $('#min_price_mobile').val();
+        max_price = $('#max_price_mobile').val();
+        // console.log(min_price);
+        // console.log(max_price);
+        url.searchParams.set("min", min_price);
+        url.searchParams.set("max", max_price);
+        window.history.pushState({}, "", url);
+        window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');  
+    });
     
 });

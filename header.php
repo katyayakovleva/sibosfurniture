@@ -53,7 +53,7 @@ $menu_id = $menu_obj->term_id;
 
 $phone = get_field('menu_phone','menu_' . $menu_id);
 $email = get_field('menu_email','menu_' . $menu_id);
-
+$items_count = WC()->cart->get_cart_contents_count();
 ?>
 <div id="preloader"><svg><circle id="preloader_animation" cx="50%" cy="50%" r="15" fill="rgba(0,0,0,0)" stroke-width="1" stroke="white" ;/></svg></div>
  
@@ -66,8 +66,9 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         <a href="tel:<?php echo esc_attr($phone);?>" class="link xs"><?php echo esc_attr($phone);?></a> 
                         <a href="mailto:<?php echo esc_attr($email);?>" class="link xs"><?php echo esc_attr($email);?></a>
                     </div>
-                    <a href="<?php echo wc_get_cart_url(); ?>" class="link" type="button">
+                    <a href="<?php echo wc_get_cart_url(); ?>" class="link mobile_cart_link" type="button">
                         <i class="icon-cart-icon fa-2xl"></i>
+                        <span  id="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
                     </a>
                 </div>
                 <figure>
@@ -78,17 +79,8 @@ $email = get_field('menu_email','menu_' . $menu_id);
                         
                         <div>
                             <?php  get_search_form(); ?>
-                            <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">
-                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart</a>
-
-                            <!-- <?php if(WC()->cart->is_empty()){?>
-                                <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart</a>
-
-                            <?php } else{?>    
-                                <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" id="header-cart-count" class="link link-blue sm">Cart (<?php echo count( WC()->cart->get_cart() ); ?>)</a>
-
-                            <?php } ?>     -->
-
+                            <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">                            
+                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart <span  id="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span></a>
                         </div>
                     </div>
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>

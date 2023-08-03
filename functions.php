@@ -260,7 +260,6 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
         wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
 
-
     }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){
         wp_enqueue_style( 'wishlist', get_template_directory_uri(). '/css/wishlist.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
@@ -1539,17 +1538,115 @@ function wc_display_item_meta( $item, $args = array() ) {
 }
 
 
-// add_filter( 'woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1 );
 
-// function iconic_cart_count_fragments( $fragments ) {
-//     if(WC()->cart->is_empty()){
-//         $fragments['#header-cart-count'] = '<a href="'.wc_get_cart_url().'" title="Cart" id="header-cart-count " class="link link-blue sm">Cart</a>';
+add_filter( 'woocommerce_add_to_cart_fragments', 'wc_refresh_mini_cart_count');
+function wc_refresh_mini_cart_count($fragments){
+    ob_start();
+    $items_count = WC()->cart->get_cart_contents_count();
+    ?>
+    <span  id="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
+    <?php
+        $fragments['#mini-cart-count'] = ob_get_clean();
+    return $fragments;
+}
 
-//     }
-//     else{
-//         $fragments['#header-cart-count'] = '<a href="'.wc_get_cart_url().'" title="Cart" id="header-cart-count " class=" link link-blue sm">Cart ('.count( WC()->cart->get_cart() ).')</a>';
+function mytheme_enqueue_styles()
+{
+// Check if ‘wc-cart-fragments’ script is already enqueued or registered
+if ( ! wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
+// Enqueue the ‘wc-cart-fragments’ script
+wp_enqueue_script( 'wc-cart-fragments' );
+}
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_styles');
 
-//     }
-//     return $fragments;
+
+function get_min_price(){
+    $query = array(
+        'posts_per_page' => 1,
+        'post_type'=> 'product',
+        'orderby' => 'meta_value_num',
+        'meta_key' =>'_price',
+        'order' => 'ASC',
+        
+    );
+    $products= new WP_Query($query);
+    while ( $products->have_posts() ) : $products->the_post();
+        global $product;
+        $price = $product->get_price();
+    endwhile;
+    return $price;
+}
+function get_max_price(){
+    $query = array(
+        'posts_per_page' => 1,
+        'post_type'=> 'product',
+        'orderby' => 'meta_value_num',
+        'meta_key' =>'_price',
+        'order' => 'desc',
+        
+    );
+    $products= new WP_Query($query);
+    while ( $products->have_posts() ) : $products->the_post();
+        global $product;
+        $price = $product->get_price();
+    endwhile;
+    return $price;
+}
+
+function where_to_show_new_collection_pop_up(){
+    $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' );
+    $args = array(
+        'taxonomy' => 'product_cat',
+        'number' => 1,
+        'hide_empty' => true,
+        'parent' => 0,
+        'parent'   => $modern_product_cat_parent->term_id,
+        'fields' => 'ids',
+        'orderby' => 'id',
+        'order' => 'DESC',
+        'meta_query' => array(
+          array(
+             'key'       => 'is_new',
+             'value'     => '1',
+             'compare'   => '='
+          )
+     ));
+    $modern_new_collections = get_terms( $args );
     
-// }
+    $classical_product_cat_parent = get_term_by( 'slug', 'classical', 'product_cat' );
+    $args = array(
+        'taxonomy' => 'product_cat',
+        'number' => 1,
+        'hide_empty' => true,
+        'parent' => 0,
+        'parent'   => $classical_product_cat_parent->term_id,
+        'fields' => 'ids',
+        'orderby' => 'id',
+        'order' => 'DESC',
+        'meta_query' => array(
+          array(
+             'key'       => 'is_new',
+             'value'     => '1',
+             'compare'   => '='
+          )
+     ));
+    $classical_new_collections = get_terms( $args );
+    
+    if(!empty($modern_new_collections) && !empty($classical_new_collections)){
+        if( $modern_new_collections[0] > $classical_new_collections[0]){
+            return 'modern';
+        }else{
+            return 'classical';
+        }
+    }else{
+        if(!empty($modern_new_collections) && empty($classical_new_collections)){
+            return 'modern';
+        }elseif(empty($modern_new_collections) && !empty($classical_new_collections)){
+            return 'classical';
+        }else{
+            return 'none';
+        }
+    }
+    
+}
