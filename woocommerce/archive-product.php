@@ -49,7 +49,11 @@ if (isset($_GET['posts_per_page'])) {
 } else {
     $posts_per_page = 12;
 }
-
+if (isset($_GET['collection'])) {
+    $collection_id = $_GET['collection'];
+} else {
+    $collection_id = 0;
+}
 $min_price_default = get_min_price();
 $max_price_default = get_max_price();
 
@@ -63,47 +67,66 @@ if (isset($_GET['max'])) {
 } else {
     $max_price = $max_price_default;
 }
-$term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
+
 $posts_per_page_veriants = [12, 24, 48];
 
+$current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
 ?>
 <a href = "<? echo get_post_type_archive_link( 'product')?>" id="catalog_link" hidden ></a>
 <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
         <aside>
             <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Collections</h4>
+            
             <div class="collections-container">
                 <?php 
                 $where_to_show_new_collection_pop_up =  where_to_show_new_collection_pop_up();
                
                 $is_show_pop_up = TRUE;
                 $active_collection = 'none';
-                if(is_tax( 'product_cat' )){
-                    $queried_object = get_queried_object();
-                    $term_id = $queried_object->term_id;
-                    $current_term = get_term( $term_id , 'product_cat' );
+
+                if($current_product_cat || $collection_id != 0){
+                    
+                    if($collection_id != 0){
+                        $current_term = get_term($collection_id, 'product_cat');
+                    }
+                    else{
+                        $current_term = $current_product_cat;
+                    }
                     $current_term_parent = get_term($current_term->parent, 'product_cat');
-                    if($current_term->slug == 'modern' || $current_term_parent->slug == 'modern'){
-                        $active_collection = 'modern';
+                    if($current_term_parent->slug == 'modern'){
+                        $active_collection = 'modern_children';
                         $is_show_pop_up = FALSE;
                     } 
-                    if($current_term->slug == 'classical' || $current_term_parent->slug == 'classical'){
-                        $active_collection = 'classical';
+                    if($current_term->slug == 'modern'){
+                        $active_collection = 'modern_parent';
                         $is_show_pop_up = FALSE;
                     } 
+                    if($current_term_parent->slug == 'classical'){
+                        $active_collection = 'classical_children';
+                        $is_show_pop_up = FALSE;
+                    } 
+                    
+                    if($current_term->slug == 'classical'){
+                        $active_collection = 'classical_parent';
+                        $is_show_pop_up = FALSE;
+                    }
                     
                 }
                     
                     
                 ?>
-                <div class="dropdown-modern  <?php if($active_collection == 'modern'): echo 'active'; endif; ?>">
-                    <?php $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' ); ?>
+                <?php $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' ); ?>
+                <div class="dropdown-modern  <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'active'; endif; ?>">
+
+
                     <span>
-                        <a href="<?php echo get_term_link( $modern_product_cat_parent );?>">Modern</a><button></button>
+                        <a <?php if( $active_collection == 'modern_parent'): echo 'class="active"'; endif; ?> href="<?php echo get_term_link( $modern_product_cat_parent );?>">Modern</a>
+                        <button></button>
                         <?php if($where_to_show_new_collection_pop_up == 'modern' && $is_show_pop_up) {?>
-                        <div class="dropdown-modern__popup">
+                            <div class="dropdown-modern__popup custom-popup" style="display: none;">
                             <p>Checkout our new collection!</p>
-                            <button>
+                            <button class="new-popup-close-button">
                             <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
                                 </svg>                  
@@ -123,10 +146,13 @@ $posts_per_page_veriants = [12, 24, 48];
                     );
                     $modern_product_cats = get_terms( $modern_cat_args );
                     ?>
-                    <ol <?php if($active_collection == 'modern'): echo 'style="display:block;"'; endif; ?>>
+                    <ol <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'style="display:block;"'; endif; ?>>
+                        <li>
+                            <a id="<? echo $modern_product_cat_parent->term_id; ?>"<?php if( ($current_product_cat && $current_product_cat->term_id == $modern_product_cat_parent->term_id) || $collection_id == $modern_product_cat_parent->term_id): echo 'class="active_collection"'; endif; ?> href="<?php echo get_term_link( $modern_product_cat_parent );?>">All</a>
+                        </li>
                         <?php foreach ($modern_product_cats as $modern_product_cat) {?>
                         <li>
-                            <a href="<?php echo get_term_link( $modern_product_cat );?>"><? echo $modern_product_cat->name; ?></a>
+                            <a id="<? echo $modern_product_cat->term_id; ?>" <?php if( ($current_product_cat && $current_product_cat->term_id == $modern_product_cat->term_id) || $collection_id == $modern_product_cat->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $modern_product_cat );?>"><? echo $modern_product_cat->name; ?></a>
                             <?php if(get_field('is_new', $modern_product_cat)){ ?>
                                 <span>NEW!</span>
                             <?php } ?>
@@ -135,20 +161,23 @@ $posts_per_page_veriants = [12, 24, 48];
                     </ol>
 
                 </div>
-                <div class="dropdown-modern  <?php if($active_collection == 'classical'): echo 'active'; endif; ?>">
+                <div class="dropdown-modern  <?php if($active_collection == 'classical_children' || $active_collection == 'classical_parent'): echo 'active'; endif; ?>">
                     <?php $classical_product_cat_parent = get_term_by( 'slug', 'classical', 'product_cat' ); ?>
                     <span>
-                        <a href="<?php echo get_term_link( $classical_product_cat_parent );?>">Classical</a><button></button>
+                        <a <?php if( $active_collection == 'classical_parent'): echo 'class="active"'; endif; ?> href="<?php echo get_term_link( $classical_product_cat_parent );?>">Classical</a><button></button>
+                        
                         <?php if($where_to_show_new_collection_pop_up == 'classical' && $is_show_pop_up) {?>
-                        <div class="dropdown-modern__popup">
+
+                        <div class="dropdown-modern__popup custom-popup" style="display: none;">
                             <p>Checkout our new collection!</p>
-                            <button>
+                            <button class="new-popup-close-button">
                             <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
                                 </svg>                  
                             </button>
                         </div>
                         <?php } ?>
+
                     </span>
 
                     <?php 
@@ -163,18 +192,18 @@ $posts_per_page_veriants = [12, 24, 48];
                     );
                     $classical_product_cats = get_terms( $classical_cat_args );
                     ?>
-                    <ol <?php if($active_collection == 'classical'): echo 'style="display:block;"'; endif; ?>>
-                    <?php 
-                    $n = 0;
-                    foreach ($classical_product_cats as $classical_product_cat) {?>
+                    <ol <?php if($active_collection == 'classical_children' || $active_collection == 'classical_parent'): echo 'style="display:block;"'; endif; ?>>
+                    <li>
+                        <a id="<? echo $classical_product_cat_parent->term_id; ?>" <?php if( ($current_product_cat && $current_product_cat->term_id == $classical_product_cat_parent->term_id) || $collection_id == $classical_product_cat_parent->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $classical_product_cat_parent );?>">All</a>
+                    </li>
+                    <?php foreach ($classical_product_cats as $classical_product_cat) {?>
                         <li>
-                            <a href="<?php echo get_term_link( $classical_product_cat );?>"><? echo $classical_product_cat->name; ?></a>
+                            <a id="<? echo $classical_product_cat->term_id; ?>"<?php if( ($current_product_cat && $current_product_cat->term_id == $classical_product_cat->term_id) || $collection_id == $classical_product_cat->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $classical_product_cat );?>"><? echo $classical_product_cat->name; ?></a>
                             <?php if(get_field('is_new', $classical_product_cat)){ ?>
                                 <span>NEW!</span>
                             <?php } ?>
                         </li>
                         <?php 
-                    $n++;
                     } ?>
                     </ol>
                 </div>
@@ -223,7 +252,7 @@ $posts_per_page_veriants = [12, 24, 48];
 
                         <li>
                         <div class="link-category-div">
-                            <a class="link-category <?php if($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="desktop_<?php echo $product_cat->term_id; ?>"></a>
+                            <a class="link-category <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="desktop_<?php echo $product_cat->term_id; ?>"></a>
                             <a class="ff-ms fs-5 ta-center category-label" href = "<?php echo get_term_link( $product_cat );?>" ><? echo $product_cat->name; ?></a>
                         
                         </div>
@@ -240,9 +269,8 @@ $posts_per_page_veriants = [12, 24, 48];
                             }
                             
                             ?>
-                            <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="desktop_<?php echo $product_cat->term_id; ?>">
+                            <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="desktop_<?php echo $product_cat->term_id; ?>">
                                 <?php
-                                    // $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
                                     $cat_args = array(
                                                 'taxonomy' => 'product_cat',
                                                 'hide_empty' => true,
@@ -251,13 +279,13 @@ $posts_per_page_veriants = [12, 24, 48];
                                     $child_product_cats = get_terms( $cat_args );
                                     ?>
                                     <li class="form-filter">
-                                        <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>
+                                        <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>
                                     </li>
                                     <?php
                                     foreach ($child_product_cats as $child_product_cat) { ?>
 
                                         <li class="form-filter">
-                                            <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
+                                            <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                         </li>
                                     
                                     <?php } 
@@ -304,9 +332,12 @@ $posts_per_page_veriants = [12, 24, 48];
                                     $modern_product_cats = get_terms( $modern_cat_args );
                                     ?>
                                     <ol>
+                                        <li>
+                                            <a id="<? echo $modern_product_cat_parent->term_id; ?>"<?php if( ($current_product_cat && $current_product_cat->term_id == $modern_product_cat_parent->term_id) || $collection_id == $modern_product_cat_parent->term_id): echo 'class="active_collection"'; endif; ?> href="<?php echo get_term_link( $modern_product_cat_parent );?>">All</a>
+                                        </li>
                                         <?php foreach ($modern_product_cats as $modern_product_cat) {?>
                                         <li>
-                                            <a href="<?php echo get_term_link( $modern_product_cat );?>"><? echo $modern_product_cat->name; ?></a>
+                                            <a id="<? echo $modern_product_cat->term_id; ?>" <?php if( ($current_product_cat && $current_product_cat->term_id == $modern_product_cat->term_id) || $collection_id == $modern_product_cat->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $modern_product_cat );?>"><? echo $modern_product_cat->name; ?></a>
                                             <?php if(get_field('is_new', $modern_product_cat)){ ?>
                                                 <span>NEW!</span>
                                             <?php } ?>
@@ -335,19 +366,18 @@ $posts_per_page_veriants = [12, 24, 48];
                                     $classical_product_cats = get_terms( $classical_cat_args );
                                     ?>
                                     <ol>
-                                    
-                                    <?php 
-                                    $n = 0;
-                                    foreach ($classical_product_cats as $classical_product_cat) {?>
                                         <li>
-                                            <a href="<?php echo get_term_link( $classical_product_cat );?>"><? echo $classical_product_cat->name; ?></a>
-                                            <?php if(get_field('is_new', $classical_product_cat)){ ?>
-                                                <span>NEW!</span>
-                                            <?php } ?>
+                                            <a id="<? echo $classical_product_cat_parent->term_id; ?>" <?php if( ($current_product_cat && $current_product_cat->term_id == $classical_product_cat_parent->term_id) || $collection_id == $classical_product_cat_parent->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $classical_product_cat_parent );?>">All</a>
                                         </li>
-                                        <?php 
-                                    $n++;
-                                    } ?>
+                                        <?php foreach ($classical_product_cats as $classical_product_cat) {?>
+                                            <li>
+                                                <a id="<? echo $classical_product_cat->term_id; ?>"<?php if( ($current_product_cat && $current_product_cat->term_id == $classical_product_cat->term_id) || $collection_id == $classical_product_cat->term_id): echo 'class="active_collection"'; endif; ?>href="<?php echo get_term_link( $classical_product_cat );?>"><? echo $classical_product_cat->name; ?></a>
+                                                <?php if(get_field('is_new', $classical_product_cat)){ ?>
+                                                    <span>NEW!</span>
+                                                <?php } ?>
+                                            </li>
+                                            <?php 
+                                        } ?>
                                     </ol>
                                 </div>
                             </div>
@@ -395,7 +425,7 @@ $posts_per_page_veriants = [12, 24, 48];
 
                                     <li>
                                         <div class="link-category-div ff-ms fs-5 ta-center">
-                                            <a class="link-category  <?php if($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="mobile_<?php echo $product_cat->term_id; ?>"></a>
+                                            <a class="link-category  <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="mobile_<?php echo $product_cat->term_id; ?>"></a>
                                             <a class=" category-label" href = "<?php echo get_term_link( $product_cat );?>" ><? echo $product_cat->name; ?></a>
                                         </div>
                                         <?php
@@ -410,9 +440,8 @@ $posts_per_page_veriants = [12, 24, 48];
                                             $child_product_cats1 = get_terms( $cat_args1 );
                                         }
                                         ?>
-                                        <ol class="link-category-list <?php if(($term && ($term->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $term->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>"  id="mobile_<?php echo $product_cat->term_id; ?>">
+                                        <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>"  id="mobile_<?php echo $product_cat->term_id; ?>">
                                             <?php
-                                                //  $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
                                                 $cat_args = array(
                                                             'taxonomy' => 'product_cat',
                                                             'hide_empty' => true,
@@ -421,13 +450,13 @@ $posts_per_page_veriants = [12, 24, 48];
                                                 $child_product_cats = get_terms( $cat_args );
                                             ?>
                                             <li class="form-filter">
-                                                <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>                                
+                                                <label><input type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label" href = "<?php echo get_term_link( $parent_product_cat );?>">All types</a>                                
                                             </li>
                                             <?php
                                             foreach ($child_product_cats as $child_product_cat) { ?>
 
                                                 <li class="form-filter">
-                                                    <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($term  && $term->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
+                                                    <label><input type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label" href = "<?php echo get_term_link( $child_product_cat );?>"><? echo $child_product_cat->name; ?></a>
                                                 </li>
                                 
                                             <?php } ?>
@@ -510,8 +539,11 @@ $posts_per_page_veriants = [12, 24, 48];
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
                     }
-                    if($term){
-                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $term->term_id);
+                    if($collection_id != 0){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $collection_id);
+                    }
+                    if($current_product_cat){
+                        $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $current_product_cat->term_id);
                     }
                     if($sale == 'true'){
                         $on_sale_products = wc_get_product_ids_on_sale();

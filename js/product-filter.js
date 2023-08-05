@@ -21,7 +21,10 @@ $(document).ready(function() {
         }else{
             sale = 'false';
         }
-        
+        if($(".active_collection").length){
+            collection_id =  $('.active_collection').attr('id');
+            url.searchParams.set("collection", collection_id);
+         }
 
         let place_typesArrayString = JSON.stringify(place_types);
 
@@ -51,12 +54,18 @@ $(document).ready(function() {
             sale = 'false';
         }
 
+        if($(".active_collection").length){
+           collection_id =  $('.active_collection').attr('id');
+           url.searchParams.set("collection", collection_id);
+        }
+        
         let place_typesArrayString = JSON.stringify(place_types);
 
         let encodedplace_typesArrayString = encodeURIComponent(place_typesArrayString);
 
         url.searchParams.set("place_types", encodedplace_typesArrayString);
         url.searchParams.set("sale", sale);
+
         window.history.pushState({}, "", url);
         
         window.location.href = window.location.href.replace(/\/page\/\d+\//, '/');     

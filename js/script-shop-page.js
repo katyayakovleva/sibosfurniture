@@ -157,6 +157,37 @@ $(document).ready(function() {
     });
     categoryLink()
     modernDropdown();
-    modernPopUp();
+    // modernPopUp();
     priceSlider();
+});
+
+
+jQuery(document).ready(function($) {
+  // Check if the popup should be shown (based on sessionStorage)
+  if (!sessionStorage.getItem('popup_shown')) {
+      // Add your additional condition check here if needed
+
+      // Show the popup
+      $('.custom-popup').show();
+
+      // Set a sessionStorage item to prevent the popup from showing again in this session
+      sessionStorage.setItem('popup_shown', 'true');
+  }
+
+  // Close the popup when the close button is clicked
+  $('.custom-popup .new-popup-close-button').click(function() {
+    const button = $(this),
+    popup = button.parent();
+
+    popup.animate(
+    {
+      opacity: "0",
+      width: "0",
+      margin: "0",
+    },
+    200);
+    setTimeout(() => {
+      popup.hide();
+    }, 200);
+    });
 });
