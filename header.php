@@ -68,7 +68,7 @@ $items_count = WC()->cart->get_cart_contents_count();
                     </div>
                     <a href="<?php echo wc_get_cart_url(); ?>" class="link mobile_cart_link" type="button">
                         <i class="icon-cart-icon fa-2xl"></i>
-                        <span  id="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
+                        <span class="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
                     </a>
                 </div>
                 <figure>
@@ -80,7 +80,9 @@ $items_count = WC()->cart->get_cart_contents_count();
                         <div>
                             <?php  get_search_form(); ?>
                             <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">                            
-                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart <span  id="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span></a>
+                            <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart 
+                                <span  class="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
+                            </a>
                         </div>
                     </div>
                     <div class="navbar-burger" type="button" data-toggle="collapse" data-target="navbar-collapse"><span></span></div>
