@@ -531,3 +531,31 @@ form.cart.without-variation-cart{
 .woosg-products .woosg-product form.variations_form .variations .variation {
     padding: 5px 0 !important;
 }
+.woocommerce div.product form.cart .button{
+    box-sizing: border-box;
+    width: -moz-fit-content;
+    width: fit-content;
+    text-align: center;
+    border-radius: 0;
+    text-transform: uppercase;
+    text-shadow: 0 5px 6px rgba(0, 0, 0, .33);
+    filter: drop-shadow(0 5px 6px rgba(0, 0, 0, .33));
+    text-shadow: 0 5px 6px rgba(0, 0, 0, .33);
+    -webkit-backdrop-filter: blur(3.5px);
+    backdrop-filter: blur(3.5px);
+    padding: .5em 1.2em;
+    transition: all ease-in-out .24s;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: var(--fs-4)
+}
+.woocommerce div.product form.cart .button {
+    color: #0049af;
+    border: 2px solid #0049af;
+    background-color: transparent
+}
+
+.woocommerce div.product form.cart .button:hover {
+    color: #fff;
+    background-color: #0049af
+}
