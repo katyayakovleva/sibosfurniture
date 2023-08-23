@@ -1614,13 +1614,13 @@ function where_to_show_new_collection_pop_up(){
      ));
     $modern_new_collections = get_terms( $args );
     
-    $classical_product_cat_parent = get_term_by( 'slug', 'classical', 'product_cat' );
+    $transitional_product_cat_parent = get_term_by( 'slug', 'transitional', 'product_cat' );
     $args = array(
         'taxonomy' => 'product_cat',
         'number' => 1,
         'hide_empty' => true,
         'parent' => 0,
-        'parent'   => $classical_product_cat_parent->term_id,
+        'parent'   => $transitional_product_cat_parent->term_id,
         'fields' => 'ids',
         'orderby' => 'id',
         'order' => 'DESC',
@@ -1631,19 +1631,19 @@ function where_to_show_new_collection_pop_up(){
              'compare'   => '='
           )
      ));
-    $classical_new_collections = get_terms( $args );
+    $transitional_new_collections = get_terms( $args );
     
-    if(!empty($modern_new_collections) && !empty($classical_new_collections)){
-        if( $modern_new_collections[0] > $classical_new_collections[0]){
+    if(!empty($modern_new_collections) && !empty($transitional_new_collections)){
+        if( $modern_new_collections[0] > $transitional_new_collections[0]){
             return 'modern';
         }else{
-            return 'classical';
+            return 'transitional';
         }
     }else{
-        if(!empty($modern_new_collections) && empty($classical_new_collections)){
+        if(!empty($modern_new_collections) && empty($transitional_new_collections)){
             return 'modern';
-        }elseif(empty($modern_new_collections) && !empty($classical_new_collections)){
-            return 'classical';
+        }elseif(empty($modern_new_collections) && !empty($transitional_new_collections)){
+            return 'transitional';
         }else{
             return 'none';
         }
