@@ -3,9 +3,9 @@
 const CATEGORIES_URL_ACME = 'http://acmecorp.com/rest/V1/categories/';
 const PRODUCT_BY_CATEGORY_ID = 'http://acmecorp.com/rest/V1/categories/%s/products';
 const PRODUCT_BY_SKU_URL = 'https://acmecorp.com/rest/V1/products/';
-const CACHE_FILE_ACME = "/themes/sibosfurniture/cache_acme_sku.json";
-const CACHE_ACME_TO_CREATE = "/themes/sibosfurniture/cache_acme_to_create.json";
-const ACME_LOGGER_FILE = "/themes/sibosfurniture/acme_logs.txt";
+const CACHE_FILE_ACME = "/themes/sibosfurniture-master/cache_acme_sku_1.json";
+const CACHE_ACME_TO_CREATE = "/themes/sibosfurniture-master/cache_acme_to_create.json";
+const ACME_LOGGER_FILE = "/themes/sibosfurniture-master/acme_logs.txt";
 
 
 const CACHE_ACME_TO_CREATE_FILE_PATH = WP_CONTENT_DIR . CACHE_ACME_TO_CREATE;

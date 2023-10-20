@@ -569,8 +569,17 @@ fieldset  p.form-row{
         align-self: flex-start;
     }
     .form-checkbox label, .form-checkbox.big label {
-    padding-block: 0.5em;
-    font-size: var(--fs-5);
+		padding-block: 0.5em;
+		font-size: var(--fs-5);
+	}
 }
+@media screen and (max-width: 35.5em){
+	.order-detail-shipping{
+        grid-template-columns: unset !important;
+        gap: 10px;
+    }
+	.orders>div .orders .orders__row>div :nth-child(2) {
+        text-align: end;
+    }
 }
 

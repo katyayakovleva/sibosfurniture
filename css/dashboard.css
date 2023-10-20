@@ -316,9 +316,9 @@
 }
 
 .orders>div .orders .orders__row>div :nth-child(2) {
-    flex-grow: 3;
+/*     flex-grow: 3;
     flex-shrink: 1;
-    flex-basis: 0
+    flex-basis: 0 */
 }
 
 .orders>div .orders .orders__footer {

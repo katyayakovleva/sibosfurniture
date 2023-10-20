@@ -1650,3 +1650,4 @@ function where_to_show_new_collection_pop_up(){
     }
     
 }
+

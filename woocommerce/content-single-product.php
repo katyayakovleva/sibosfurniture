@@ -137,11 +137,13 @@ if ( post_password_required() ) {
     }
 </style>
 <script>
-    <?php if( $product->get_type() != 'woosg' ){
+    //jQuery(document).ready(function() {
+      //  jQuery('.quantity input').attr("value", 1);
+    //})
+ <?php if( $product->get_type() != 'woosg' ){
      ?>
         jQuery(document).ready(function() {
             jQuery('.quantity input').attr("value", 1);
         })
     <?php }?>
-
 </script>

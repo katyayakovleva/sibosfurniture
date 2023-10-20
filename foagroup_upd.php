@@ -3,13 +3,15 @@
 const API_USER = 'sibosfurniture';
 const API_KEY = '5ab3e1ed-5f50-4120-87db-6a547450c672';
 
-const CACHE_FILE_FOAG = "/themes/sibosfurniture/cache_foagroup.json";
-const CACHE_FOAG_TO_CREATE = "/themes/sibosfurniture/cache_foag_to_create.json";
-const FOAG_LOGGER_FILE = "/themes/sibosfurniture/foag_logs.txt";
+const CACHE_FILE_FOAG = "/themes/sibosfurniture-master/cache_foagroup.json";
+const CACHE_FOAG_TO_CREATE = "/themes/sibosfurniture-master/cache_foag_to_create.json";
+const HELPER_CACHE_FOAG = "/themes/sibosfurniture-master/cache_foag_helper.json";
+const FOAG_LOGGER_FILE = "/themes/sibosfurniture-master/foag_logs.txt";
 
 
 const CACHE_FOAG_TO_CREATE_FILE_PATH = WP_CONTENT_DIR . CACHE_FOAG_TO_CREATE;
 const CACHE_FILE_PATH_FOAG = WP_CONTENT_DIR . CACHE_FILE_FOAG;
+const HELPER_CACHE_FILE_PATH_FOAG = WP_CONTENT_DIR . HELPER_CACHE_FOAG;
 const FOAG_LOGGER_FILE_PATH = WP_CONTENT_DIR . FOAG_LOGGER_FILE;
 
 
@@ -47,7 +49,7 @@ function foag_runJob_update()
 {
     $products = foag_read_products_cache(); // Or create if is does not exists
     $client_v1 = new SoapClient('https://www.foagroup.com/api/soap/?wsdl');
-
+    $helper_cache = foag_read_helper_cache();
     $session_v1 = $client_v1->login(API_USER, API_KEY);
 
     if (empty($products)) {
@@ -60,16 +62,27 @@ function foag_runJob_update()
 
         $existing_product_id = wc_get_product_id_by_sku($sku);
         if ($existing_product_id != null) {
-            foag_update_existing_product($client_v1, $session_v1, $existing_product_id, $id, $sku);
+            foag_update_existing_product($client_v1, $session_v1, $existing_product_id, $id, $sku, $helper_cache);
         } else {
             foag_save_sku_create($sku);
         }
     }
 }
 
-function foag_update_existing_product($client_v1, $session_v1, $existing_product_id, $id, $sku)
+function foag_update_existing_product($client_v1, $session_v1, $existing_product_id, $id, $sku, $helper_cache)
 {
-    $existing_product = new WC_Product_Simple($existing_product_id);
+    if (in_array($sku, $helper_cache['simple'])) {
+        $existing_product = new WC_Product_Simple($existing_product_id);
+        foag_log_info($sku, "[FOAGROUP] Simple type");
+    } elseif (in_array($sku, $helper_cache['conf_parent'])) {
+        $existing_product = new WC_Product_Variable($existing_product_id);
+        foag_log_info($sku, "[FOAGROUP] Conf parent type");
+    } elseif (in_array($sku, $helper_cache['conf_child'])) {
+        $existing_product = new WC_Product_Variation($existing_product_id);
+        foag_log_info($sku, "[FOAGROUP] Conf child type");
+    } else {
+        foag_log_info($sku, "[FOAGROUP] Unknown type");
+    }
     $modified_time = strtotime(get_post_modified_time('Y-m-d', false, $existing_product->get_id()));
     $current_time = strtotime(current_time('Y-m-d'));
     $week_ago = strtotime('-1 week', $current_time);
@@ -86,7 +99,7 @@ function foag_update_existing_product($client_v1, $session_v1, $existing_product
 
         $product_info = $client_v1->call($session_v1, 'catalog_product.info', $id);
         if (!empty($product_info)) {
-            $price = floatval($product_info['price'])*1.45;
+            $price = floatval($product_info['price']) * 1.45;
         } else {
             $price = 0;
         }
@@ -128,9 +141,40 @@ function foag_create_products_cache(): void
 
     $session_v2 = $client_v2->login(API_USER, API_KEY);
     $product_response = $client_v2->catalogProductList($session_v2, $complexFilter);
-    var_dump($product_response);
     fwrite($cache_json, json_encode($product_response));
     fclose($cache_json);
+    foag_split_caches(json_encode($product_response));
+}
+
+function foag_split_caches($products_json): void
+{
+    $client_v1 = new SoapClient('https://www.foagroup.com/api/soap/?wsdl');
+
+    $session_v1 = $client_v1->login(API_USER, API_KEY);
+    $simple_products = array();
+    $configurable_products = array();
+    $variation_products = array();
+    $configurable_products_full = array();
+    for ($i = 0; $i < sizeof($products_json); $i++) {
+        if ($products_json[$i]['type'] == 'simple') {
+            $simple_products[] = $products_json[$i]['sku'];
+        } else {
+            $configurable_product = $client_v1->call($session_v1, 'catalog_product.info', intval($products_json[$i]['product_id']));
+            foreach ($configurable_product['associated_skus'] as $variation_sku) {
+                $variation_products[] = $variation_sku;
+            }
+            $configurable_products[] = $products_json[$i]['sku'];
+            $configurable_products_full[$products_json[$i]['product_id']] = $configurable_product['associated_ids'];
+        }
+    }
+    $helper_cache_json = array();
+    $helper_cache_json['simple'] = $simple_products;
+    $helper_cache_json['conf_parent'] = $configurable_products;
+    $helper_cache_json['conf_child'] = $variation_products;
+    $helper_cache_json['conf_full'] = $configurable_products_full;
+    $helper_cache = fopen(HELPER_CACHE_FILE_PATH_FOAG, "w");
+    fwrite($helper_cache, json_encode($helper_cache_json));
+    fclose($helper_cache);
 }
 
 function foag_read_products_cache(): array
@@ -138,6 +182,18 @@ function foag_read_products_cache(): array
     $cache_json = fopen(CACHE_FILE_PATH_FOAG, "r");
     if (filesize(CACHE_FILE_PATH_FOAG) > 0) {
         $cache = fread($cache_json, filesize(CACHE_FILE_PATH_FOAG));
+        fclose($cache_json);
+        return json_decode($cache, true);
+    } else {
+        return array();
+    }
+}
+
+function foag_read_helper_cache(): array
+{
+    $cache_json = fopen(HELPER_CACHE_FILE_PATH_FOAG, "r");
+    if (filesize(HELPER_CACHE_FILE_PATH_FOAG) > 0) {
+        $cache = fread($cache_json, filesize(HELPER_CACHE_FILE_PATH_FOAG));
         fclose($cache_json);
         return json_decode($cache, true);
     } else {

@@ -52,7 +52,6 @@
 //     });
     
 // }
-
 var $ = jQuery.noConflict();
 
 function loadOrderDetails(action, order_id){

@@ -360,7 +360,6 @@ form.cart.without-variation-cart{
         width: 5em;
         height: 5em;
     }
-
     .woocommerce-product-short-description p{
         font-size: 1.25em!important;
         font-family: 'Merriweather Sans', sans-serif!important;
@@ -510,7 +509,8 @@ form.cart.without-variation-cart{
     border: none !important;
 }
 .woosg-products .woosg-product form.variations_form .variations .variation .label {
-    display: none !important;
+    margin: 0.5em 0 1em !important;
+    font-size: 1em !important;
 }
 .woosg-products .woosg-product form.variations_form .variations .variation {
 

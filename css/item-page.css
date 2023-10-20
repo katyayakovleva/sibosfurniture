@@ -467,3 +467,6 @@
 .woocommerce-product-attributes-item--attribute_manufacture{
     display: none !important;
 }
+.woosg-products .woosg-product .woosg-quantity input{
+	min-width: unset !important;
+}

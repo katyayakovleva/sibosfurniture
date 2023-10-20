@@ -1,4 +1,5 @@
 var $ = jQuery.noConflict();
+
 function collapseCross() {
     const a = $("body"),
         e = $('.navbar-burger[data-toggle="collapse"]');
@@ -236,7 +237,6 @@ preloader_animation.fromTo($("#preloader_animation"), 2, {
             $('#searchform').submit();
         });
     });
-
 $( document.body ).on( 'updated_cart_totals added_to_cart removed_from_cart', function(){
     console.log('update cart');
     $(document.body).trigger('wc_fragment_refresh');
