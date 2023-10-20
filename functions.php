@@ -260,6 +260,7 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
         wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
 
+
     }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){
         wp_enqueue_style( 'wishlist', get_template_directory_uri(). '/css/wishlist.css', array(), rand(111,9999));
         wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
@@ -930,11 +931,11 @@ function get_place_types(){
     return $place_types_arr;
 }
 
-// remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-// remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
-// add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
-// add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
+add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
+add_action( 'sibos_stripe_payment_request_button', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
 
 add_action('delete_coaster_furniture_cron_hook', 'delete_coaster_furniture_cron_exec');
 
@@ -1538,7 +1539,6 @@ function wc_display_item_meta( $item, $args = array() ) {
 }
 
 
-
 add_filter( 'woocommerce_add_to_cart_fragments', 'wc_refresh_mini_cart_count');
 function wc_refresh_mini_cart_count($fragments){
     ob_start();
@@ -1593,6 +1593,7 @@ function get_max_price(){
     endwhile;
     return $price;
 }
+
 
 function where_to_show_new_collection_pop_up(){
     $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' );
@@ -1650,4 +1651,3 @@ function where_to_show_new_collection_pop_up(){
     }
     
 }
-
