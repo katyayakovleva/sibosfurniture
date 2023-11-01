@@ -242,10 +242,12 @@ a.active::before {
 .dropdown__content .link:hover {
     color: #0049af
 }
-
-.dropdown:hover .dropdown__content {
-    display: block
+.dropdown__content.active{
+    display: block;
 }
+/* .dropdown:hover .dropdown__content {
+    display: block
+} */
 
 .grid-container {
     /* width: 100%;
@@ -466,6 +468,11 @@ a.active::before {
         flex-direction: row !important;
     }    */
 }
+@media screen and (max-width: 35.5em) {
+    .dropdown-modern__popup {
+        display: none !important;
+      }
+}
 .link-category-list .active {
     display: block !important;
 }
@@ -596,7 +603,7 @@ a.active::before {
     background-color: #0049af;
     color: #fff;
   }
-  .dropdown-modern > span > button {
+  .dropdown-modern > span > a.dropdown-button {
     content: "";
     height: 40px;
     border: none;
@@ -604,11 +611,12 @@ a.active::before {
     display: block;
     width: 40px;
     flex-shrink: 0;
+    flex: unset;
   }
-  .dropdown-modern > span > button:hover {
+  .dropdown-modern > span > a.dropdown-button:hover {
     background-color: #0049af;
   }
-  .dropdown-modern > span > button::after {
+  .dropdown-modern > span > a.dropdown-button::after {
     content: "";
     display: block;
     width: 100%;
@@ -661,7 +669,7 @@ a.active::before {
   .dropdown-modern.active > span > button {
     background-color: #0049af;
   }
-  .dropdown-modern.active > span > button::after {
+  .dropdown-modern.active > span > a.dropdown-button::after {
     rotate: 90deg;
   }
   

@@ -12,7 +12,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 4.6.0
+ * @version 7.8.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -39,17 +39,27 @@ $show_downloads        = $order->has_downloadable_item() && $order->is_download_
 // 	);
 // }
 ?>
+<!-- <section class="woocommerce-order-details"> -->
+	<?php do_action( 'woocommerce_order_details_before_order_table', $order ); ?>
 
+	<!-- <h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Order details', 'woocommerce' ); ?></h2> -->
 
-<?php do_action( 'woocommerce_order_details_before_order_table', $order ); ?>
-    
-        
+	<!-- <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
+
+		<thead>
+			<tr>
+				<th class="woocommerce-table__product-name product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
+				<th class="woocommerce-table__product-table product-total"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
+			</tr>
+		</thead>
+
+		<tbody> -->
 			<?php
 			do_action( 'woocommerce_order_details_before_order_table_items', $order );
 
-			foreach ( $order_items as $item_id => $item ) {?>
-				<div class="orders__row">
-				<?php 
+			foreach ( $order_items as $item_id => $item ) { ?>
+			<div class="orders__row">
+			<?php
 				$product = $item->get_product();
 
 				wc_get_template(
@@ -62,36 +72,45 @@ $show_downloads        = $order->has_downloadable_item() && $order->is_download_
 						'purchase_note'      => $product ? $product->get_purchase_note() : '',
 						'product'            => $product,
 					)
-				);?>
+				);
+				?>
 				</div>
 				<?php
 			}
 
 			do_action( 'woocommerce_order_details_after_order_table_items', $order );
 			?>
+		<!-- </tbody>
+
+		<tfoot> -->
 		<div class="orders__row orders__footer">
+
 			<?php
 			foreach ( $order->get_order_item_totals() as $key => $total ) {
 				?>
 				<div>                    
 					<p><?php echo esc_html( $total['label'] ); ?></p>
-					<p><?php echo ( 'payment_method' === $key ) ? esc_html( $total['value'] ) : wp_kses_post( $total['value'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<p><?php echo wp_kses_post( $total['value'] ); ?></p>
 				</div>
+
 				<?php
 			}
 			?>
-			
 		</div>
 		<div class="order-note">
 			<?php if ( $order->get_customer_note() ) : ?>
 				<h2 class="ff-ms fs-4 fw-7 fc-blue-2">Note:</h2>
 				<div>
 					<p><?php echo wp_kses_post( nl2br( wptexturize( $order->get_customer_note() ) ) ); ?></p>
-				</div>						
+				</div>	
 			<?php endif; ?>
-		</div>	
+		<!-- </tfoot>
+	</table> -->
+	</div>
+
 	<?php do_action( 'woocommerce_order_details_after_order_table', $order ); ?>
-    
+<!-- </section> -->
+
 <?php
 /**
  * Action hook fired after the order details.
@@ -104,5 +123,3 @@ do_action( 'woocommerce_after_order_details', $order );
 if ( $show_customer_details ) {
 	wc_get_template( 'order/order-details-customer.php', array( 'order' => $order ) );
 }
-
-?>

@@ -73,303 +73,302 @@ $posts_per_page_veriants = [12, 24, 48];
 $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
 ?>
 <a href = "<? echo get_post_type_archive_link( 'product')?>" id="catalog_link" hidden ></a>
-<?php if($current_product_cat){?>
-<a id="current_product_catgory" hidden ></a>
-<?php } ?>
+
 <main class="header-padding">
     <article class="catalog px-2 px-md-4 pt-2">
-        <aside>
-            <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Collections</h4>
-            
-            <div class="collections-container">
-                <?php 
-                $where_to_show_new_collection_pop_up =  where_to_show_new_collection_pop_up();
-               
-                $is_show_pop_up = TRUE;
-                $active_collection = 'none';
-
-                if($current_product_cat || $collection_id != 0){
-                    // echo $current_product_cat->slug;
-                    if($collection_id != 0){
-                        $current_term = get_term($collection_id, 'product_cat');
-                    }
-                    else{
-                        $current_term = $current_product_cat;
-                    }
-                    if($current_term->parent != 0){
-                        $current_term_parent = get_term($current_term->parent, 'product_cat');
-                        if($current_term_parent->slug == 'modern'){
-                            $active_collection = 'modern_children';
-                            $is_show_pop_up = FALSE;
-                        } 
-                        if($current_term->slug == 'modern'){
-                            $active_collection = 'modern_parent';
-                            $is_show_pop_up = FALSE;
-                        } 
-                        if($current_term_parent->slug == 'transitional'){
-                            $active_collection = 'transitional_children';
-                            $is_show_pop_up = FALSE;
-                        } 
-                        
-                        if($current_term->slug == 'transitional'){
-                            $active_collection = 'transitional_parent';
-                            $is_show_pop_up = FALSE;
-                        }
-                    }
-                    
-                }
-                    
-                    
-                ?>
-                <?php $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' ); ?>
-                <div class="dropdown-modern  <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'active'; endif; ?>">
-                    <span>
-                        <a <?php if( $active_collection == 'modern_parent'): echo 'class="active"'; endif; ?> value="<?php echo $modern_product_cat_parent->term_id?>">Modern</a>
-                        <button></button>
-                        <?php if($where_to_show_new_collection_pop_up == 'modern' && $is_show_pop_up) {?>
-                            <div class="dropdown-modern__popup custom-popup" style="display: none;">
-                            <p>Checkout our new collection!</p>
-                            <button class="new-popup-close-button">
-                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
-                                </svg>                  
-                            </button>
-                        </div>
-                        <?php } ?>
-                    </span>
-                    <?php 
-                    $modern_cat_args = array(
-                        'taxonomy' => 'product_cat',
-                        'hide_empty' => true,
-                        'parent' => 0,
-                        'parent'   => $modern_product_cat_parent->term_id,
-                        'orderby' => 'meta_value_num',
-                        'order' => 'DESC',
-                        'meta_key' => 'is_new',
-                    );
-                    $modern_product_cats = get_terms( $modern_cat_args );
-                    ?>
-                    <ol <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'style="display:block;"'; endif; ?>>
-                        <li>
-                            <a value ="<? echo $modern_product_cat_parent->term_id; ?>" >All</a>
-                        </li>
-                        <?php foreach ($modern_product_cats as $modern_product_cat) {?>
-                        <li>
-                            <a value="<? echo $modern_product_cat->term_id; ?>" ><? echo $modern_product_cat->name; ?></a>
-                            <?php if(get_field('is_new', $modern_product_cat)){ ?>
-                                <span>NEW!</span>
-                            <?php } ?>
-                        </li>
-                        <?php } ?>
-                    </ol>
-
-                </div>
-                <div class="dropdown-modern  <?php if($active_collection == 'transitional_children' || $active_collection == 'transitional_parent'): echo 'active'; endif; ?>">
-                    <?php $transitional_product_cat_parent = get_term_by( 'slug', 'transitional', 'product_cat' ); ?>
-                    <span>
-                        <a <?php if( $active_collection == 'transitional_parent'): echo 'class="active"'; endif; ?> value="<?php echo $transitional_product_cat_parent->term_id?>">Transitional</a><button></button>
-                        
-                        <?php if($where_to_show_new_collection_pop_up == 'transitional' && $is_show_pop_up) {?>
-
-                        <div class="dropdown-modern__popup custom-popup" style="display: none;">
-                            <p>Checkout our new collection!</p>
-                            <button class="new-popup-close-button">
-                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
-                                </svg>                  
-                            </button>
-                        </div>
-                        <?php } ?>
-
-                    </span>
-
-                    <?php 
-                    $transitional_cat_args = array(
-                        'taxonomy' => 'product_cat',
-                        'hide_empty' => true,
-                        'parent' => 0,
-                        'parent'   => $transitional_product_cat_parent->term_id,
-                        'orderby' => 'meta_value_num',
-                        'order' => 'DESC',
-                        'meta_key' => 'is_new',
-                    );
-                    $transitional_product_cats = get_terms( $transitional_cat_args );
-                    ?>
-                    <ol <?php if($active_collection == 'transitional_children' || $active_collection == 'transitional_parent'): echo 'style="display:block;"'; endif; ?>>
-                    <li>
-                        <a value="<? echo $transitional_product_cat_parent->term_id; ?>">All</a>
-                    </li>
-                    <?php foreach ($transitional_product_cats as $transitional_product_cat) {?>
-                        <li>
-                            <a value="<? echo $transitional_product_cat->term_id; ?>"><? echo $transitional_product_cat->name; ?></a>
-                            <?php if(get_field('is_new', $transitional_product_cat)){ ?>
-                                <span>NEW!</span>
-                            <?php } ?>
-                        </li>
-                        <?php 
-                    } ?>
-                    </ol>
-                </div>
-            </div>
-            <div class="price-container">
-                <div class="price-container__head">
-                    <p class="ff-ms fs-4 fc-blue-2 fw-7 ta-start uppercase">Price</p>
-                    <button id="price_filter_button_desktop" class="search-btn" type="button">
-                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.7"
-                        d="M13.8132 6.90524C13.8132 8.42904 13.3184 9.83664 12.485 10.9787L16.6887 15.1849C17.1038 15.5999 17.1038 16.2738 16.6887 16.6888C16.2736 17.1037 15.5996 17.1037 15.1845 16.6888L10.9808 12.4825C9.83857 13.3191 8.43069 13.8105 6.90659 13.8105C3.09136 13.8105 0 10.7197 0 6.90524C0 3.09076 3.09136 0 6.90659 0C10.7218 0 13.8132 3.09076 13.8132 6.90524ZM6.90659 11.6858C9.54636 11.6858 11.6881 9.5445 11.6881 6.90524C11.6881 4.26598 9.54636 2.12469 6.90659 2.12469C4.26681 2.12469 2.1251 4.26598 2.1251 6.90524C2.1251 9.5445 4.26681 11.6858 6.90659 11.6858Z"
-                        fill="currentColor" />
-                    </svg>
-                    </button>
-                </div>
-                <div class="range">
-                    <div class="range__slider">
-                        <span class="range__selected"></span>
-                    </div>
-                    <div class="range__input">
-                        <input type="range" class="min" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $min_price; ?>" step="10">
-                        <input type="range" class="max" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $max_price; ?>" step="10">
-                    </div>
-                    <div class="range__price">
-                        <label>$ <input id="min_price_desktop" type="number" name="min" value="<?php echo $min_price; ?>"></label>
-                        <p>-</p>
-                        <label>$ <input id="max_price_desktop" type="number" name="max" value="<?php echo $max_price; ?>"></label>
-                    </div>
-                </div>
-            </div>
-            <? 
-            $additional_categories_list = array();
-            if (($current_product_cat || $collection_id != 0 )&& $active_collection != 'none') {
-
-                if($collection_id != 0){
-                    $primary_category = get_term($collection_id, 'product_cat');
-                }
-                else{
-                    $primary_category = $current_product_cat;
-                }
-                if($primary_category->name == 'transitional'){
-                    $primary_category = get_term_by( 'slug', 'modern', 'product_cat' );
-
-                    $product_ids = wc_get_products(array(
-                        'status' => 'publish',
-                        'limit' => -1,
-                        'category' => array($primary_category->slug),
-                        'return' => 'ids',
-                        ));
-                    
-                    $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
-                    $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                    $id_to_exclude = array();
-                    foreach ($product_ids as $product_id) {
-                        $additional_categories = wp_get_post_terms($product_id,'product_cat',
-                        array('fields' => 'ids',));
+        <aside id="desktop_filters">
+            <div id="filters">
+                <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Collections</h4>
                 
-                        foreach ($additional_categories as $category_id) {
-                            if (!in_array($category_id, $id_to_exclude)) {
-                                $id_to_exclude[] = $category_id;
+                <div class="collections-container">
+                    <?php 
+                    $where_to_show_new_collection_pop_up =  where_to_show_new_collection_pop_up();
+                
+                    $is_show_pop_up = TRUE;
+                    $active_collection = 'none';
+
+                    if($current_product_cat || $collection_id != 0){
+                        if($collection_id != 0){
+                            $current_collection = get_term($collection_id, 'product_cat');
+                        }
+                        else{
+                            $current_collection = $current_product_cat;
+                        }
+                        if($current_collection->parent != 0){
+                            $current_collection_parent = get_term($current_collection->parent, 'product_cat');
+                            if($current_collection_parent->slug == 'modern'){
+                                $active_collection = 'modern_children';
+                                $is_show_pop_up = FALSE;
+                            } 
+                            if($current_collection->slug == 'modern'){
+                                $active_collection = 'modern_parent';
+                                $is_show_pop_up = FALSE;
+                            } 
+                            if($current_collection_parent->slug == 'transitional'){
+                                $active_collection = 'transitional_children';
+                                $is_show_pop_up = FALSE;
+                            } 
+                            
+                            if($current_collection->slug == 'transitional'){
+                                $active_collection = 'transitional_parent';
+                                $is_show_pop_up = FALSE;
                             }
                         }
+                        
                     }
-                    $cat_args = array(
-                        'taxonomy' => 'product_cat',
-                        'exclude'  => $id_to_exclude,
-                        'fields' => 'ids',
-                    );
-                    $additional_categories_list = get_terms( $cat_args ); 
-                }
-                else{
-                    $product_ids = wc_get_products(array(
-                        'status' => 'publish',
-                        'limit' => -1,
-                        'category' => array($primary_category->slug),
-                        'return' => 'ids',
-                        ));
-                    
-                        // Get a list of all additional categories for products in the primary category
+                        
+                        
+                    ?>
+                    <?php $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' ); ?>
+                    <div class="dropdown-modern  <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'active'; endif; ?>">
+                        <span>
+                            <a class="product_collection <?php if( $active_collection == 'modern_parent'): echo 'active'; endif; ?>" value="<?php echo $modern_product_cat_parent->term_id?>" data-href="<?php echo get_term_link($modern_product_cat_parent);?>">Modern</a>
+                            <a class="dropdown-button"></a>
+                            <?php if($where_to_show_new_collection_pop_up == 'modern' && $is_show_pop_up) {?>
+                                <div class="dropdown-modern__popup custom-popup" style="display: none;">
+                                <p>Checkout our new collection!</p>
+                                <button class="new-popup-close-button">
+                                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
+                                    </svg>                  
+                                </button>
+                            </div>
+                            <?php } ?>
+                        </span>
+                        <?php 
+                        $modern_cat_args = array(
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => true,
+                            'parent' => 0,
+                            'parent'   => $modern_product_cat_parent->term_id,
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            'meta_key' => 'is_new',
+                        );
+                        $modern_product_cats = get_terms( $modern_cat_args );
+                        ?>
+                        <ol <?php if($active_collection == 'modern_children' || $active_collection == 'modern_parent'): echo 'style="display:block;"'; endif; ?>>
+                            <li>
+                                <a class=" product_collection <?php if( $active_collection != 'none' && $current_collection->term_id == $modern_product_cat_parent->term_id){ echo 'active_collection'; }?>" value ="<? echo $modern_product_cat_parent->term_id; ?>" data-href="<?php echo get_term_link($modern_product_cat_parent);?>">All</a>
+                            </li>
+                            <?php foreach ($modern_product_cats as $modern_product_cat) {?>
+                            <li>
+                                <a class="product_collection <?php if($active_collection != 'none' && $current_collection->term_id == $modern_product_cat->term_id){ echo 'active_collection'; }?>" value="<? echo $modern_product_cat->term_id; ?>" data-href="<?php echo get_term_link($modern_product_cat);?>"><? echo $modern_product_cat->name; ?></a>
+                                <?php if(get_field('is_new', $modern_product_cat)){ ?>
+                                    <span>NEW!</span>
+                                <?php } ?>
+                            </li>
+                            <?php } ?>
+                        </ol>
+
+                    </div>
+                    <div class="dropdown-modern  <?php if($active_collection == 'transitional_children' || $active_collection == 'transitional_parent'): echo 'active'; endif; ?>">
+                        <?php $transitional_product_cat_parent = get_term_by( 'slug', 'transitional', 'product_cat' ); ?>
+                        <span>
+                            <a class="product_collection <?php if( $active_collection == 'transitional_parent'): echo 'active'; endif; ?>" value="<?php echo $transitional_product_cat_parent->term_id?>" data-href="<?php echo get_term_link($transitional_product_cat_parent);?>">Transitional</a>
+                            <a class="dropdown-button"></a>                            
+                            <?php if($where_to_show_new_collection_pop_up == 'transitional' && $is_show_pop_up) {?>
+
+                            <div class="dropdown-modern__popup custom-popup" style="display: none;">
+                                <p>Checkout our new collection!</p>
+                                <button class="new-popup-close-button">
+                                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.304 2.23484C10.7097 1.82912 10.7097 1.17355 10.304 0.767822C9.89823 0.362099 9.24266 0.362099 8.83693 0.767822L5.53613 4.06862L2.23533 0.767822C1.82961 0.362099 1.17403 0.362099 0.768311 0.767822C0.362587 1.17355 0.362587 1.82912 0.768311 2.23484L4.06911 5.53564L0.768311 8.83644C0.362588 9.24217 0.362588 9.89774 0.768311 10.3035C1.17403 10.7092 1.82961 10.7092 2.23533 10.3035L5.53613 7.00267L8.83693 10.3035C9.24266 10.7092 9.89823 10.7092 10.304 10.3035C10.7097 9.89774 10.7097 9.24217 10.304 8.83644L7.00316 5.53564L10.304 2.23484Z" fill="white" fill-opacity="0.5"/>
+                                    </svg>                  
+                                </button>
+                            </div>
+                            <?php } ?>
+
+                        </span>
+
+                        <?php 
+                        $transitional_cat_args = array(
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => true,
+                            'parent' => 0,
+                            'parent'   => $transitional_product_cat_parent->term_id,
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            'meta_key' => 'is_new',
+                        );
+                        $transitional_product_cats = get_terms( $transitional_cat_args );
+                        ?>
+                        <ol <?php if($active_collection == 'transitional_children' || $active_collection == 'transitional_parent'): echo 'style="display:block;"'; endif; ?>>
+                        <li>
+                            <a class="product_collection <?php if( $active_collection != 'none' && $current_collection->term_id == $transitional_product_cat_parent->term_id){ echo 'active_collection'; }?>" value="<? echo $transitional_product_cat_parent->term_id; ?>" data-href="<?php echo get_term_link($transitional_product_cat_parent);?>">All</a>
+                        </li>
+                        <?php foreach ($transitional_product_cats as $transitional_product_cat) {?>
+                            <li>
+                                <a class="product_collection <?php if( $active_collection != 'none' && $current_collection->term_id == $transitional_product_cat->term_id){ echo 'active_collection'; }?>"  value="<? echo $transitional_product_cat->term_id; ?>" data-href="<?php echo get_term_link($transitional_product_cat);?>"><? echo $transitional_product_cat->name; ?></a>
+                                <?php if(get_field('is_new', $transitional_product_cat)){ ?>
+                                    <span>NEW!</span>
+                                <?php } ?>
+                            </li>
+                            <?php 
+                        } ?>
+                        </ol>
+                    </div>
+                </div>
+                <div class="price-container">
+                    <div class="price-container__head">
+                        <p class="ff-ms fs-4 fc-blue-2 fw-7 ta-start uppercase">Price</p>
+                        <button id="price_filter_button" class="search-btn" type="button">
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.7"
+                            d="M13.8132 6.90524C13.8132 8.42904 13.3184 9.83664 12.485 10.9787L16.6887 15.1849C17.1038 15.5999 17.1038 16.2738 16.6887 16.6888C16.2736 17.1037 15.5996 17.1037 15.1845 16.6888L10.9808 12.4825C9.83857 13.3191 8.43069 13.8105 6.90659 13.8105C3.09136 13.8105 0 10.7197 0 6.90524C0 3.09076 3.09136 0 6.90659 0C10.7218 0 13.8132 3.09076 13.8132 6.90524ZM6.90659 11.6858C9.54636 11.6858 11.6881 9.5445 11.6881 6.90524C11.6881 4.26598 9.54636 2.12469 6.90659 2.12469C4.26681 2.12469 2.1251 4.26598 2.1251 6.90524C2.1251 9.5445 4.26681 11.6858 6.90659 11.6858Z"
+                            fill="currentColor" />
+                        </svg>
+                        </button>
+                    </div>
+                    <div class="range">
+                        <div class="range__slider">
+                            <span class="range__selected"></span>
+                        </div>
+                        <div class="range__input">
+                            <input type="range" class="min" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $min_price; ?>" step="10">
+                            <input type="range" class="max" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $max_price; ?>" step="10">
+                        </div>
+                        <div class="range__price">
+                            <label>$ <input id="min_price" type="number" name="min" value="<?php echo $min_price; ?>"></label>
+                            <p>-</p>
+                            <label>$ <input id="max_price" type="number" name="max" value="<?php echo $max_price; ?>"></label>
+                        </div>
+                    </div>
+                </div>
+                <? 
+                $additional_categories_list = array();
+                if (($current_product_cat || $collection_id != 0 )&& $active_collection != 'none') {
+
+                    if($collection_id != 0){
+                        $primary_category = get_term($collection_id, 'product_cat');
+                    }
+                    else{
+                        $primary_category = $current_product_cat;
+                    }
+                    if($primary_category->name == 'transitional'){
+                        $primary_category = get_term_by( 'slug', 'modern', 'product_cat' );
+
+                        $product_ids = wc_get_products(array(
+                            'status' => 'publish',
+                            'limit' => -1,
+                            'category' => array($primary_category->slug),
+                            'return' => 'ids',
+                            ));
+                        
                         $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
                         $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                        
+                        $id_to_exclude = array();
                         foreach ($product_ids as $product_id) {
                             $additional_categories = wp_get_post_terms($product_id,'product_cat',
-                            array('exclude' => array($primary_category->term_id, $category_collections->term_id, $category_waiting->term_id),
-                            'fields' => 'ids',));
+                            array('fields' => 'ids',));
                     
                             foreach ($additional_categories as $category_id) {
-                                if (!in_array($category_id, $additional_categories_list)) {
-                                    $additional_categories_list[] = $category_id;
+                                if (!in_array($category_id, $id_to_exclude)) {
+                                    $id_to_exclude[] = $category_id;
                                 }
                             }
                         }
-                    } 
-                }
-            
-            ?>
-            <div class="categories-container">
-                <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
-                <ul class="link-category-list" id="filter-products-desktop"> 
-                    <?php
-                    $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                    $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
-                    
-                    $cat_args = array(
-                        'taxonomy' => 'product_cat',
-                        'hide_empty' => true,
-                        'exclude'  => array($category_waiting->term_id, $category_collections->term_id),
-                        'include' => $additional_categories_list,
-                        'parent' => 0,
-                    );
-                    $product_cats = get_terms( $cat_args );
-                    foreach ($product_cats as $product_cat) { ?>
-
-                        <li>
-                        <div class="link-category-div">
-                            <a class="link-category <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="desktop_<?php echo $product_cat->term_id; ?>"></a>
-                            <a data-href="<?php echo get_term_link($product_cat);?>"  class="ff-ms fs-5 ta-center category-label product_cat" value="<?php echo $product_cat->term_id; ?>"><? echo $product_cat->name; ?></a>
-                        </div>
-                        <?php
-                            $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
-                            if(!empty($place_types)){
-                                $cat_args1 = array(
-                                        'taxonomy' => 'product_cat',
-                                        'hide_empty' => true,
-                                        'parent'   => $parent_product_cat->term_id,
-                                        'include'  => $place_types
-                                    );
-                                $child_product_cats1 = get_terms( $cat_args1 );
-                            }
+                        $cat_args = array(
+                            'taxonomy' => 'product_cat',
+                            'exclude'  => $id_to_exclude,
+                            'fields' => 'ids',
+                        );
+                        $additional_categories_list = get_terms( $cat_args ); 
+                    }
+                    else{
+                        $product_ids = wc_get_products(array(
+                            'status' => 'publish',
+                            'limit' => -1,
+                            'category' => array($primary_category->slug),
+                            'return' => 'ids',
+                            ));
+                        
+                            // Get a list of all additional categories for products in the primary category
+                            $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
+                            $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
                             
-                            ?>
-                            <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="desktop_<?php echo $product_cat->term_id; ?>">
-                                <?php
-                                    $cat_args = array(
-                                                'taxonomy' => 'product_cat',
-                                                'hide_empty' => true,
-                                                'parent'   => $parent_product_cat->term_id,
-                                                'include' => $additional_categories_list,
-                                            );
-                                    $child_product_cats = get_terms( $cat_args );
-                                    ?>
-                                    <li class="form-filter">
-                                        <label><input class="all" type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a href="<?php echo get_term_link($product_cat);?>" class="label product_cat" value="<?php echo $parent_product_cat->term_id; ?>"  >All types</a>
-                                    </li>
-                                    <?php
-                                    foreach ($child_product_cats as $child_product_cat) { ?>
+                            foreach ($product_ids as $product_id) {
+                                $additional_categories = wp_get_post_terms($product_id,'product_cat',
+                                array('exclude' => array($primary_category->term_id, $category_collections->term_id, $category_waiting->term_id),
+                                'fields' => 'ids',));
+                        
+                                foreach ($additional_categories as $category_id) {
+                                    if (!in_array($category_id, $additional_categories_list)) {
+                                        $additional_categories_list[] = $category_id;
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                
+                ?>
+                <div class="categories-container">
+                    <h4 class="ff-ms fs-4 fc-blue-2 fw-7 my-1">Categories</h4>
+                    <ul class="link-category-list" id="filter-products"> 
+                        <?php
+                        $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
+                        $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
+                        
+                        $cat_args = array(
+                            'taxonomy' => 'product_cat',
+                            'hide_empty' => true,
+                            'exclude'  => array($category_waiting->term_id, $category_collections->term_id),
+                            'include' => $additional_categories_list,
+                            'parent' => 0,
+                        );
+                        $product_cats = get_terms( $cat_args );
+                        foreach ($product_cats as $product_cat) { ?>
 
-                                        <li class="form-filter">
-                                            <label><input class="sub_product_cat" type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a href="<?php echo get_term_link($child_product_cat);?>"class="label product_cat" value="<?php echo $child_product_cat->term_id; ?>" ><? echo $child_product_cat->name; ?></a>
-                                        </li>
-                                    
-                                    <?php } 
+                            <li>
+                            <div class="link-category-div">
+                                <a class="link-category <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="<?php echo $product_cat->term_id; ?>"></a>
+                                <a data-href="<?php echo get_term_link($product_cat);?>"  class="ff-ms fs-5 ta-center category-label product_cat" value="<?php echo $product_cat->term_id; ?>"><? echo $product_cat->name; ?></a>
+                            </div>
+                            <?php
+                                $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
+                                if(!empty($place_types)){
+                                    $cat_args1 = array(
+                                            'taxonomy' => 'product_cat',
+                                            'hide_empty' => true,
+                                            'parent'   => $parent_product_cat->term_id,
+                                            'include'  => $place_types
+                                        );
+                                    $child_product_cats1 = get_terms( $cat_args1 );
+                                }
+                                
                                 ?>
-                            </ol>
-                        </li>
-                    
-                    <?php } ?>
+                                <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="<?php echo $product_cat->term_id; ?>">
+                                    <?php
+                                        $cat_args = array(
+                                                    'taxonomy' => 'product_cat',
+                                                    'hide_empty' => true,
+                                                    'parent'   => $parent_product_cat->term_id,
+                                                    'include' => $additional_categories_list,
+                                                );
+                                        $child_product_cats = get_terms( $cat_args );
+                                        ?>
+                                        <li class="form-filter">
+                                            <label><input class="all" type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a href="<?php echo get_term_link($product_cat);?>" class="label product_cat" value="<?php echo $parent_product_cat->term_id; ?>"  >All types</a>
+                                        </li>
+                                        <?php
+                                        foreach ($child_product_cats as $child_product_cat) { ?>
 
-                    <li class="form-checkbox">
-                        <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
-                    </li>
-                </ul>
+                                            <li class="form-filter">
+                                                <label><input class="sub_product_cat" type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a href="<?php echo get_term_link($child_product_cat);?>"class="label product_cat" value="<?php echo $child_product_cat->term_id; ?>" ><? echo $child_product_cat->name; ?></a>
+                                            </li>
+                                        
+                                        <?php } 
+                                    ?>
+                                </ol>
+                            </li>
+                        
+                        <?php } ?>
+
+                        <li class="form-checkbox">
+                            <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </aside>
         <section>
@@ -381,169 +380,8 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
                     <div class="dropdown d-sm-none">
                         <div class="dropdown__trigger filter">Filter</div>
-                        <div class="dropdown__content filter__content">
-                            <div class="collections-container">
-                                <p class="ff-ms fs-4 fc-blue-2 fw-7 ta-start uppercase">Collections</p>
-                                <div class="dropdown-modern">
-                                    <?php $modern_product_cat_parent = get_term_by( 'slug', 'modern', 'product_cat' ); ?>
-                                    <span>
-                                        <a value="<?php echo $modern_product_cat_parent->term_id?>" >Modern</a><button></button>
-                                        
-                                    </span>
-                                    <?php 
-                                    $modern_cat_args = array(
-                                        'taxonomy' => 'product_cat',
-                                        'hide_empty' => true,
-                                        'parent' => 0,
-                                        'parent'   => $modern_product_cat_parent->term_id,
-                                        'orderby' => 'meta_value_num',
-                                        'order' => 'DESC',
-                                        'meta_key' => 'is_new',
-                                    );
-                                    $modern_product_cats = get_terms( $modern_cat_args );
-                                    ?>
-                                    <ol>
-                                        <li>
-                                            <a value="<? echo $modern_product_cat_parent->term_id; ?>">All</a>
-                                        </li>
-                                        <?php foreach ($modern_product_cats as $modern_product_cat) {?>
-                                        <li>
-                                            <a value="<? echo $modern_product_cat->term_id; ?>" ><? echo $modern_product_cat->name; ?></a>
-                                            <?php if(get_field('is_new', $modern_product_cat)){ ?>
-                                                <span>NEW!</span>
-                                            <?php } ?>
-                                        </li>
-                                        <?php } ?>
-                                    </ol>
-
-                                </div>
-                                <div class="dropdown-modern">
-                                    <?php $transitional_product_cat_parent = get_term_by( 'slug', 'transitional', 'product_cat' ); ?>
-                                    <span>
-                                        <a value="<?php echo $transitional_product_cat_parent->term_id?>">Transitional</a><button></button>
-                                        
-                                    </span>
-
-                                    <?php 
-                                    $transitional_cat_args = array(
-                                        'taxonomy' => 'product_cat',
-                                        'hide_empty' => true,
-                                        'parent' => 0,
-                                        'parent'   => $transitional_product_cat_parent->term_id,
-                                        'orderby' => 'meta_value_num',
-                                        'order' => 'DESC',
-                                        'meta_key' => 'is_new',
-                                    );
-                                    $transitional_product_cats = get_terms( $transitional_cat_args );
-                                    ?>
-                                    <ol>
-                                        <li>
-                                            <a value="<? echo $transitional_product_cat_parent->term_id; ?>">All</a>
-                                        </li>
-                                        <?php foreach ($transitional_product_cats as $transitional_product_cat) {?>
-                                            <li>
-                                                <a value="<? echo $transitional_product_cat->term_id; ?>"><? echo $transitional_product_cat->name; ?></a>
-                                                <?php if(get_field('is_new', $transitional_product_cat)){ ?>
-                                                    <span>NEW!</span>
-                                                <?php } ?>
-                                            </li>
-                                            <?php 
-                                        } ?>
-                                    </ol>
-                                </div>
-                            </div>
-                            <div class="price-container">
-                                <div class="price-container__head">
-                                    <p class="ff-ms fs-4 fc-blue-2 fw-7 ta-start uppercase">Price</p>
-                                    <button id="price_filter_button_mobile"class="search-btn" type="button">
-                                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.7"
-                                        d="M13.8132 6.90524C13.8132 8.42904 13.3184 9.83664 12.485 10.9787L16.6887 15.1849C17.1038 15.5999 17.1038 16.2738 16.6887 16.6888C16.2736 17.1037 15.5996 17.1037 15.1845 16.6888L10.9808 12.4825C9.83857 13.3191 8.43069 13.8105 6.90659 13.8105C3.09136 13.8105 0 10.7197 0 6.90524C0 3.09076 3.09136 0 6.90659 0C10.7218 0 13.8132 3.09076 13.8132 6.90524ZM6.90659 11.6858C9.54636 11.6858 11.6881 9.5445 11.6881 6.90524C11.6881 4.26598 9.54636 2.12469 6.90659 2.12469C4.26681 2.12469 2.1251 4.26598 2.1251 6.90524C2.1251 9.5445 4.26681 11.6858 6.90659 11.6858Z"
-                                        fill="currentColor" />
-                                    </svg>
-                                    </button>
-                                </div>
-                                <div class="range">
-                                    <div class="range__slider">
-                                        <span class="range__selected"></span>
-                                    </div>
-                                    <div class="range__input">
-                                        <input type="range" class="min" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $min_price; ?>" step="10">
-                                        <input type="range" class="max" min="<?php echo $min_price_default; ?>" max="<?php echo $max_price_default; ?>" value="<?php echo $max_price; ?>" step="10">
-                                    </div>
-                                    <div class="range__price">
-                                        <label>$ <input id="min_price_mobile" type="number" name="min" value="<?php echo $min_price; ?>"></label>
-                                        <p>-</p>
-                                        <label>$ <input id="max_price_mobile" type="number" name="max" value="<?php echo $max_price; ?>"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="categories-container">
-                                <p class="ff-ms fs-4 fc-blue-2 fw-7 ta-start uppercase">Categories</p>
-                                <ul class="link-category-list" id="filter-products-mobile">
-                                <?php
-                                $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                                $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
-                                
-                                $cat_args = array(
-                                    'taxonomy' => 'product_cat',
-                                    'hide_empty' => true,
-                                    'exclude'  => array($category_waiting->term_id, $category_collections->term_id),
-                                    'include' => $additional_categories_list,
-                                    'parent' => 0,
-                                );
-                                $product_cats = get_terms( $cat_args );
-                                foreach ($product_cats as $product_cat) { ?>
-
-                                    <li>
-                                        <div class="link-category-div ff-ms fs-5 ta-center">
-                                            <a class="link-category  <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="mobile_<?php echo $product_cat->term_id; ?>"></a>
-                                            <a data-href="<?php echo get_term_link($product_cat);?>"  class=" category-label product_cat" value="<?php echo $product_cat->term_id; ?>"  ><? echo $product_cat->name; ?></a>
-                                        </div>
-                                        <?php
-                                        $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
-                                        if(!empty($place_types)){
-                                            $cat_args1 = array(
-                                                    'taxonomy' => 'product_cat',
-                                                    'hide_empty' => true,
-                                                    'parent'   => $parent_product_cat->term_id,
-                                                    'include'  => $place_types
-                                                );
-                                            $child_product_cats1 = get_terms( $cat_args1 );
-                                        }
-                                        ?>
-                                        <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>"  id="mobile_<?php echo $product_cat->term_id; ?>">
-                                            <?php
-                                                $cat_args = array(
-                                                            'taxonomy' => 'product_cat',
-                                                            'hide_empty' => true,
-                                                            'parent'   => $parent_product_cat->term_id,
-                                                            'include' => $additional_categories_list,
-
-                                                        );
-                                                $child_product_cats = get_terms( $cat_args );
-                                            ?>
-                                            <li class="form-filter">
-                                                <label><input class="all" type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a class="label product_cat" data-href="<?php echo get_term_link($product_cat);?>" value="<?php echo $parent_product_cat->term_id; ?>" >All types</a>                                
-                                            </li>
-                                            <?php
-                                            foreach ($child_product_cats as $child_product_cat) { ?>
-
-                                                <li class="form-filter">
-                                                    <label><input class="sub_product_cat" type="checkbox" name="place-type" value="<?php echo $child_product_cat->term_id; ?>" <?php if(in_array($child_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $child_product_cat->term_id)): echo 'checked';endif; ?> ></label><a class="label product_cat" data-href="<?php echo get_term_link($child_product_cat);?>"  value="<?php echo $child_product_cat->term_id; ?>" ><? echo $child_product_cat->name; ?></a>
-                                                </li>
-                                
-                                            <?php } ?>
-                                        </ol>
-                                    </li>
-                
-                                <?php } ?>
-
-                                    <li class="form-checkbox">
-                                        <label><input type="checkbox" name="sale" <?php if($sale == 'true'): echo 'checked'; endif;?>>Sale</label>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div id="mobile_filters" class="dropdown__content filter__content">
+                            
                         </div>
                     </div>
                     <div class="dropdown">

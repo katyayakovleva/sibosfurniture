@@ -2,7 +2,7 @@ var $ = jQuery.noConflict();
 
 
 function modernDropdown() {
-  const button = $(".dropdown-modern").find("button");
+  const button = $(".dropdown-modern .dropdown-button")
 
   button.click(function () {
     const button = $(this),
@@ -138,7 +138,16 @@ function priceSlider() {
     });
   });
 }
+function moveFilters() {
+  if (window.matchMedia("screen and (max-width: 64em)").matches) {
+    $("#mobile_filters").prepend($("#filters"));
+  } else {
+    $("#desktop_filters").prepend($("#filters"));
+  }
+}
+
 $(document).ready(function() {
+
     $(".link-category").click(function(){
         var val = $(this).attr('value')
         const t = $("#"+val);
@@ -159,10 +168,29 @@ $(document).ready(function() {
     modernDropdown();
     // modernPopUp();
     priceSlider();
+    moveFilters(),
+    $(window).resize(
+      $.debounce(250, function () {
+        moveFilters();
+      })
+    );
 });
 
 
 jQuery(document).ready(function($) {
+  $('.dropdown').click( function(){
+    if($('.dropdown__content.active').length > 0){
+      $('.dropdown__content.active').toggleClass('active')
+    }
+    var content = $(this).find('.dropdown__content')
+    content.toggleClass('active')
+  })
+  $(document).on("click", function(event){
+    var $trigger = $(".dropdown");
+    if($trigger !== event.target && !$trigger.has(event.target).length){
+      $('.dropdown__content.active').removeClass("active");
+    }
+  });
   // Check if the popup should be shown (based on sessionStorage)
   if (!sessionStorage.getItem('popup_shown')) {
       // Add your additional condition check here if needed

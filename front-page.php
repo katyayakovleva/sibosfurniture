@@ -136,21 +136,17 @@ get_header();
             <?php }?>
         </section>
     </article>
-    <?php
-            $galleries = get_post_galleries(get_the_ID(), false);
-            $first_gallery = $galleries[0];
-            $second_gallery = $galleries[1];
-        ?>
+
     <article class="cam" data-toggle="carousel" data-interval="1000">
         <section>
             <h2 class="ff-ms fs-1 fw-7 fc-white">CHOOSE<br>COLOR<br>AND<br>MATERIAL</h2>
             <div class="cam-colors-images">
-                <?php if($first_gallery): 
-                    $number = 1;
-                    foreach($first_gallery['src'] as $src):?>
-                        <img aria-current="<?php if($number== 1): echo "true"; endif; ?>" src="<?php echo $src; ?>" alt="material blue image"> 
-
-                <?php endforeach;
+            <?php
+                $colors_and_materials_first_gallery = acf_photo_gallery('colors_and_materials_first_gallery', $post->ID);
+                if($colors_and_materials_first_gallery): 
+                    foreach($colors_and_materials_first_gallery as $image):?>
+                        <img src="<?php echo $image['full_image_url']; ?>" alt="<?php $image['title']; ?>">
+                    <?php endforeach;
                 endif;?>
             </div>
         </section>
@@ -164,14 +160,13 @@ get_header();
         
         <section>
             <div class="cam-materials-images">
-                <?php if($second_gallery): 
-                    $number = 1;
-                    foreach($second_gallery['src'] as $src):?>
-                        <img aria-current="<?php if($number== 1): echo "true"; endif; ?>" src="<?php echo $src; ?>" alt="material blue image"> 
-
+                <?php
+                $colors_and_materials_second_gallery = acf_photo_gallery('colors_and_materials_second_gallery', $post->ID);
+                if($colors_and_materials_second_gallery): 
+                    foreach($colors_and_materials_second_gallery as $image):?>
+                        <img src="<?php echo $image['full_image_url']; ?>" alt="<?php $image['title']; ?>">
                     <?php endforeach;
-                    endif;
-                    ?>
+                endif;?>
             </div>
             <a href="<?php echo get_permalink( $page_template[0]->ID ); ?>" class="btn mt-1">Colors & Materials</a>
         </section>
