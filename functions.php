@@ -259,6 +259,7 @@ function sibosfurniture_scripts() {
         wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array('jquery'), rand(111,9999), true );
         wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
         wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
+        wp_enqueue_style( 'news-page', get_template_directory_uri(). '/css/news-page.css', array(), rand(111,9999));
 
 
     }elseif (is_page_template( 'page-templates/page-template-wish-list.php' )){

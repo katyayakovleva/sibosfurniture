@@ -79,7 +79,10 @@
         --fs-7: 0.63em
     }
 }
-
+.catalog-header{
+    display: grid;
+  }
+  
 .catalog {
     display: grid;
     grid-template-columns: 1fr
@@ -467,10 +470,16 @@ a.active::before {
     /* .dropdown-modern ol li {
         flex-direction: row !important;
     }    */
+   
 }
 @media screen and (max-width: 35.5em) {
     .dropdown-modern__popup {
         display: none !important;
+      }
+}
+@media screen and (min-width: 64em) {
+     .catalog-header{
+        grid-template-columns: 1fr 5fr 4fr;
       }
 }
 .link-category-list .active {

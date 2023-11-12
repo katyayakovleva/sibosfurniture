@@ -372,9 +372,38 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
             </div>
         </aside>
         <section>
-            <div class="breadcrumb my-2">
+            <!-- <div class="breadcrumb my-2">
                 <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Home</a></div>
                 <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Catalog</a></div>
+            </div> -->
+            <div class="catalog-header my-2">
+                <div class="breadcrumb my-2">
+                    <div class="breadcrumb__item"><a href="<?php echo home_url();?>" class="link">Головна</a></div>
+                    <div class="breadcrumb__item"><a href="<?php echo $shop_page_url ?>" class="link">Каталог</a></div>
+                </div>
+                <div>
+                    <h1 class="fs-3 fc-blue-2 fw-7 ta-center">
+                        <?php if($current_product_cat){
+                            echo $current_product_cat->name;
+                            if(!empty($selected_additional_categories)){
+                                
+                                foreach ($selected_additional_categories as $category) {
+                                    if($category['additional_cat'] == 'manufacturers'){
+                                        $parentCategory = get_term_by( 'slug', 'manufacturers', 'additional_category' );
+                                        $categoryTerm = $category['term'];
+                                        if($parentCategory->term_id == $categoryTerm){
+                                            echo ' - Усі виробники';
+                                        }else{ 
+                                            echo ' - '.get_term($categoryTerm)->name; 
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }?>
+                    </h1>
+                </div>
+                <div></div>
             </div>
             <article>
                 <section class="d-flex jc-between g-1 jc-sm-end px-2">
@@ -784,5 +813,16 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                 <div class="swiper-button-next"></div>
             </div>
         </article>
+        <section class="px-2 px-sm-4 pb-3 pb-sm-4 mt-3 mt-sm-4">
+            <article class="article-block">
+                <div>
+                    <?php if($current_product_cat){
+                        // echo '<p>'.$current_product_cat->name.'</p>';
+                        echo '<p>'.term_description( $current_product_cat->term_id).'</p>';
+                        
+                    }?>
+                </div>         
+            </article>
+        </section>
     </main>
 <?php get_footer( 'shop' );
