@@ -235,8 +235,10 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         </div>
                     </div>
                 </div>
-                <? 
+                <?php 
                 $additional_categories_list = array();
+              
+
                 if (($current_product_cat || $collection_id != 0 )&& $active_collection != 'none') {
 
                     if($collection_id != 0){
@@ -245,60 +247,29 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                     else{
                         $primary_category = $current_product_cat;
                     }
-                    if($primary_category->name == 'transitional'){
-                        $primary_category = get_term_by( 'slug', 'modern', 'product_cat' );
+                    $product_ids = wc_get_products(array(
+                        'status'   => 'publish',
+                        'limit'    => -1,
+                        'category' => array($primary_category->slug),
+                        'return'   => 'ids',
+                    ));
+                // Define categories to exclude
+                $exclude_categories = array(
+                    $primary_category->term_id,
+                    get_term_by('slug', 'collections', 'product_cat')->term_id,
+                    get_term_by('slug', 'waiting', 'product_cat')->term_id,
+                );
+                    $all_categories_for_products = wp_get_object_terms($product_ids, 'product_cat', array('fields' => 'ids'));
 
-                        $product_ids = wc_get_products(array(
-                            'status' => 'publish',
-                            'limit' => -1,
-                            'category' => array($primary_category->slug),
-                            'return' => 'ids',
-                            ));
-                        
-                        $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
-                        $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                        $id_to_exclude = array();
-                        foreach ($product_ids as $product_id) {
-                            $additional_categories = wp_get_post_terms($product_id,'product_cat',
-                            array('fields' => 'ids',));
-                    
-                            foreach ($additional_categories as $category_id) {
-                                if (!in_array($category_id, $id_to_exclude)) {
-                                    $id_to_exclude[] = $category_id;
-                                }
-                            }
+                    foreach ($all_categories_for_products as $categories_for_product) {
+                        if (!is_array($categories_for_product)) {
+                            $categories_for_product = array($categories_for_product);
                         }
-                        $cat_args = array(
-                            'taxonomy' => 'product_cat',
-                            'exclude'  => $id_to_exclude,
-                            'fields' => 'ids',
-                        );
-                        $additional_categories_list = get_terms( $cat_args ); 
+                        $additional_categories_list = array_merge($additional_categories_list, $categories_for_product);
                     }
-                    else{
-                        $product_ids = wc_get_products(array(
-                            'status' => 'publish',
-                            'limit' => -1,
-                            'category' => array($primary_category->slug),
-                            'return' => 'ids',
-                            ));
-                        
-                            // Get a list of all additional categories for products in the primary category
-                            $category_collections = get_term_by( 'slug', 'collections', 'product_cat' );
-                            $category_waiting = get_term_by( 'slug', 'waiting', 'product_cat' );
-                            
-                            foreach ($product_ids as $product_id) {
-                                $additional_categories = wp_get_post_terms($product_id,'product_cat',
-                                array('exclude' => array($primary_category->term_id, $category_collections->term_id, $category_waiting->term_id),
-                                'fields' => 'ids',));
-                        
-                                foreach ($additional_categories as $category_id) {
-                                    if (!in_array($category_id, $additional_categories_list)) {
-                                        $additional_categories_list[] = $category_id;
-                                    }
-                                }
-                            }
-                        } 
+                    $additional_categories_list = array_diff(array_unique($additional_categories_list), $exclude_categories);
+
+                    // $additional_categories_list = array_unique($additional_categories_list); 
                     }
                 
                 ?>
@@ -317,15 +288,14 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                             'parent' => 0,
                         );
                         $product_cats = get_terms( $cat_args );
-                        foreach ($product_cats as $product_cat) { ?>
+                        foreach ($product_cats as $parent_product_cat) { ?>
 
-                            <li>
+                        <li>
                             <div class="link-category-div">
-                                <a class="link-category <?php if($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id)) : echo 'active'; endif;?>" value="<?php echo $product_cat->term_id; ?>"></a>
-                                <a data-href="<?php echo get_term_link($product_cat);?>"  class="ff-ms fs-5 ta-center category-label product_cat" value="<?php echo $product_cat->term_id; ?>"><? echo $product_cat->name; ?></a>
+                                <a class="link-category <?php if($current_product_cat && ($current_product_cat->term_id == $parent_product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $parent_product_cat->term_id)) : echo 'active'; endif;?>" value="<?php echo $parent_product_cat->term_id; ?>"></a>
+                                <a data-href="<?php echo get_term_link($parent_product_cat);?>"  class="ff-ms fs-5 ta-center category-label product_cat" value="<?php echo $parent_product_cat->term_id; ?>"><? echo $parent_product_cat->name; ?></a>
                             </div>
                             <?php
-                                $parent_product_cat = get_term_by( 'id', $product_cat->term_id, 'product_cat' );
                                 if(!empty($place_types)){
                                     $cat_args1 = array(
                                             'taxonomy' => 'product_cat',
@@ -337,7 +307,7 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                                 }
                                 
                                 ?>
-                                <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $product_cat->term_id) ) || !empty($child_product_cats1) || in_array($product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="<?php echo $product_cat->term_id; ?>">
+                                <ol class="link-category-list <?php if(($current_product_cat && ($current_product_cat->term_id == $parent_product_cat->term_id || wp_get_term_taxonomy_parent_id( $current_product_cat->term_id, 'product_cat') == $parent_product_cat->term_id) ) || !empty($child_product_cats1) || in_array($parent_product_cat->term_id ,$place_types )) : echo 'active'; endif;?>" id="<?php echo $parent_product_cat->term_id; ?>">
                                     <?php
                                         $cat_args = array(
                                                     'taxonomy' => 'product_cat',
@@ -348,7 +318,7 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                                         $child_product_cats = get_terms( $cat_args );
                                         ?>
                                         <li class="form-filter">
-                                            <label><input class="all" type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a href="<?php echo get_term_link($product_cat);?>" class="label product_cat" value="<?php echo $parent_product_cat->term_id; ?>"  >All types</a>
+                                            <label><input class="all" type="checkbox" name="place-type" value="<?php echo $parent_product_cat->term_id; ?>" <?php if(in_array($parent_product_cat->term_id ,$place_types ) || ($current_product_cat  && $current_product_cat->term_id == $parent_product_cat->term_id)): echo 'checked';endif; ?>></label><a href="<?php echo get_term_link($parent_product_cat);?>" class="label product_cat" value="<?php echo $parent_product_cat->term_id; ?>"  >All types</a>
                                         </li>
                                         <?php
                                         foreach ($child_product_cats as $child_product_cat) { ?>
@@ -385,21 +355,7 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                     <h1 class="fs-3 fc-blue-2 fw-7 ta-center">
                         <?php if($current_product_cat){
                             echo $current_product_cat->name;
-                            if(!empty($selected_additional_categories)){
-                                
-                                foreach ($selected_additional_categories as $category) {
-                                    if($category['additional_cat'] == 'manufacturers'){
-                                        $parentCategory = get_term_by( 'slug', 'manufacturers', 'additional_category' );
-                                        $categoryTerm = $category['term'];
-                                        if($parentCategory->term_id == $categoryTerm){
-                                            echo ' - Усі виробники';
-                                        }else{ 
-                                            echo ' - '.get_term($categoryTerm)->name; 
-                                        }
-                                    }
-                                    
-                                }
-                            }
+                           
                         }?>
                     </h1>
                 </div>
@@ -466,17 +422,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                                 ),
                             ),
                     );
-                    // if(!empty($item_types)){
-                    //     $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $item_types);
-                    // }
-                    // if(!empty($brands)){
-                    //     $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $brands);
-                    // }
-                    // $place_types_and_collections = array_merge($collections, $place_types);
-                    // if(!empty($place_types_and_collections)){
-                    //     $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types_and_collections);
-                    // }
-                    
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
                     }
@@ -495,23 +440,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         } 
                     }
                     if($sort == 'rating'){
-                        // $args['meta_query']= array(
-                        //     'relation' => 'OR',
-                        //     array(
-                        //         'key'     => '_wc_average_rating',
-                        //         'value'   => '',
-                        //         'compare' => 'NOT EXISTS'
-                        //     ),
-                        //     array(
-                        //         'key'     => '_wc_average_rating',
-                        //         'compare' => 'EXISTS'
-                        //     )
-                        // ); 
-                        
-                        // $args['orderby'] = 'meta_value_num';
-                        // $args['order'] = 'DESC';
-                        // $args['meta_key'] = '_wc_average_rating';
-
                         $args['meta_query'][] = array(
                             'relation' => 'AND',
                             'raiting' => array(
@@ -530,8 +458,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         );
                     }
                     elseif($sort == 'date'){
-                        // $args['orderby'] = 'date';
-                        // $args['order'] = 'desc';
                         $args['meta_key'] = '_stock_status';
                         $args['orderby'] = array(
                             'meta_value' => 'ASC',
@@ -539,9 +465,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         );
                     }
                     elseif($sort == 'price'){
-                        // $args['orderby'] = 'meta_value_num';
-                        // $args['meta_key'] = '_price';
-                        // $args['order'] = 'asc';
                         $args['meta_query'][] = array(
                             'relation' => 'AND',
                             'price' => array(
@@ -562,9 +485,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         
                     }
                     elseif($sort == 'price-desc'){
-                        // $args['orderby'] = 'meta_value_num';
-                        // $args['meta_key'] = '_price';
-                        // $args['order'] = 'desc';
                         $args['meta_query'][] = array(
                             'relation' => 'AND',
                             'price' => array(
@@ -585,8 +505,6 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                         
                     }
                     else{
-                        // $args['orderby'] = 'popularity';
-                        // $args['order'] = 'desc';
                         $args['meta_key'] = '_stock_status';
                         $args['orderby'] = array(
                             'meta_value' => 'ASC',
@@ -813,16 +731,18 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                 <div class="swiper-button-next"></div>
             </div>
         </article>
-        <section class="px-2 px-sm-4 pb-3 pb-sm-4 mt-3 mt-sm-4">
-            <article class="article-block">
-                <div>
-                    <?php if($current_product_cat){
-                        // echo '<p>'.$current_product_cat->name.'</p>';
-                        echo '<p>'.term_description( $current_product_cat->term_id).'</p>';
-                        
-                    }?>
-                </div>         
-            </article>
-        </section>
+        <?php if($current_product_cat){
+            // echo '<p>'.$current_product_cat->name.'</p>';
+            $description = term_description( $current_product_cat->term_id);
+            if($description){ ?>
+                <section class="px-2 px-sm-4 pb-3 pb-sm-4 mt-3 mt-sm-4">
+                    <article class="article-block">
+                        <div>
+                            <p><?php echo $description ;?></p> 
+                        </div>         
+                    </article>
+                </section>
+        <?php }
+        }?>
     </main>
 <?php get_footer( 'shop' );
