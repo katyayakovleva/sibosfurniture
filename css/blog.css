@@ -244,6 +244,7 @@
 }
 
 .grid-container {
+    min-height: 50vh;
     /* width: 100%;
     box-sizing: border-box;
     display: grid;

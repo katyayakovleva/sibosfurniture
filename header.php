@@ -78,7 +78,13 @@ $items_count = WC()->cart->get_cart_contents_count();
                     <div class="navbar-search">
                         
                         <div>
-                            <?php  get_search_form(); ?>
+                            <?php 
+                            if(is_page_template( 'page-templates/page-template-blog.php' ) || is_category() || (is_single() && 'post' == get_post_type()) || (is_search() && !isset($_GET['post_type']))){
+                                get_search_form();
+                            }else{
+                                get_product_search_form();
+                            } 
+                            ?>
                             <input type="submit" style="height: 0px; width: 0px; border: none; padding: 0px;"  hidefocus="true">                            
                             <a href="<?php echo wc_get_cart_url(); ?>" title="Cart" class="link link-blue sm">Cart 
                                 <span  class="mini-cart-count"> <?php echo $items_count ? '('.$items_count.')' : '&nbsp;'; ?></span>
@@ -159,7 +165,13 @@ $items_count = WC()->cart->get_cart_contents_count();
                     <?php } ?>
                     <div class="navbar-search">
                         <div>
-                            <?php  get_search_form(); ?>
+                            <?php 
+                            if(is_page_template( 'page-templates/page-template-blog.php' ) || is_category() || (is_single() && 'post' == get_post_type()) || (is_search() && !isset($_GET['post_type']))){
+                                get_search_form();
+                            }else{
+                                get_product_search_form();
+                            } 
+                            ?>
 
                         </div>
                     </div>

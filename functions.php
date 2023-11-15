@@ -271,8 +271,8 @@ function sibosfurniture_scripts() {
     }
     
     elseif (is_search()){
-        if( isset($_GET['search-type']) && $_GET['search-type']){
-            $type = $_GET['search-type'];
+        if( isset($_GET['post_type']) && $_GET['post_type']){
+            $type = $_GET['post_type'];
             if ($type == 'product') {  
                 wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
                 wp_enqueue_style( 'woocommerce_product', get_template_directory_uri(). '/css/woocommerce_product.css', array(), rand(111,9999));
@@ -281,13 +281,10 @@ function sibosfurniture_scripts() {
                 wp_enqueue_script( 'script-shop-page', get_template_directory_uri() . '/js/script-shop-page.js', array('jquery'), rand(111,9999), true );
                 wp_enqueue_script( 'swiper-per_view', get_template_directory_uri() . '/js/swiper-per_view.js', array('swiper-bundle'), rand(111,9999), true );
                 wp_enqueue_script( 'product-filter', get_template_directory_uri() . '/js/product-filter.js', array('jquery'), rand(111,9999), true );
-            
-            }elseif ($type == 'blog'){
-                wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
-
-            }else{
-
             }
+        }else{
+            wp_enqueue_style( 'blog', get_template_directory_uri(). '/css/blog.css', array(), rand(111,9999));
+            // wp_enqueue_style( 'shop-page', get_template_directory_uri(). '/css/shop-page.css', array(), rand(111,9999));
         }
        
     }

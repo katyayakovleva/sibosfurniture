@@ -413,6 +413,9 @@ $current_product_cat = get_term_by( 'slug', get_query_var('term'), get_query_var
                                 ),
                             ),
                     );
+                    if( isset($_GET['s'])){
+                        $args['s'] = $_GET['s'];
+                    }
                     if(!empty($place_types)){
                         $args['tax_query'][] = array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $place_types);
                     }
