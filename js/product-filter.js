@@ -1,10 +1,10 @@
 var $ = jQuery.noConflict();
 
 function setParamsToNewURL(old_url, new_url){
-    if($('a.active_collection').length){
-        collection = $('a.active_collection').attr('value');
-        new_url.searchParams.set("collection", collection);
-    }
+    // if($('a.active_collection').length){
+    //     collection = $('a.active_collection').attr('value');
+    //     new_url.searchParams.set("collection", collection);
+    // }
     if(old_url.searchParams.has('posts_per_page')){
         const posts_per_page = old_url.searchParams.get('posts_per_page')
         new_url.searchParams.set("posts_per_page", posts_per_page);
@@ -24,6 +24,10 @@ function setParamsToNewURL(old_url, new_url){
     if(old_url.searchParams.has('sale')){
         const sale = old_url.searchParams.get('sale')
         new_url.searchParams.set("sale", sale);
+    }
+    if($('a.active_collection').length && old_url.searchParams.has('place_types')){
+        const place_types = old_url.searchParams.get('place_types')
+        new_url.searchParams.set("place_types", place_types);
     }
     return new_url;
 }
@@ -47,6 +51,10 @@ $(document).ready(function() {
             } 
         }
         new_url = setParamsToNewURL(url, new URL($('#catalog_link').attr('href')));
+        if($('a.active_collection').length){
+            collection = $('a.active_collection').attr('value');
+            new_url.searchParams.set("collection", collection);
+        }
         var place_types = [];
         $("#filter-products input:checkbox[name=place-type]:checked").each(function(){
             place_types.push($(this).val());
@@ -74,14 +82,30 @@ $(document).ready(function() {
 
     });
     $('a.product_cat ').on('click', function(){
-        const href = $(this).data("href")
-        new_url = new URL(href);
-        window.history.pushState({}, "", new_url);   
-        window.location.href = window.location.href;  
+        if($('.active_collection').length){
+            var place_types = [];
+            place_types.push($(this).attr('value'));        
+
+            let place_typesArrayString = JSON.stringify(place_types);
+            let encodedplace_typesArrayString = encodeURIComponent(place_typesArrayString);
+            
+            url.searchParams.set("place_types", encodedplace_typesArrayString);
+        
+            window.history.pushState({}, "", url);
+             
+        }else{
+            const href = $(this).data("href")
+            // new_url = new URL(href);
+            new_url = setParamsToNewURL(url, new URL(href));
+            window.history.pushState({}, "", new_url);   
+        }
+        window.location.href = window.location.href; 
     });
     $('a.product_collection').click( function(){
         const href = $(this).data("href")
-        new_url = new URL(href);
+        // new_url = new URL(href);
+        new_url = setParamsToNewURL(url, new URL(href));
+        
         window.history.pushState({}, "", new_url);   
         window.location.href = window.location.href;  
         // collection = $(this).attr('value');
